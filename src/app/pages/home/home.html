@@ -1,4 +1,108 @@
-<p>home works!</p>
-<!-- <p routerLink="/register">Register</p>
-<p routerLink="/login">Login</p> -->
+<div class="landing-hero p-10 md:p-0">
+  <div class="hero-overlay "></div>
+  <div class="hero-inner container ml-auto">
+    <div class="hero-text">
+      <h1>Find experiences you’ll love</h1>
+      <p>Discover local events, concerts, classes and more — all around you.</p>
+      <div class="search-filter flex items-center">
+        <div class="flex">
+          <input
+            type="search"
+            name=""
+            placeholder="What are you looking for?"
+            id=""
+            class="h-12 rounded-3xl py-2 px-5 placeholder:text-slate-400 placeholder:text-[14px] placeholder:italic active:ring-1 ring-fuchsia-700"
+          />
+        </div>
+        <select
+          class="h-12 rounded-3xl py-2 px-5 placeholder:text-slate-400 placeholder:text-[14px] placeholder:italic active:ring-1 ring-fuchsia-700"
+        >
+          <option value="">All Locations</option>
+          @for (loc of locations; track loc) {
+          <option [value]="loc">{{ loc }}</option>
+          }
+        </select>
+        <!-- <input
+          type="date"
+          placeholder="Any date"
+          class="h-12 rounded-3xl py-2 px-5 placeholder:text-slate-400 placeholder:text-[14px] placeholder:italic active:ring-1 ring-fuchsia-700"
+        /> -->
+        <!-- <select
+          class="h-12 rounded-3xl py-2 px-5 placeholder:text-slate-400 placeholder:text-[14px] placeholder:italic active:ring-1 ring-fuchsia-700"
+        >
+          <option value="">All Categories</option>
+          @for (cat of categories; track cat) {
+          <option [value]="cat">{{ cat }}</option>
+          }
+        </select> -->
 
+        <button (click)="onSearch()" class="cursor-pointer">
+          <div
+            class="p-2 cursor-pointer bg-fuchsia-900 w-10 h-10 flex items-center justify-center rounded-full"
+          >
+            <ng-icon name="ionSearch" style="color: white; cursor: pointer" />
+          </div>
+        </button>
+      </div>
+    </div>
+    
+    <!-- <div class="w-full">
+      <img src="assets/images/laptopframe.png" alt="" />
+    </div> -->
+    
+    <div class="hero-carousel">
+      @for (img of carouselImages; track $index) {
+      <div class="slide" [class.active]="$index === currentIndex">
+        <img [src]="img" alt="Hero image {{ $index }}" />
+      </div>
+      }
+    </div>
+
+
+  </div>
+</div>
+
+<section class="section trending-events container">
+  <h2>Trending Events</h2>
+  <div class="cards-grid">
+    @for (ev of trendingEvents; track ev.id) {
+    <div class="card">
+      <div class="card-image">
+        <img [src]="ev.image" alt="{{ ev.name }}" />
+      </div>
+      <div class="card-info">
+        <h3>{{ ev.name }}</h3>
+        <p class="meta">
+          {{ ev.date | date : "mediumDate" }} • {{ ev.location }}
+        </p>
+        <p class="description">{{ ev.shortDesc }}</p>
+        <button (click)="goToEvent(ev.id)">View & Book</button>
+      </div>
+    </div>
+    }
+  </div>
+</section>
+
+<section class="section browse-categories container">
+  <h2>Browse by Category</h2>
+  <div class="cat-list">
+    @for (cat of categories; track cat) {
+    <div class="cat-item">
+      <!-- <div class="cat-icon">{{ catIcons[cat] || "🎫" }}</div> -->
+      <div class="cat-name">{{ cat }}</div>
+    </div>
+    }
+  </div>
+</section>
+
+<section class="section testimonials container">
+  <h2>What People Are Saying</h2>
+  <div class="testi-grid">
+    @for (t of testimonials; track t) {
+    <div class="testi-item">
+      <p class="feedback">"{{ t.text }}"</p>
+      <p class="user">— {{ t.user }}</p>
+    </div>
+    }
+  </div>
+</section>

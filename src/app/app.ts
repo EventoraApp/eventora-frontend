@@ -12,6 +12,5 @@ export class App {
   protected readonly title = signal('Eventora');
   router = inject(Router);
   constructor() {
-    this.router.url;
   }
 }
