@@ -1,0 +1,75 @@
+<nav
+  class="border-b-1 border-slate-200 flex items-center justify-between w-full pr-5"
+>
+  <div class="">
+    <img
+      src="assets/images/Purple Gradient Letter E Logo.svg"
+      class="w-25 h-25 -my-5"
+      alt="Logo"
+    />
+  </div>
+
+  <div class="flex relative">
+    <input
+      type="search"
+      name=""
+      placeholder="Search for an event"
+      id=""
+      class="rounded-3xl py-2 px-5  placeholder:text-slate-400 placeholder:text-[14px] placeholder:italic active:ring-1 ring-fuchsia-700"
+    />
+     <div
+      class="p-2 bg-fuchsia-900 w-8 h-8 top-1 flex items-center justify-center rounded-full absolute right-2"
+    >
+      <ng-icon
+        name="ionSearch"
+        class="w-full text-white cursor-pointer"
+        style="color: white; cursor: pointer"
+      />
+    
+    </div>
+    <!-- <select name="" id="" class="w-100px" value="Choose location">
+      <option value="current">Current Location</option>
+      <option value="recent">Recent</option>
+    </select> -->
+   
+  </div>
+
+  <div class="lg:flex items-center justify-center gap-4 hidden">
+    <ul class="flex items-center justify-center gap-4">
+      <li
+        class="cursor-pointer rounded-3xl transition-all hover:bg-slate-100 px-4 py-2"
+      >
+        Find Events
+      </li>
+      <li
+        class="cursor-pointer rounded-3xl transition-all hover:bg-slate-100 px-4 py-2"
+      >
+        Create Events
+      </li>
+      <li
+        class="cursor-pointer rounded-3xl transition-all hover:bg-slate-100 px-4 py-2"
+      >
+        Find my Tickets
+      </li>
+    </ul>
+    <button
+      routerLink="/login"
+      class="bg-transparent cursor-pointer text-black transition-all hover:bg-slate-100 rounded-3xl"
+    >
+      Log In
+    </button>
+    <button
+      routerLink="/register"
+      class="cursor-pointer font-normal bg-fuchsia-900 hover:bg-violet-800 w-fit py-2 shadow-lg transition-all duration-200 rounded-3xl"
+    >
+      Register
+    </button>
+  </div>
+  <div class="lg:hidden flex w-10 h-10">Menu</div>
+    <!-- <ng-icon
+        name="ionMenu"
+        class=" text-white cursor-pointer hidden flex"
+        style="cursor: pointer"
+        
+      /> -->
+</nav>
