@@ -1,4 +1,4 @@
-@if(!(router.url === "/register" || router.url === "/login")){<app-navbar></app-navbar>
+@if(router.url === "/home" ){<app-navbar></app-navbar>
 <div class="h-18"></div>}
 <router-outlet></router-outlet>
-@if(!(router.url === "/register" || router.url === "/login")){<app-footer></app-footer>}
+@if(router.url === "/home" ){<app-footer></app-footer>}

@@ -20,45 +20,10 @@ export const routes: Routes = [
     loadComponent: () =>
       import('../app/pages/auth/forgot-password/forgot-password').then((m) => m.ForgotPassword),
   },
-  {
+   {
     path: 'dashboard',
-    loadComponent: () =>
-      import('../app/pages/dashboard/dashboard').then((m) => m.Dashboard),
-  },
-  {
-    path: 'events',
-    loadComponent: () =>
-      import('../app/pages//events/event-list/event-list').then(
-        (m) => m.EventList
-      ),
-    children: [
-      {
-        path: ':id',
-        loadComponent: () =>
-          import('../app/pages/events/event-detail/event-detail').then(
-            (m) => m.EventDetail
-          ),
-      },
-      {
-        path: 'create',
-        loadComponent: () =>
-          import('../app/pages/events/create-event/create-event').then(
-            (m) => m.CreateEvent
-          ),
-      },
-      {
-        path: ':id/edit',
-        loadComponent: () =>
-          import('../app/pages/events/edit-event/edit-event').then(
-            (m) => m.EditEvent
-          ),
-      },
-    ],
-  },
-  {
-    path: 'my-events',
-    loadComponent: () =>
-      import('../app/pages/events/my-events/my-events').then((m) => m.MyEvents),
+    loadChildren: () =>
+      import('../app/pages/dashboard/dashboard.routes').then((m) => m.routes),
   },
   {
     path: '**',
