@@ -1,15 +1,16 @@
 <aside
-  class="w-15 border-r border-slate-200  bg-slate-100 h-full fixed top-15 left-0 flex flex-col items-center py-4"
+  class="w-15 border-r border-slate-200  bg-slate-100 h-full fixed top-15 left-0 flex flex-col justify-between items-center py-4 pb-18"
 >
   <div class="grid gap-6">
-    <div routerLink="/dashboard/home" class="hover:bg-fuchsia-900 py-2 px-3 rounded-md text-gray-700 hover:text-white cursor-pointer transition-all">
-      <ng-icon name="ionHome" style="width: 25px; height: 25px;"/>
+    <div title="Home" routerLink="/dashboard/home" [ngClass]="{'bg-gradient-eventora ':isHomeActive}" class="hover:bg-white flex items-center justify-center h-10 w-10 rounded-md text-gray-700   cursor-pointer transition-all">
+      <ng-icon name="ionHome" style="width: 22px; height: 22px;"/>
     </div>
-    <div routerLink="/dashboard/events" class="hover:bg-fuchsia-900 py-2 px-3 rounded-md text-gray-700 hover:text-white cursor-pointer transition-all">
-      <ng-icon name="ionCalendarOutline" style="width: 25px; height: 25px;"/>
-    </div>
-    <div routerLink="/dashboard/settings" class="hover:bg-fuchsia-900 py-2 px-3 rounded-md text-gray-700 hover:text-white cursor-pointer transition-all">
-      <ng-icon name="ionSettingsOutline" style="width: 25px; height: 25px;"/>
+    <div title="Events" routerLink="/dashboard/events" [ngClass]="{'bg-gradient-eventora':isEventActive}"  class="hover:bg-white flex items-center justify-center h-10 w-10 rounded-md text-gray-700  cursor-pointer transition-all">
+      <ng-icon name="ionCalendarOutline"  style="width: 22px; height: 22px;"/>
     </div>
   </div>
+  <div title="Settings" routerLink="/dashboard/settings" [ngClass]="{'bg-gradient-eventora':isSettingsActive}"  class=" hover:bg-white flex items-center justify-center h-10 w-10 rounded-md text-gray-700  cursor-pointer transition-all">
+    <ng-icon name="ionSettingsOutline" style="width: 22px; height: 22px;"/>
+  </div>
+
 </aside>

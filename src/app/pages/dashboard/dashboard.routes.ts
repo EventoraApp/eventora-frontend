@@ -12,6 +12,10 @@ export const routes: Routes = [
         loadComponent: () => import('./home/home').then((m) => m.Home),
       },
       {
+        path: 'settings',
+        loadComponent: () => import('./settings/settings').then((m) => m.Settings),
+      },
+      {
         path: 'events',
         loadComponent: () =>
           import('./events/event-list/event-list').then((m) => m.EventList),
@@ -39,8 +43,4 @@ export const routes: Routes = [
       },
     ],
   },
-  // {
-  //   path: '**',
-  //   loadComponent: () => import('./home/home').then((m) => m.Home),
-  // },
 ];

@@ -1,1 +1,215 @@
-<p>home works!</p>
+<div class="p-6 space-y-6">
+  <!-- Header -->
+  <div>
+    <h1 class="text-4xl font-bold text-gray-900">Hey there, {{ userName }}</h1>
+  </div>
+
+  <!-- Main Layout -->
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+    <!-- Left Section -->
+    <div class="lg:col-span-2 space-y-6">
+      <!-- Event Summary -->
+      <div class="bg-white rounded-xl border border-gray-200 p-6 shadow-sm">
+        <h2 class="text-xl font-semibold text-gray-900">
+          Your event is happening in
+          <span class="text-violet-700 font-bold">about 1 month</span>
+        </h2>
+
+        <div
+          class="mt-4 border border-gray-200 rounded-xl p-4 flex items-center justify-between bg-gray-50 hover:bg-gray-100 transition"
+        >
+          <!-- Left (Event Info) -->
+          <div class="grid grid-cols-1 md:grid-cols-2 xl:flex items-center gap-4">
+            <div
+              class="bg-red-50 border border-red-200 text-center px-3 py-2 rounded-lg"
+            >
+              <p class="text-sm font-bold text-red-500">NOV</p>
+              <p class="text-lg font-semibold text-gray-800">16</p>
+            </div>
+            <img
+              [src]="event.image"
+              alt="Event image"
+              class="w-24 h-16 rounded-md object-cover"
+            />
+            <div>
+              <p class="font-semibold text-gray-900">{{ event.title }}</p>
+              <p class="text-sm text-red-500 font-medium">
+                {{ event.status }} · Starts {{ event.date }} at {{ event.time }}
+              </p>
+            </div>
+          </div>
+
+          <!-- Right (Tickets Info) -->
+          <div class="text-right">
+            <p class="font-medium text-gray-800">
+              {{ event.ticketsSold }}/{{ event.totalTickets }}
+            </p>
+            <p class="text-sm text-gray-500">Tickets sold</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Timeline Section -->
+      <div class="bg-white rounded-xl border border-gray-200 p-6 shadow-sm space-y-6">
+        <div class="space-y-4">
+          <div>
+            <p class="text-gray-600 font-semibold">Wednesday</p>
+            <p class="text-sm text-gray-400">Oct 8</p>
+          </div>
+          <div
+            class="border border-gray-200 rounded-lg p-4 flex items-start gap-3 bg-gray-50 hover:bg-gray-100 transition"
+          >
+            <div
+              class="w-8 h-8 flex items-center justify-center rounded-full bg-violet-100 text-violet-700 font-bold"
+            >
+              📈
+            </div>
+            <div>
+              <p class="font-semibold text-gray-900">
+                Start selling tickets to Hackaton
+              </p>
+              <p class="text-sm text-gray-600">
+                Send an email campaign to tell everyone tickets are on sale.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="space-y-4">
+          <div>
+            <p class="text-gray-600 font-semibold">Sunday</p>
+            <p class="text-sm text-gray-400">Nov 16</p>
+          </div>
+          <div
+            class="border border-gray-200 rounded-lg p-4 flex items-start gap-3 bg-blue-50 hover:bg-blue-100 transition"
+          >
+            <div
+              class="w-8 h-8 flex items-center justify-center rounded-full bg-blue-200 text-blue-700 font-bold"
+            >
+              🎉
+            </div>
+            <div>
+              <p class="font-semibold text-gray-900">
+                Today’s the day! We hope you have a great event, while building
+                your community!
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 🟣 Community Spotlight Section -->
+      <section class="mt-16 px-8">
+        <h2 class="text-2xl font-semibold text-gray-900 mb-6">
+          Community spotlight
+        </h2>
+
+        <div
+          class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 flex flex-col md:flex-row items-start gap-6"
+        >
+          <img
+            src="assets/images/hero3.jpg"
+            alt="Community spotlight"
+            class="rounded-lg w-full md:w-64 object-cover"
+          />
+
+          <div class="flex-1">
+            <h3 class="text-xl font-semibold text-orange-600 mb-2">
+              Meet Prashant
+            </h3>
+            <p class="text-gray-700 mb-3">
+              "As someone who completely relies on people buying tickets to
+              [our] event to get the word out, Eventora plays a huge part in my
+              business."
+            </p>
+            <p class="text-sm text-gray-500 mb-5">
+              — Prashant Kakad, Founder of Jai Ho! Dance Party and Bollywood
+              Dreams Entertainment
+            </p>
+            <button
+              class="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition"
+            >
+              Read article
+            </button>
+          </div>
+
+          <div class="flex gap-2 self-start md:self-center">
+            <button
+              class="w-8 h-8 flex items-center justify-center rounded-full bg-gray-100 hover:bg-gray-200 transition"
+            >
+              <span class="text-gray-600 text-lg">&larr;</span>
+            </button>
+            <button
+              class="w-8 h-8 flex items-center justify-center rounded-full bg-gray-100 hover:bg-gray-200 transition"
+            >
+              <span class="text-gray-600 text-lg">&rarr;</span>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- 🟣 Help Section -->
+      <section class="mt-16 px-8 pb-20">
+        <h2 class="text-2xl font-semibold text-gray-900 mb-3">
+          How can we help?
+        </h2>
+        <a
+          href="#"
+          class="text-indigo-600 font-medium hover:underline mb-6 block"
+          >Go to Help Center</a
+        >
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div
+            class="bg-white border border-gray-200 rounded-lg p-6 text-center hover:shadow-md transition"
+          >
+            <div class="text-indigo-500 text-3xl mb-2">📅</div>
+            <h3 class="font-medium text-gray-800">Creating an event</h3>
+          </div>
+
+          <div
+            class="bg-white border border-gray-200 rounded-lg p-6 text-center hover:shadow-md transition"
+          >
+            <div class="text-indigo-500 text-3xl mb-2">👤</div>
+            <h3 class="font-medium text-gray-800">Your account</h3>
+          </div>
+
+          <div
+            class="bg-white border border-gray-200 rounded-lg p-6 text-center hover:shadow-md transition"
+          >
+            <div class="text-indigo-500 text-3xl mb-2">📢</div>
+            <h3 class="font-medium text-gray-800">Marketing an event</h3>
+          </div>
+
+          <div
+            class="bg-white border border-gray-200 rounded-lg p-6 text-center hover:shadow-md transition"
+          >
+            <div class="text-indigo-500 text-3xl mb-2">💰</div>
+            <h3 class="font-medium text-gray-800">Payouts and taxes</h3>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- Right Sidebar -->
+    <div>
+      <div class="bg-white rounded-xl border border-gray-200 p-6 shadow-sm">
+        <button
+          class="bg-gray-100 text-sm font-medium text-gray-700 px-3 py-1 rounded-lg mb-3"
+        >
+          Get discovered
+        </button>
+        <h3 class="font-semibold text-gray-900 mb-2">
+          Set up your organizer profile
+        </h3>
+        <p class="text-sm text-gray-600 mb-4">
+          A complete profile can increase discovery of your event on search
+          engines, highlight your brand and build trust with attendees.
+        </p>
+        <a href="#" class="text-sm font-medium text-violet-700 hover:underline"
+          >Set up your profile →</a
+        >
+      </div>
+    </div>
+  </div>
+</div>
