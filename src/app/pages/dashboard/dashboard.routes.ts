@@ -19,28 +19,26 @@ export const routes: Routes = [
         path: 'events',
         loadComponent: () =>
           import('./events/event-list/event-list').then((m) => m.EventList),
-        children: [
-          {
-            path: ':id',
-            loadComponent: () =>
-              import('./events/event-detail/event-detail').then(
-                (m) => m.EventDetail
-              ),
-          },
-          {
-            path: 'create',
-            loadComponent: () =>
-              import('./events/create-event/create-event').then(
-                (m) => m.CreateEvent
-              ),
-          },
-          {
-            path: ':id/edit',
-            loadComponent: () =>
-              import('./events/edit-event/edit-event').then((m) => m.EditEvent),
-          },
-        ],
       },
+      {
+        path: 'events/create',
+        loadComponent: () =>
+          import('./events/create-event/create-event').then(
+            (m) => m.CreateEvent
+          ),
+      },
+        {
+          path: 'events/:id',
+          loadComponent: () =>
+            import('./events/event-detail/event-detail').then(
+              (m) => m.EventDetail
+            ),
+        },
+        {
+          path: 'events/:id/edit',
+          loadComponent: () =>
+            import('./events/edit-event/edit-event').then((m) => m.EditEvent),
+        },
     ],
   },
 ];

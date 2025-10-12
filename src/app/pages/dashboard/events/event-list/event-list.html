@@ -1,9 +1,44 @@
-<div class="p-6 bg-white rounded-2xl shadow-sm border border-gray-100">
+<section class="p-6 space-y-6">
   <div class="flex justify-between items-center mb-6">
-    <h1 class="text-3xl font-extrabold text-gray-900">Events</h1>
-
+    <h1 class="text-5xl font-extrabold text-gray-900">Events</h1>
   </div>
-
-
-  
-</div>
+  <div class="flex items-center justify-between">
+    <div class="relative">
+      <button class="cursor-pointer h-full absolute text-gray-700 bg-transparent flex items-center justify-center">
+          <ng-icon name="ionSearch" />
+      </button>
+      <input
+        type="search"
+        placeholder="Search events"
+        name=""
+        id=""
+        class="pl-10 py-3 rounded-none placeholder:text-slate-400 placeholder:text-[14px] placeholder:italic active:ring-[0.5px] ring-fuchsia-700"
+      />
+    </div>
+    <button routerLink = "/dashboard/events/create" class="rounded-none cursor-pointer bg-fuchsia-900 text-[14px] py-3">
+      Create Event
+    </button>
+  </div>
+  <app-table
+    [events]="[
+      {
+        image: 'assets/images/tech1.jpg',
+        name: 'Tech Conference 2025',
+        link: 'https://eventbrite.com/e/tech-conference-2025',
+        location: 'Accra, Ghana',
+        date: 'Oct 15, 2025',
+        time: '10:00 AM',
+        status: 'Published'
+      },
+      {
+        image: 'assets/images/tech2.jpg',
+        name: 'AI Workshop',
+        link: '#',
+        location: 'Virtual',
+        date: 'Nov 2, 2025',
+        time: '2:00 PM',
+        status: 'Draft'
+      }
+    ]"
+  />
+</section>
