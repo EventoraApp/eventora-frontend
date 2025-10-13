@@ -1,56 +1,8 @@
 <div class="landing-hero p-10 md:p-0">
-  <div class="hero-overlay "></div>
-  <div class="hero-inner container ml-auto">
-    <div class="hero-text">
-      <h1>Find experiences you’ll love</h1>
-      <p>Discover local events, concerts, classes and more — all around you.</p>
-      <div class="search-filter flex items-center">
-        <div class="flex">
-          <input
-            type="search"
-            name=""
-            placeholder="What are you looking for?"
-            id=""
-            class="h-12 rounded-3xl py-2 px-5 placeholder:text-slate-400 placeholder:text-[14px] placeholder:italic active:ring-1 ring-fuchsia-700"
-          />
-        </div>
-        <select
-          class="h-12 rounded-3xl py-2 px-5 placeholder:text-slate-400 placeholder:text-[14px] placeholder:italic active:ring-1 ring-fuchsia-700"
-        >
-          <option value="">All Locations</option>
-          @for (loc of locations; track loc) {
-          <option [value]="loc">{{ loc }}</option>
-          }
-        </select>
-        <!-- <input
-          type="date"
-          placeholder="Any date"
-          class="h-12 rounded-3xl py-2 px-5 placeholder:text-slate-400 placeholder:text-[14px] placeholder:italic active:ring-1 ring-fuchsia-700"
-        /> -->
-        <!-- <select
-          class="h-12 rounded-3xl py-2 px-5 placeholder:text-slate-400 placeholder:text-[14px] placeholder:italic active:ring-1 ring-fuchsia-700"
-        >
-          <option value="">All Categories</option>
-          @for (cat of categories; track cat) {
-          <option [value]="cat">{{ cat }}</option>
-          }
-        </select> -->
-
-        <button (click)="onSearch()" class="cursor-pointer">
-          <div
-            class="p-2 cursor-pointer bg-fuchsia-900 w-10 h-10 flex items-center justify-center rounded-full"
-          >
-            <ng-icon name="ionSearch" style="color: white; cursor: pointer" />
-          </div>
-        </button>
-      </div>
-    </div>
-    
-    <!-- <div class="w-full">
-      <img src="assets/images/laptopframe.png" alt="" />
-    </div> -->
-    
-    <div class="hero-carousel">
+  <div class="hero-overlay"></div>
+  <div class="hero-inner container relative overflow-hidden">
+    <!-- Carousel as background -->
+    <div class="hero-carousel absolute inset-0">
       @for (img of carouselImages; track $index) {
       <div class="slide" [class.active]="$index === currentIndex">
         <img [src]="img" alt="Hero image {{ $index }}" />
@@ -58,7 +10,48 @@
       }
     </div>
 
+    <!-- Overlay to dim and blur the background -->
+    <div class="hero-overlay absolute inset-0 bg-black/40 z-[1]"></div>
 
+    <!-- Hero text content on top -->
+    <div class="hero-text relative z-[2] text-white max-w-2xl py-24">
+      <h1
+        class="text-5xl md:text-6xl xl:text-7xl font-bold mb-4 text-white text-start md:text-center w-fit"
+      >
+        Find experiences you’ll love
+      </h1>
+      <p class="text-lg mb-8">
+        Discover local events, concerts, classes and more — all around you.
+      </p>
+
+      <div
+        class="items-start grid grid-cols-1 md:grid-cols-2 md:items-center gap-3"
+      >
+        <input
+          type="search"
+          placeholder="What are you looking for?"
+          class="h-12 rounded-3xl py-2 px-5 placeholder:text-slate-400 placeholder:text-[14px] placeholder:italic active:ring-1 ring-fuchsia-700 flex-1"
+        />
+        <div class="flex items-center justify-start">
+          <select
+            class="h-12 rounded-3xl py-2 px-5 placeholder:text-slate-400 placeholder:text-[14px] placeholder:italic active:ring-1 ring-fuchsia-700"
+          >
+            <option value="">All Locations</option>
+            @for (loc of locations; track loc) {
+            <option [value]="loc">{{ loc }}</option>
+            }
+          </select>
+
+          <button (click)="onSearch()" class="bg-transparent cursor-pointer">
+            <div
+              class="p-2 bg-fuchsia-900 w-10 h-10 flex items-center justify-center rounded-full"
+            >
+              <ng-icon name="ionSearch" style="color: white" />
+            </div>
+          </button>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -85,11 +78,13 @@
 
 <section class="section browse-categories container">
   <h2>Browse by Category</h2>
-  <div class="cat-list">
-    @for (cat of categories; track cat) {
-    <div class="cat-item">
-      <!-- <div class="cat-icon">{{ catIcons[cat] || "🎫" }}</div> -->
-      <div class="cat-name">{{ cat }}</div>
+  <div
+    class="cat-list grid md:grid-cols-3 grid-cols-2 lg:grid-cols-4 xl:grid-cols-5"
+  >
+    @for (cat of categoryEntries; track cat[0]) {
+    <div class="cat-item flex flex-col items-center">
+      <ng-icon [name]="cat[0]" class="text-3xl mb-2" />
+      <div class="cat-name text-sm font-medium">{{ cat[1] }}</div>
     </div>
     }
   </div>

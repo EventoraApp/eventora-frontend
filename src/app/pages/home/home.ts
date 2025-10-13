@@ -1,8 +1,15 @@
 import { DatePipe } from '@angular/common';
-import { Component,OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { NgIcon, provideIcons } from "@ng-icons/core";
-import { ionSearch } from '@ng-icons/ionicons';
+import { NgIcon, provideIcons } from '@ng-icons/core';
+import {
+  ionBriefcaseSharp,
+  ionFastFood,
+  ionFootball,
+  ionHeadsetSharp,
+  ionLaptopOutline,
+  ionSearch,
+} from '@ng-icons/ionicons';
 
 interface EventItem {
   id: string;
@@ -17,21 +24,22 @@ interface Testimonial {
   text: string;
 }
 
-
-
 @Component({
   selector: 'app-home',
   imports: [DatePipe, NgIcon],
   templateUrl: './home.html',
   styleUrl: './home.scss',
   viewProviders: [
-    provideIcons({ionSearch}),
+    provideIcons({
+      ionSearch,
+      ionHeadsetSharp,
+      ionBriefcaseSharp,
+      ionFastFood,
+      ionLaptopOutline,
+      ionFootball,
+    }),
   ],
 })
-
-
-
-
 export class Home implements OnInit {
   carouselImages: string[] = [
     'assets/images/hero1.jpg',
@@ -41,8 +49,15 @@ export class Home implements OnInit {
   currentIndex = 0;
 
   locations = ['Accra', 'Kumasi', 'Tema', 'Takoradi'];
-  categories = ['Music', 'Tech', 'Food & Drink', 'Sports', 'Workshops'];
-
+  categories = {
+    ionHeadsetSharp: 'Music',
+    ionLaptopOutline: 'Tech',
+    ionFastFood: 'Food & Drink',
+    ionFootball: 'Sports',
+    ionBriefcaseSharp: 'Workshops',
+  };
+  categoryEntries = Object.entries(this.categories);
+  
   trendingEvents: EventItem[] = [
     {
       id: '1',
@@ -50,7 +65,7 @@ export class Home implements OnInit {
       date: new Date('2025-11-10'),
       location: 'Accra',
       image: 'assets/images/music1.jpg',
-      shortDesc: 'Enjoy a spectacular evening of local bands and DJs.'
+      shortDesc: 'Enjoy a spectacular evening of local bands and DJs.',
     },
     {
       id: '2',
@@ -58,7 +73,7 @@ export class Home implements OnInit {
       date: new Date('2025-12-05'),
       location: 'Kumasi',
       image: 'assets/images/tech1.jpg',
-      shortDesc: 'Join innovators, network, and learn from industry leaders.'
+      shortDesc: 'Join innovators, network, and learn from industry leaders.',
     },
     {
       id: '3',
@@ -66,7 +81,7 @@ export class Home implements OnInit {
       date: new Date('2025-10-22'),
       location: 'Tema',
       image: 'assets/images/food1.jpg',
-      shortDesc: 'Taste cuisines from around the world at one place.'
+      shortDesc: 'Taste cuisines from around the world at one place.',
     },
     {
       id: '3',
@@ -74,22 +89,34 @@ export class Home implements OnInit {
       date: new Date('2025-10-22'),
       location: 'Tema',
       image: 'assets/images/hack1.jpg',
-      shortDesc: 'Taste cuisines from around the world at one place.'
-    }
+      shortDesc: 'Taste cuisines from around the world at one place.',
+    },
   ];
 
   testimonials: Testimonial[] = [
-    { user: 'Jane Doe', text: 'I found amazing concerts here — so easy to book!' },
-    { user: 'John Smith', text: 'Eventora helps me discover local events I never knew existed.' },
-    { user: 'Mary Johnson', text: 'Great UX and beautiful design. Very intuitive!' },
-    { user: 'John Smith', text: 'Eventora helps me discover local events I never knew existed.' },
+    {
+      user: 'Jane Doe',
+      text: 'I found amazing concerts here — so easy to book!',
+    },
+    {
+      user: 'John Smith',
+      text: 'Eventora helps me discover local events I never knew existed.',
+    },
+    {
+      user: 'Mary Johnson',
+      text: 'Great UX and beautiful design. Very intuitive!',
+    },
+    {
+      user: 'John Smith',
+      text: 'Eventora helps me discover local events I never knew existed.',
+    },
   ];
 
   filters = {
     query: '',
     location: '',
     date: '',
-    category: ''
+    category: '',
   };
 
   ngOnInit(): void {
@@ -98,8 +125,7 @@ export class Home implements OnInit {
 
   startCarousel() {
     setInterval(() => {
-      this.currentIndex =
-        (this.currentIndex + 1) % this.carouselImages.length;
+      this.currentIndex = (this.currentIndex + 1) % this.carouselImages.length;
     }, 5000);
   }
 
