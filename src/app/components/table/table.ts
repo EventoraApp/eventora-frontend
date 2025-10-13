@@ -1,8 +1,12 @@
 import { NgClass } from '@angular/common';
-import { Component, inject, Input } from '@angular/core';
+import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { provideIcons, NgIcon } from '@ng-icons/core';
-import { ionTrash ,ionArrowUpRightBoxOutline,ionCreate} from '@ng-icons/ionicons';
+import {
+  ionTrash,
+  ionArrowUpRightBoxOutline,
+  ionCreate,
+} from '@ng-icons/ionicons';
 
 export interface EventTableColumn {
   header: string;
@@ -12,28 +16,30 @@ export interface EventTableColumn {
 @Component({
   selector: 'app-table',
   standalone: true,
-   imports: [NgClass, NgIcon], 
+  imports: [NgClass, NgIcon],
   templateUrl: './table.html',
   styleUrls: ['./table.scss'],
-    viewProviders: [
-    provideIcons({ ionTrash,ionArrowUpRightBoxOutline,ionCreate}),
+  viewProviders: [
+    provideIcons({ ionTrash, ionArrowUpRightBoxOutline, ionCreate }),
   ],
 })
-export class EventTable{
+export class EventTable {
   @Input() events: any[] = [];
-  router = inject(Router)
+  router = inject(Router);
 
-   onView(event: any) {
-    console.log('View', event);
-    this.router.navigate(['/dashboard/events/', event.name])
+  @Output() view = new EventEmitter<any>();
+  @Output() edit = new EventEmitter<any>();
+  @Output() delete = new EventEmitter<any>();
+
+  onView(event: any) {
+    this.view.emit(event);
   }
-  
+
   onEdit(event: any) {
-    console.log('Edit', event);
-    this.router.navigate(['/dashboard/events/',event.name,'edit'])
+    this.edit.emit(event);
   }
-  
+
   onDelete(event: any) {
-    console.log('Delete', event);
+    this.delete.emit(event);
   }
 }
