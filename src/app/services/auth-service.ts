@@ -1,12 +1,14 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable, tap } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  private baseUrl = 'https://eventora-backend-2.onrender.com/api';
+  apiURL = environment.apiURL
+  private baseUrl = this.apiURL;
 
   private http = inject(HttpClient);
 
