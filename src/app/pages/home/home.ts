@@ -1,5 +1,5 @@
 import { DatePipe } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import {
@@ -10,6 +10,7 @@ import {
   ionLaptopOutline,
   ionSearch,
 } from '@ng-icons/ionicons';
+import { AuthService } from '../../services/auth-service';
 
 interface EventItem {
   id: string;
@@ -41,6 +42,8 @@ interface Testimonial {
   ],
 })
 export class Home implements OnInit {
+  authService = inject(AuthService);
+  user = {};
   carouselImages: string[] = [
     'assets/images/hero1.jpg',
     'assets/images/hero2.jpg',
@@ -57,7 +60,7 @@ export class Home implements OnInit {
     ionBriefcaseSharp: 'Workshops',
   };
   categoryEntries = Object.entries(this.categories);
-  
+
   trendingEvents: EventItem[] = [
     {
       id: '1',
@@ -121,6 +124,7 @@ export class Home implements OnInit {
 
   ngOnInit(): void {
     this.startCarousel();
+   
   }
 
   startCarousel() {

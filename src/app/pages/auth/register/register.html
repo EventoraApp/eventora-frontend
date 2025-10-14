@@ -15,16 +15,23 @@
       </p>
     </div>
 
-    <form class="mt-5 mb-3 gap-4 grid" [formGroup]="registerForm">
+    <form class="mt-5 mb-3 gap-4 grid" [formGroup]="registerForm" novalidate>
       <div class="grid grid-cols-2 gap-2">
         <div class="flex flex-col">
-          <label for="">First Name</label>
+          <label for="">First Name <span class="text-red-400">*</span></label>
           <input
             formControlName="firstName"
             type="text"
             placeholder="First Name"
             class="mt-1 w-full placeholder:text-slate-400 placeholder:text-[14px] placeholder:italic active:ring-1 ring-fuchsia-700"
           />
+          @if(registerForm.get('firstName')?.touched &&
+          registerForm.get('firstName')?.errors?.['required']){
+
+          <p class="text-[13px] text-red-400">
+            Please this field must not be empty
+          </p>
+          }
         </div>
         <div class="flex flex-col">
           <label for="">Last Name</label>
@@ -38,29 +45,80 @@
       </div>
 
       <div class="flex flex-col">
-        <label for="">Email</label>
+        <label for="">Email <span class="text-red-400">*</span></label>
         <input
           formControlName="email"
           type="email"
           placeholder="Email"
+          [ngClass]="{
+            'ring-red-400':
+              registerForm.get('email')?.errors &&
+              registerForm.get('email')?.touched
+          }"
           class="mt-1 w-full placeholder:text-slate-400 placeholder:text-[14px] placeholder:italic active:ring-1 ring-fuchsia-700"
         />
+        @if(registerForm.get('email')?.touched){
+        @if(registerForm.get('email')?.errors?.['required']){
+        <p class="text-[13px] text-red-400">
+          Please this field must not be empty
+        </p>
+        }@else if (registerForm.get('email')?.errors?.['email']) {
+        <p class="text-[13px] text-red-400">Please enter a valid email</p>
+
+        } }
       </div>
 
       <div class="flex flex-col">
-        <label for="">Password</label>
+        <label for="">Password <span class="text-red-400">*</span></label>
         <input
           formControlName="password"
           type="password"
           placeholder="Password"
           class="mt-1 w-full placeholder:text-slate-400 placeholder:text-[14px] placeholder:italic active:ring-1 ring-fuchsia-700"
         />
+        @if(registerForm.get('password')?.invalid &&
+        (registerForm.get('password')?.dirty ||
+        registerForm.get('password')?.touched)){
+        @if(registerForm.get('password')?.errors?.['required']){
+        <p class="text-[13px] text-red-400">Password is required</p>
+        }@else if (registerForm.get('password')?.errors?.['minlength']) {
+        <p class="text-[13px] text-red-400">
+          Password must not be less than 8 charaters
+        </p>
+        }@else if (registerForm.get('password')?.errors?.['pattern']) {
+        <p class="text-[13px] text-red-400">
+          Password must include uppercase, lowercase, number, and special
+          character.
+        </p>
+        } }
+      </div>
+      <div class="flex flex-col">
+        <label for=""
+          >Confirm Password <span class="text-red-400">*</span></label
+        >
+        <input
+          formControlName="password_confirm"
+          type="password"
+          placeholder="Confirm Password"
+          class="mt-1 w-full placeholder:text-slate-400 placeholder:text-[14px] placeholder:italic active:ring-1 ring-fuchsia-700"
+        />
+        @if(registerForm.get('password_confirm')?.touched){
+        @if(registerForm.get('password_confirm')?.errors?.['required']){
+        <p class="text-[13px] text-red-400">
+          Please this field must not be empty
+        </p>
+        }@else if (registerForm.value.password_confirm !==
+        registerForm.value.password) {
+        <p class="text-[13px] text-red-400">Password must match.</p>
+
+        } }
       </div>
 
       <button
+        (click)="handleRegister()"
         class="cursor-pointer font-normal bg-fuchsia-900 hover:bg-violet-800 px-4 py-2 shadow-lg transition-all duration-200 w-full"
       >
-        Register
+        @if(loading){ Loading... }@else{ Register }
       </button>
     </form>
 

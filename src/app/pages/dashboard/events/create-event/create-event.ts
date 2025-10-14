@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   FormControl,
   FormGroup,
   FormsModule,
   ReactiveFormsModule,
+  Validators,
 } from '@angular/forms';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import {
@@ -13,6 +14,7 @@ import {
   ionCloudUpload,
 } from '@ng-icons/ionicons';
 import { RouterLink } from '@angular/router';
+import { Events } from '../../../../services/events';
 
 @Component({
   selector: 'app-create-event',
@@ -29,8 +31,9 @@ export class CreateEvent implements OnInit {
   isPaid: boolean = false;
   isFree: boolean = false;
   isDonation: boolean = false;
+  eventService = inject(Events);
+  loading = false;
 
-  
   ticketForm = new FormGroup({
     type: new FormControl('Paid'),
     name: new FormControl(''),
@@ -48,35 +51,42 @@ export class CreateEvent implements OnInit {
     location: new FormControl(''),
     event_date: new FormControl(''),
     event_time: new FormControl(''),
+    price: new FormControl(this.ticketForm.value.price, [Validators.required]),
     capacity: new FormControl(this.ticketForm.value.quantity),
     category: new FormControl(''),
     image: new FormControl(''),
     is_published: new FormControl(false),
   });
+  router: any;
 
-  
   handleType(type: string) {
     this.ticketForm.value.type = type;
     this.isPaid = this.ticketForm.value.type === 'Paid';
     this.isFree = this.ticketForm.value.type === 'Free';
     this.isDonation = this.ticketForm.value.type === 'Donation';
 
-    console.log("Donation",this.isDonation,"Free", this.isFree,"Paid", this.isPaid)
+    console.log(
+      'Donation',
+      this.isDonation,
+      'Free',
+      this.isFree,
+      'Paid',
+      this.isPaid
+    );
   }
 
-constructor() {
-  this.ticketForm.get('type')?.valueChanges.subscribe(type => {
-  const priceControl = this.ticketForm.get('price');
+  constructor() {
+    this.ticketForm.get('type')?.valueChanges.subscribe((type) => {
+      const priceControl = this.ticketForm.get('price');
 
-  if (type === 'Free' || type === 'Donation') {
-    priceControl?.disable();
-    priceControl?.setValue('');
-  } else {
-    priceControl?.enable();
+      if (type === 'Free' || type === 'Donation') {
+        priceControl?.disable();
+        priceControl?.setValue('');
+      } else {
+        priceControl?.enable();
+      }
+    });
   }
-});
-
-}
 
   openDrawer() {
     this.isDrawerOpen = true;
@@ -97,7 +107,39 @@ constructor() {
   }
 
   onSubmit() {
-    console.log('Event Data:', this.createEventForm.value);
+    if (this.createEventForm.invalid) {
+      this.createEventForm.markAllAsTouched();
+      return;
+    }
+
+    this.loading = true;
+    const formData = this.createEventForm.value;
+
+    const payload = {
+      title: formData.title,
+      description: formData.description,
+      location: formData.location,
+      event_date: formData.event_date,
+      event_time: formData.event_time,
+      price: formData.price,
+      capacity: formData.capacity,
+      category: formData.category,
+      is_published: formData.is_published,
+    };
+
+    this.eventService.createEvent(payload).subscribe({
+      next: (res: any) => {
+        console.log('Event created successfully:', res);
+        this.loading = false;
+        alert('Event created successfully!');
+        this.router.navigate(['/dashboard/events']); 
+      },
+      error: (err) => {
+        console.error('Error creating event:', err);
+        this.loading = false;
+        alert('Failed to create event.');
+      },
+    });
   }
 
   removeImage() {

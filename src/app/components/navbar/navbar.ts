@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Component, inject, OnInit } from '@angular/core';
+import { Router, RouterLink } from '@angular/router';
 import { provideIcons, NgIcon } from '@ng-icons/core';
-import { ionSearch, ionMenu, ionClose } from '@ng-icons/ionicons';
+import { ionSearch, ionMenu, ionClose, ionLogOutOutline } from '@ng-icons/ionicons';
 import { SideNavbar } from "../side-navbar/side-navbar";
+import { AuthService } from '../../services/auth-service';
 
 @Component({
   selector: 'app-navbar',
@@ -10,11 +11,20 @@ import { SideNavbar } from "../side-navbar/side-navbar";
   templateUrl: './navbar.html',
   styleUrl: './navbar.scss',
     viewProviders: [
-    provideIcons({ ionSearch,ionMenu,ionClose }),
+    provideIcons({ ionSearch,ionMenu,ionClose,ionLogOutOutline }),
   ],
 })
-export class Navbar {
+export class Navbar implements OnInit {
   isSideNavActive = false
+  authService = inject(AuthService)
+  router = inject(Router)
+  user = {
+   username: '',
+   email: '',
+   role: '',
+   first_name: '',
+   last_name: '',
+  };
 
   onSideBarClose(){
     this.isSideNavActive = false
@@ -24,5 +34,24 @@ export class Navbar {
     this.isSideNavActive = true
 
   }
+  ngOnInit(): void {
+       this.authService.getCurrentUser().subscribe({
+      next: (res) => {
+        this.user = res;
+      },
+      error: (err) => {
+        console.log(err, 'An error occurred')
+        // alert('Couldnt get current user for some reasons')
+      },
+    });
 
+    
+  }
+
+
+
+  handleLogOut() {
+    this.authService.logout()
+    this.router.navigate(['/login'])
+  }
 }
