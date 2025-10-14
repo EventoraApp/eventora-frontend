@@ -1,0 +1,80 @@
+<div class="overflow-x-auto rounded-md shadow-sm">
+  <table class="min-w-full text-sm text-left">
+    <thead class="bg-slate-100 text-black">
+      <tr>
+        <th class="px-6 py-3 font-semibold">Event</th>
+        <th class="px-6 py-3 font-semibold">Date</th>
+        <th class="px-6 py-3 font-semibold">Status</th>
+        <th class="px-6 py-3 font-semibold text-right">Actions</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      @if (events.length > 0) { @for (event of events; track $index) {
+      <tr class="hover:bg-slate-50 transition cursor-pointer">
+        <!-- Event Column -->
+        <td class="px-6 py-4 flex items-center gap-4" (click)="onView(event)">
+          <img
+            [src]="event.image"
+            alt="{{ event.name }}"
+            class="w-20 h-12 object-cover rounded-md border border-gray-200"
+          />
+          <div>
+            <a
+              target="_blank"
+              class="text-violet-600 dark:text-violet-400 font-semibold hover:underline"
+            >
+              {{ event.name }}
+            </a>
+            <p class="text-gray-500 text-xs">{{ event.location }}</p>
+          </div>
+        </td>
+
+        <!-- Date -->
+        <td class="px-6 py-4" (click)="onView(event)">
+          <p class="text-gray-500">{{ event.date }}</p>
+          <p class="text-xs text-gray-500">{{ event.time }}</p>
+        </td>
+
+        <!-- Status -->
+        <td class="px-6 py-4" (click)="onView(event)">
+          <div
+            class="px-3 py-1 rounded-full text-xs font-medium w-fit"
+            [ngClass]="{
+              'bg-green-100 text-green-700': event.status === 'Published',
+              'bg-yellow-100 text-yellow-700': event.status === 'Draft',
+              'bg-red-100 text-red-700': event.status === 'Cancelled'
+            }"
+          >
+            {{ event.status }}
+          </div>
+        </td>
+
+        <!-- Actions -->
+        <td class="px-6 py-4 text-right">
+          <button
+            title="Edit"
+            class="p-0 mr-2 w-fit rounded-full bg-transparent text-gray-400 cursor-pointer hover:text-black"
+            (click)="onEdit(event)"
+          >
+            <ng-icon name="ionCreate" style="width: 18px; height: 18px" />
+          </button>
+          <button
+            title="Delete"
+            class="p-0 w-fit rounded-full bg-transparent text-red-400 cursor-pointer hover:text-black"
+            (click)="onDelete(event)"
+          >
+            <ng-icon name="ionTrash" style="width: 18px; height: 18px" />
+          </button>
+        </td>
+      </tr>
+      } } @else {
+      <tr>
+        <td colspan="4" class="px-6 py-4 text-center text-gray-400">
+          No events found
+        </td>
+      </tr>
+      }
+    </tbody>
+  </table>
+</div>

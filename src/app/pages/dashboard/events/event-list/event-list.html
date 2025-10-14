@@ -1,0 +1,33 @@
+<section class="p-6 space-y-6">
+  <div class="flex justify-between items-center mb-6">
+    <h1 class="text-5xl font-extrabold text-gray-900">Events</h1>
+  </div>
+  <div class="flex items-center justify-between">
+    <div class="relative">
+      <button
+        class="cursor-pointer h-full absolute text-gray-700 bg-transparent flex items-center justify-center"
+      >
+        <ng-icon name="ionSearch" />
+      </button>
+      <input
+        type="search"
+        placeholder="Search events"
+        name=""
+        id=""
+        class="pl-10 py-3 rounded-none placeholder:text-slate-400 placeholder:text-[14px] placeholder:italic active:ring-[0.5px] ring-fuchsia-700"
+      />
+    </div>
+    <button
+      routerLink="/dashboard/events/create"
+      class="rounded-none cursor-pointer bg-fuchsia-900 text-[14px] py-3"
+    >
+      Create Event
+    </button>
+  </div>
+  <app-table
+    [events]="events"
+    (view)="onView($event)"
+    (edit)="onEdit($event)"
+    (delete)="onDelete($event)"
+  />
+</section>

@@ -1,1 +1,182 @@
-/* You can add global styles to this file, and also import other style files */
+@use "tailwindcss";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* --------------- FONT & BASE SETTINGS --------------- */
+@layer base {
+  :root,
+  .root {
+    /* Core Theme Colors */
+    --color-primary: 99 102 241; /* Violet-500 */
+    --color-primary-hover: 124 58 237; /* Violet-600 */
+    --color-primary-light: 167 139 250; /* Violet-400 */
+
+    --color-bg: 255 255 255;
+    --color-bg-secondary: 249 250 251;
+    --color-text: 17 24 39;
+    --color-text-secondary: 75 85 99;
+    --color-border: 229 231 235;
+    --color-card: 255 255 255;
+
+    /* Font */
+    --font-sans: "Inter", "Poppins", "Segoe UI", sans-serif;
+
+    /* Shadows & Transitions */
+    --shadow-card: 0 4px 8px rgba(0, 0, 0, 0.05);
+    --transition-fast: 0.25s ease;
+    --radius-lg: 1rem;
+  }
+
+  .dark {
+    --color-primary: 139 92 246; /* Violet-500 in dark mode */
+    --color-primary-hover: 167 139 250; /* Violet-400 */
+    --color-primary-light: 196 181 253; /* Violet-300 */
+
+    --color-bg: 17 24 39;
+    --color-bg-secondary: 31 41 55;
+    --color-text: 243 244 246;
+    --color-text-secondary: 156 163 175;
+    --color-border: 55 65 81;
+    --color-card: 31 41 55;
+
+    --shadow-card: 0 4px 12px rgba(0, 0, 0, 0.3);
+  }
+
+  body {
+    @apply bg-[rgb(var(--color-bg))] text-[rgb(var(--color-text))] font-sans antialiased transition-colors duration-300;
+    font-family: var(--font-sans);
+  }
+
+  a {
+    @apply text-[rgb(var(--color-primary))] hover:text-[rgb(var(--color-primary-hover))] transition-colors;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-semibold text-[rgb(var(--color-text))];
+  }
+
+  input,
+  textarea,
+  select {
+    @apply bg-[rgb(var(--color-bg-secondary))] border border-[rgb(var(--color-border))] text-[rgb(var(--color-text))] rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[rgb(var(--color-primary))];
+  }
+
+  button {
+    @apply font-medium rounded-md px-4 py-2 transition-colors duration-200;
+    background-color: rgb(var(--color-primary));
+    color: white;
+  }
+
+  button:hover {
+    background-color: rgb(var(--color-primary-hover));
+  }
+
+  .card {
+    @apply rounded-2xl shadow-sm p-5;
+    background-color: rgb(var(--color-card));
+    box-shadow: var(--shadow-card);
+    transition: background-color var(--transition-fast),
+      box-shadow var(--transition-fast);
+  }
+
+  .divider {
+    @apply border-t border-[rgb(var(--color-border))] my-4;
+  }
+
+  .text-muted {
+    color: rgb(var(--color-text-secondary));
+  }
+}
+
+/* --------------- COMPONENT STYLES --------------- */
+@layer components {
+  .btn-primary {
+    @apply bg-[rgb(var(--color-primary))] text-white px-4 py-2 rounded-lg font-medium shadow hover:bg-[rgb(var(--color-primary-hover))] transition-colors;
+  }
+
+  .btn-outline {
+    @apply border border-[rgb(var(--color-primary))] text-[rgb(var(--color-primary))] px-4 py-2 rounded-lg hover:bg-[rgb(var(--color-primary))] hover:text-white transition-colors;
+  }
+
+  .input-field {
+    @apply w-full px-3 py-2 border border-[rgb(var(--color-border))] rounded-md bg-[rgb(var(--color-bg-secondary))] text-[rgb(var(--color-text))] focus:ring-2 focus:ring-[rgb(var(--color-primary))];
+  }
+
+  .badge {
+    @apply inline-block text-xs font-semibold px-2 py-1 rounded-full bg-[rgb(var(--color-primary-light))] text-[rgb(var(--color-bg))];
+  }
+
+  .card-hover {
+    @apply hover:shadow-lg hover:-translate-y-1 transition-transform duration-200;
+  }
+
+  .section-title {
+    @apply text-2xl font-semibold mb-4 text-[rgb(var(--color-text))];
+  }
+
+  .nav-link {
+    @apply px-3 py-2 rounded-md text-[rgb(var(--color-text-secondary))] hover:text-[rgb(var(--color-primary))] transition-colors;
+  }
+
+  .active-link {
+    @apply text-[rgb(var(--color-primary))] font-semibold;
+  }
+
+  .toast {
+    @apply fixed bottom-5 right-5 bg-[rgb(var(--color-card))] text-[rgb(var(--color-text))] shadow-lg px-4 py-3 rounded-lg border border-[rgb(var(--color-border))];
+  }
+
+  .dark .toast {
+    @apply border-none;
+  }
+}
+
+/* --------------- UTILITIES OVERRIDES --------------- */
+@layer utilities {
+  .bg-primary {
+    background-color: rgb(var(--color-primary));
+  }
+
+  .text-primary {
+    color: rgb(var(--color-primary));
+  }
+
+  .border-primary {
+    border-color: rgb(var(--color-primary));
+  }
+
+  .transition-theme {
+    transition: background-color var(--transition-fast),
+      color var(--transition-fast), border-color var(--transition-fast);
+  }
+
+  .bg-gradient-eventora {
+    @apply bg-gradient-to-r from-violet-900  to-fuchsia-800 text-white;
+  }
+
+  .bg-gradient-eventora-hover {
+    @apply bg-gradient-to-r from-violet-900  to-fuchsia-800;
+  }
+
+  .bg-gradient-eventora-soft {
+    @apply bg-gradient-to-br from-violet-100 to-fuchsia-100 text-[rgb(var(--color-text))];
+  }
+
+  .border-gradient-eventora {
+    border-image: linear-gradient(to right, #7c3aed, #a855f7) 1;
+  }
+
+  .glow-eventora {
+    box-shadow: 0 0 20px rgba(124, 58, 237, 0.5),
+      0 0 40px rgba(91, 33, 182, 0.4);
+  }
+}
+
+

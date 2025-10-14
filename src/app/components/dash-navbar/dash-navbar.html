@@ -1,0 +1,52 @@
+<header
+  class="z-100 pr-6 py-3 h-16 -ml-2 bg-white border-b border-slate-200 flex items-center justify-between fixed top-0 right-0 left-0"
+>
+  <div class="">
+    <img
+      routerLink="/home"
+      src="assets/images/Purple Gradient Letter E Logo.svg"
+      class="w-20 h-20 -my-5 cursor-pointer"
+      alt="Logo"
+    />
+  </div>
+  <div class="grid grid-cols-2 items-center space-x-4">
+    <button
+      routerLink="/dashboard/events/create"
+      class="px-4 py-2 border-1 border-fuchsia-500 text-black bg-transparent hover:bg-fuchsia-200 transition-all cursor-pointer rounded-4xl"
+    >
+      + Create
+    </button>
+    <div class="relative">
+      <button
+        (click)="toggleMenu()"
+        class="cursor-pointer transition-all flex items-center space-x-2 bg-slate-100 text-black hover:border-slate-300 hover:border-1 border-1 border-transparent rounded-4xl"
+      >
+        <span>{{ username }}</span>
+        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+          <path
+            d="M5.23 7.21l4.77 4.77 4.77-4.77-1.06-1.06L10 9.86 6.29 6.15z"
+          />
+        </svg>
+      </button>
+      <div
+        [ngClass]="{ 'opacity-100 h-25': showMenu}"
+        class="flex items-center justify-center flex-col w-full opacity-0 rounded-lg p-2 h-0 transition-all absolute overflow-hidden shadow-lg bg-gray-100 border border-gray-200"
+      >
+        <button routerLink="/find-event" class="hover:underline bg-transparent text-gray-600 hover:text-gray-800 cursor-pointer text-[13px] flex items-center justify-center">
+          Find Events
+        </button>
+        <button
+          class="bg-transparent flex items-center justify-center "
+          (click)="handleLogOut()"
+        >
+          <ng-icon
+            title="Logout"
+            name="ionLogOutOutline"
+            style="cursor: pointer; color: rgb(224, 57, 57); width: 20px"
+          />
+          <p class="text-[14px] text-red-400 cursor-pointer hover:underline">Logout</p>
+        </button>
+      </div>
+    </div>
+  </div>
+</header>

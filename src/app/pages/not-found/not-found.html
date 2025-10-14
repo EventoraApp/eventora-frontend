@@ -1,0 +1,33 @@
+<div class="flex flex-col items-center justify-center min-h-screen text-center bg-white px-4">
+  <!-- Warning icon -->
+  <div class="w-12 h-12 flex items-center justify-center border-2 border-fuchsia-400 rounded-full mb-6">
+    <span class="text-fuchsia-400 text-2xl">!</span>
+  </div>
+
+  <!-- Main text -->
+  <h1 class="text-3xl md:text-5xl font-extrabold text-gray-800 mb-3">
+    Whoops, the page or event you are<br class="hidden md:block" />
+    looking for was not found.
+  </h1>
+
+  <p class="text-gray-500 dark:text-gray-400 mb-8">
+    If you feel this message is in error, please
+    <a href="#" class="text-blue-600 hover:underline">let us know.</a>
+  </p>
+
+  <!-- Buttons -->
+  <div class="flex flex-wrap justify-center gap-3">
+    <a
+      routerLink="/dashboard/events/create"
+      class="bg-fuchsia-900 hover:bg-violet-700 cursor-pointer text-white px-5 py-2.5 rounded-md font-semibold shadow-sm transition"
+    >
+      Create An Event
+    </a>
+    <a
+      routerLink="/events"
+      class="border border-gray-300  text-gray-700 cursor-pointer hover:bg-gray-800 hover:text-white px-5 py-2.5 rounded-md font-semibold transition"
+    >
+      Find An Event
+    </a>
+  </div>
+</div>

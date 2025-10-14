@@ -1,0 +1,90 @@
+<nav
+  class="border-b-1 border-slate-100 flex items-center justify-between w-full pr-5 fixed h-18 backdrop-blur-xl z-20"
+>
+  <div class="">
+    <img
+      routerLink="/home"
+      src="assets/images/Purple Gradient Letter E Logo.svg"
+      class="w-25 h-25 -my-5 cursor-pointer"
+      alt="Logo"
+    />
+  </div>
+
+  <ul class="lg:flex items-center justify-center gap-4 hidden">
+    <li
+      class="cursor-pointer rounded-3xl transition-all hover:bg-slate-100 px-4 py-2"
+    >
+      Find Events
+    </li>
+    <li
+      routerLink="/dashboard/events/create"
+      class="cursor-pointer rounded-3xl transition-all hover:bg-slate-100 px-4 py-2"
+    >
+      Create Events
+    </li>
+    <li
+      class="cursor-pointer rounded-3xl transition-all hover:bg-slate-100 px-4 py-2"
+    >
+      Find my Tickets
+    </li>
+  </ul>
+
+  @if(!user.username){
+  <div class="lg:flex items-center justify-center gap-4 hidden">
+    <button
+      routerLink="/login"
+      class="bg-transparent cursor-pointer text-black transition-all hover:bg-slate-100 rounded-3xl"
+    >
+      Log In
+    </button>
+    <button
+      routerLink="/register"
+      class="cursor-pointer font-normal bg-fuchsia-900 hover:bg-violet-800 w-fit py-2 shadow-lg transition-all duration-200 rounded-3xl"
+    >
+      Register
+    </button>
+  </div>
+  }@else {
+  <div class="lg:flex items-center justify-center hidden">
+    <!-- <div class="rounded-full w-30 h-30 bg-gray-500 m-2"></div> -->
+    <button
+    routerLink="/dashboard/home"
+      class="text-[15px] text-gray-600 bg-transparent border border-gray-600 rounded-full cursor-pointer hover:bg-gray-200 mx-2"
+    >
+      <p>
+        {{ user.username }}
+      </p>
+    </button>
+
+    <!-- <p  class="text-[15px] text-red-400 cursor-pointer ">Logout</p> -->
+    <ng-icon
+      (click)="handleLogOut()"
+      title="Logout"
+      name="ionLogOutOutline"
+      style="cursor: pointer; color: rgb(224, 57, 57); width: 25px;"
+    />
+  </div>
+  }
+  <div class="lg:hidden flex w-10 h-10">
+    @if(isSideNavActive){ <app-side-navbar> </app-side-navbar>
+    <div class="text-4xl z-400">
+      <ng-icon
+        (click)="onSideBarClose()"
+        name="ionClose"
+        style="
+          cursor: pointer;
+          width: 30px;
+          height: 30px;
+          color: rgb(97, 5, 89);
+        "
+      />
+    </div>
+    }
+
+    <ng-icon
+      name="ionMenu"
+      style="cursor: pointer; color: rgb(97, 5, 89)"
+      (click)="onSideBarOpen()"
+    />
+  </div>
+</nav>
