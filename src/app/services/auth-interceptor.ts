@@ -1,14 +1,46 @@
-import { HttpInterceptorFn } from '@angular/common/http';
+import { HttpInterceptorFn, HttpErrorResponse, HttpRequest, HttpHandlerFn } from '@angular/common/http';
+import { inject } from '@angular/core';
+import { AuthService } from './auth-service'; // adjust the path to match your app
+import { catchError, switchMap, throwError } from 'rxjs';
 
-export const authInterceptor: HttpInterceptorFn = (req, next) => {
+export const authInterceptor: HttpInterceptorFn = (req: HttpRequest<any>, next: HttpHandlerFn) => {
+  const authService = inject(AuthService);
   const token = localStorage.getItem('access_token');
-  if (token) {
-    const cloned = req.clone({
-      setHeaders: {
-        Authorization: `Bearer ${token}`
+
+  // Clone request and attach access token if available
+  const authReq = token
+    ? req.clone({
+        setHeaders: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+    : req;
+
+  return next(authReq).pipe(
+    catchError((error: HttpErrorResponse) => {
+    
+      if (error.status === 401 && !req.url.includes('/api/users/login/') && !req.url.includes('/api/users/register/')) {
+      
+        return authService.refreshAccessToken().pipe(
+          switchMap((newToken: string) => {
+          
+            localStorage.setItem('access_token', newToken);
+
+        
+            const newReq = req.clone({
+              setHeaders: { Authorization: `Bearer ${newToken}` },
+            });
+
+            return next(newReq);
+          }),
+          catchError((refreshError) => {
+            authService.logout();
+            return throwError(() => refreshError);
+          })
+        );
       }
-    });
-    return next(cloned);
-  }
-  return next(req);
+
+      return throwError(() => error);
+    })
+  );
 };

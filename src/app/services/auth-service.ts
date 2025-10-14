@@ -7,7 +7,7 @@ import { environment } from '../../environments/environment';
   providedIn: 'root',
 })
 export class AuthService {
-  apiURL = environment.apiURL
+  apiURL = environment.apiURL;
   private baseUrl = this.apiURL;
 
   private http = inject(HttpClient);
@@ -32,6 +32,15 @@ export class AuthService {
     );
   }
 
+  refreshAccessToken() {
+    const refresh = localStorage.getItem('refresh_token');
+   return this.http.post(`${this.baseUrl}/token/refresh/`, refresh).pipe(
+      tap((res: any) => {
+        localStorage.setItem('access_token', res.access);
+      })
+    );
+  }
+
   logout(): void {
     localStorage.removeItem('access_token');
     localStorage.removeItem('refresh_token');
@@ -48,7 +57,7 @@ export class AuthService {
   }
 
   getCurrentUser(): Observable<any> {
-    return this.http.get(`${this.baseUrl}/users/me/`)
+    return this.http.get(`${this.baseUrl}/users/me/`);
     // .pipe(
     //   tap((res) => {
     //     localStorage.setItem('user', JSON.stringify(res));

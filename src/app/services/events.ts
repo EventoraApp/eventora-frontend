@@ -2,13 +2,14 @@ import { inject, Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { EventRecord } from '../models/event.model';
 import { HttpClient } from '@angular/common/http';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class Events {
    private http = inject(HttpClient);
-  private baseUrl = 'https://eventora-backend.onrender.com/api';
+  private baseUrl = environment.apiURL;
 
 
   getAllEvents(): Observable<any> {

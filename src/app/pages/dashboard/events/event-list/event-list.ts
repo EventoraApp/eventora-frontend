@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { EventTable } from '../../../../components/table/table';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import { ionSearch } from '@ng-icons/ionicons';
@@ -12,7 +12,7 @@ import { Events } from '../../../../services/events';
   styleUrl: './event-list.scss',
   viewProviders: [provideIcons({ ionSearch })],
 })
-export class EventList {
+export class EventList implements OnInit {
   router = inject(Router);
   private eventService = inject(Events);
   events: any[] = [];
@@ -21,7 +21,7 @@ export class EventList {
   ngOnInit(): void {
     this.loadEvents();
   }
-
+  
   loadEvents() {
     this.eventService.getAllEvents().subscribe({
       next: (res) => {
@@ -35,7 +35,8 @@ export class EventList {
           id: event.id,
           slug: event.slug,
         }));
-
+        
+        console.log(this.events)
         this.loading = false;
       },
       error: (err) => {

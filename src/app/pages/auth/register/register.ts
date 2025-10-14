@@ -65,7 +65,7 @@ export class Register {
       password_confirm: password_confirm,
       role: role,
     };
-console.log(registerData)
+
     this.authService.registerUser(registerData).subscribe({
       next: (res) => {
         console.log('Registration successful:', res);
@@ -74,8 +74,8 @@ console.log(registerData)
         this.loading = false
       },
       error: (err) => {
-        console.error('Registration failed:', err);
-        alert('Registration failed. Please try again.');
+        console.error('Registration failed:', JSON.stringify(err.error));
+        alert(`${JSON.stringify(err.error.username[0])}`);
         this.loading = false
       },
     });

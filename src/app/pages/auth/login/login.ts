@@ -35,7 +35,7 @@ export class Login {
     const { email, password } = this.loginForm.value;
 
     this.authService
-      .loginUser({ username: 'infynnity', password: password! })
+      .loginUser({ username: 'Beans', password: password! })
       .subscribe({
         next: (res) => {
           console.log('Login successful:', res);

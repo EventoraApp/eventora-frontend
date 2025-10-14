@@ -51,7 +51,7 @@ export class CreateEvent implements OnInit {
     location: new FormControl(''),
     event_date: new FormControl(''),
     event_time: new FormControl(''),
-    price: new FormControl(this.ticketForm.value.price, [Validators.required]),
+    price: new FormControl("100", [Validators.required]),
     capacity: new FormControl(this.ticketForm.value.quantity),
     category: new FormControl(''),
     image: new FormControl(''),
@@ -109,14 +109,17 @@ export class CreateEvent implements OnInit {
   onSubmit() {
     if (this.createEventForm.invalid) {
       this.createEventForm.markAllAsTouched();
+      console.log("Errors in form",this.createEventForm.value)
       return;
     }
-
+    
+    console.log("Errors in form 3",this.createEventForm.value)
     this.loading = true;
     const formData = this.createEventForm.value;
 
     const payload = {
       title: formData.title,
+      image: formData.image,
       description: formData.description,
       location: formData.location,
       event_date: formData.event_date,

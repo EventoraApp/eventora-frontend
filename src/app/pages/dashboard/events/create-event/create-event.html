@@ -3,7 +3,7 @@
   <aside class="w-64 bg-white border-r border-gray-200 p-6 space-y-6 fixed">
     <a
       routerLink="/dashboard/events"
-      class="cursor-pointer text-violet-600 font-semibold flex items-center gap-2"
+      class="cursor-pointer text-violet-600 font-medium flex items-center gap-2"
     >
       <ng-icon name="ionChevronBack" style="width: 22px; height: 22px" />
       Back to events
@@ -19,11 +19,11 @@
         {{ createEventForm.value.event_time || "10:00 AM" }}
       </p>
       <div class="mt-3">
-        <button class="border border-gray-300 rounded-md text-sm px-3 py-1">
+        <button class="text-gray-700 cursor-pointer border border-gray-300 bg-transparent rounded-md text-sm px-3 py-1">
           Draft
         </button>
-        <a href="#" class="ml-3 text-sm text-blue-600 hover:underline"
-          >Preview</a
+        <a href="#" class="ml-3 text-sm text-violet-600 hover:underline"
+          >Publish</a
         >
       </div>
     </div>
@@ -74,7 +74,6 @@
       <h2 class="text-2xl font-bold text-gray-800 mb-6">Event Overview</h2>
 
       <form
-        (ngSubmit)="onSubmit()"
         class="space-y-6"
         [formGroup]="createEventForm"
       >
@@ -180,10 +179,11 @@
         <!-- Save Button -->
         <div class="flex justify-end">
           <button
-            type="submit"
-            class="bg-fuchsia-900 hover:bg-violet-800 cursor-pointer text-white px-6 py-2 rounded-md font-semibold shadow-sm transition"
+          (click)="onSubmit()"
+            type="button"
+            class="bg-violet-800 hover:bg-violet-800 cursor-pointer text-white px-6 py-2 rounded-md font-semibold shadow-sm transition"
           >
-            Save
+           @if(loading){Loading...}@else{Save}
           </button>
         </div>
       </form>
