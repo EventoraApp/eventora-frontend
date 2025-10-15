@@ -19,7 +19,7 @@ export class AuthService {
   }
 
   loginUser(credentials: {
-    username: string;
+    email: string;
     password: string;
   }): Observable<any> {
     return this.http.post(`${this.baseUrl}/users/login/`, credentials).pipe(
