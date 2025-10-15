@@ -22,7 +22,7 @@ export class EventList implements OnInit {
   ngOnInit(): void {
     this.loadEvents();
   }
-  
+
   loadEvents() {
     this.eventService.getMyEvents().subscribe({
       next: (res) => {
@@ -36,8 +36,8 @@ export class EventList implements OnInit {
           id: event.id,
           slug: event.slug,
         }));
-        
-        console.log(this.events)
+
+        console.log(this.events);
         this.loading = false;
       },
       error: (err) => {
@@ -47,23 +47,29 @@ export class EventList implements OnInit {
     });
   }
 
-   onView(event: any) {
+  onView(event: any) {
     console.log('View event:', event);
     this.router.navigate(['/dashboard/events/', event.id]);
   }
-
+  
   onEdit(event: any) {
     console.log('Edit event:', event);
+    this.router.navigate(['/dashboard/events/', event.id]);
   }
 
   onDelete(event: any) {
     if (confirm(`Are you sure you want to delete ${event.name}?`)) {
       this.eventService.deleteEvent(event.id).subscribe({
         next: () => {
-          this.events = this.events.filter(e => e.id !== event.id);
+          this.events = this.events.filter((e) => e.id !== event.id);
+          toast.success('Event Deleted successfully!');
         },
-        error: (err) => console.error('Delete failed', err),
+        error: (err) => {
+          console.error('Delete failed', err);
+          toast.error(' Delete failed!');
+        },
       });
     }
   }
+
 }

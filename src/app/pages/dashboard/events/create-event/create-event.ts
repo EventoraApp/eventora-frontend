@@ -12,7 +12,7 @@ import {
   ionTrashOutline,
   ionCloudUpload,
 } from '@ng-icons/ionicons';
-import { Router, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Events } from '../../../../services/events';
 import { toast } from 'ngx-sonner';
 
@@ -34,7 +34,10 @@ export class CreateEvent implements OnInit {
   eventService = inject(Events);
   loading = false;
   selectedFile = '';
-  router = inject(Router)
+  router = inject(Router);
+  isEditMode = false;
+  eventId: string | null = null;
+  event: any = null;
 
   ticketForm = new FormGroup({
     type: new FormControl('Paid'),
@@ -76,7 +79,7 @@ export class CreateEvent implements OnInit {
     );
   }
 
-  constructor() {
+  constructor(private route: ActivatedRoute) {
     this.ticketForm.get('type')?.valueChanges.subscribe((type) => {
       const priceControl = this.ticketForm.get('price');
 
@@ -100,7 +103,7 @@ export class CreateEvent implements OnInit {
   onImageSelect(event: any) {
     const file = event.target.files[0];
     if (file) {
-        this.selectedFile = file;
+      this.selectedFile = file;
       const reader = new FileReader();
       reader.onload = () =>
         this.createEventForm.patchValue({ image: reader.result as string });
@@ -114,6 +117,7 @@ export class CreateEvent implements OnInit {
       price: this.ticketForm.value.price,
     });
     if (this.createEventForm.invalid) {
+      toast.error("Leave nothing blank here")
       this.createEventForm.markAllAsTouched();
       return;
     }
@@ -136,19 +140,35 @@ export class CreateEvent implements OnInit {
       formData.append('image', this.selectedFile);
     }
 
-    this.eventService.createEvent(formData).subscribe({
-      next: (res: any) => {
-        console.log('Event created successfully:', res);
-        this.loading = false;
-        toast.success('Event created successfully!');
-        this.router.navigate(['/dashboard/events']);
-      },
-      error: (err) => {
-        this.loading = false;
-        toast.error('Failed to create event.', err.error);
-        console.log(err.error);
-      },
-    });
+    if (this.isEditMode) {
+      this.eventService.editEvent( this.eventId!,formData).subscribe({
+        next: (res: any) => {
+          console.log('Event edited successfully:', res);
+          this.loading = false;
+          toast.success('Event edited successfully!');
+          this.router.navigate(['/dashboard/events']);
+        },
+        error: (err) => {
+          this.loading = false;
+          toast.error('Failed to edited event.', err.error);
+          console.log(err.error);
+        },
+      });
+    } else {
+      this.eventService.createEvent(formData).subscribe({
+        next: (res: any) => {
+          console.log('Event created successfully:', res);
+          this.loading = false;
+          toast.success('Event created successfully!');
+          this.router.navigate(['/dashboard/events']);
+        },
+        error: (err) => {
+          this.loading = false;
+          toast.error('Failed to create event.', err.error);
+          console.log(err.error);
+        },
+      });
+    }
   }
 
   removeImage() {
@@ -157,5 +177,25 @@ export class CreateEvent implements OnInit {
 
   ngOnInit(): void {
     this.isDrawerOpen = false;
+    this.eventId = this.route.snapshot.paramMap.get('id');
+    if (this.eventId) {
+      this.isEditMode = true;
+      this.loadEvent(this.eventId);
+    }
+  }
+
+  loadEvent(id: string) {
+    this.eventService.getEventById(id).subscribe((eventData) => {
+      this.createEventForm.patchValue({
+        title: eventData.title,
+        // description: eventData.description,
+        location: eventData.location,
+        event_date: eventData.event_date,
+        event_time: eventData.event_time,
+        capacity: eventData.capacity,
+        image: eventData.image,
+        price: eventData.price,
+      });
+    });
   }
 }

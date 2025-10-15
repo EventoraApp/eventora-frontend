@@ -8,6 +8,7 @@ import { inject } from '@angular/core';
 import { AuthService } from './auth-service'; // adjust the path to match your app
 import { catchError, switchMap, throwError } from 'rxjs';
 import { toast } from 'ngx-sonner';
+import { Router } from '@angular/router';
 
 export const authInterceptor: HttpInterceptorFn = (
   req: HttpRequest<any>,
@@ -15,6 +16,7 @@ export const authInterceptor: HttpInterceptorFn = (
 ) => {
   const authService = inject(AuthService);
   const token = localStorage.getItem('access_token');
+  const router = inject(Router)
 
   // Clone request and attach access token if available
   const authReq = token
@@ -46,10 +48,12 @@ export const authInterceptor: HttpInterceptorFn = (
             // authService.logout();
             toast.error("Couldn't Retrieve Session", refreshError.error);
             console.log(refreshError.error);
+            router.navigate(['/login'])
             return throwError(() => refreshError);
           })
         );
       }
+      router.navigate(['/login'])
 
       return throwError(() => error);
     })
