@@ -15,6 +15,7 @@ import { Component, inject } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../../services/auth-service';
 import { NgClass } from '@angular/common';
+import { generateFromEmail, generateUsername } from "unique-username-generator";
 
 @Component({
   selector: 'app-register',
@@ -55,9 +56,10 @@ export class Register {
     
     const { firstName, lastName, email, password, password_confirm ,role } =
     this.registerForm.value;
+    const username = generateFromEmail(email!, 3);
     
     const registerData = {
-      username: `${firstName}`,
+      username: username,
       first_name:firstName,
       last_name:lastName,
       email: email,
