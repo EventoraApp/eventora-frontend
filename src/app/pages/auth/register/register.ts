@@ -15,7 +15,9 @@ import { Component, inject } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../../services/auth-service';
 import { NgClass } from '@angular/common';
-import { generateFromEmail, generateUsername } from "unique-username-generator";
+import {  generateUsername } from "unique-username-generator";
+import { toast } from 'ngx-sonner';
+
 
 @Component({
   selector: 'app-register',
@@ -29,11 +31,12 @@ import { generateFromEmail, generateUsername } from "unique-username-generator";
 export class Register {
   private authService = inject(AuthService);
   private router = inject(Router);
+  protected readonly toast = toast;
   loading = false
 
   registerForm = new FormGroup({
     firstName: new FormControl('', [Validators.required]),
-    lastName: new FormControl(''),
+    lastName: new FormControl('', [Validators.required]),
     email: new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl('', [
       Validators.required,
@@ -49,14 +52,14 @@ export class Register {
   handleRegister() {
     if (this.registerForm.invalid) {
       this.registerForm.markAllAsTouched();
-      alert('Provide inputs for the required fields')
+      toast.warning('Provide inputs for the required fields')
       return;
     }
     this.loading = true
     
     const { firstName, lastName, email, password, password_confirm ,role } =
     this.registerForm.value;
-    const username = generateFromEmail(email!, 3);
+    const username = generateUsername()
     
     const registerData = {
       username: username,
@@ -71,13 +74,13 @@ export class Register {
     this.authService.registerUser(registerData).subscribe({
       next: (res) => {
         console.log('Registration successful:', res);
-        alert('Registration successful!');
+        toast.success('Registration successful!');
         this.router.navigate(['/login']);
         this.loading = false
       },
       error: (err) => {
         console.error('Registration failed:', JSON.stringify(err.error));
-        alert(`${JSON.stringify(err.error.username[0])}`);
+        toast.error(`${JSON.stringify(err.error)}`);
         this.loading = false
       },
     });

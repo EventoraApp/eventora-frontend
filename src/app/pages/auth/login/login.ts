@@ -8,6 +8,7 @@ import {
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../../services/auth-service';
 import { NgClass } from '@angular/common';
+import { toast } from 'ngx-sonner';
 
 @Component({
   selector: 'app-login',
@@ -55,14 +56,14 @@ export class Login {
 
             },
             error: () => {this.loading = false;
-              console.log("Couldnt get User")
+              toast.error("Couldn't get User")
             },
           });
 
         },
         error: (err) => {
           console.error('Login failed:', err);
-          alert('Invalid credentials. Please try again.');
+          toast.error('Invalid credentials. Please try again.');
           this.loading = false;
         },
       });

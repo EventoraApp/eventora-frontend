@@ -4,6 +4,7 @@ import { NgIcon, provideIcons } from '@ng-icons/core';
 import { ionSearch } from '@ng-icons/ionicons';
 import { Router, RouterLink } from '@angular/router';
 import { Events } from '../../../../services/events';
+import { toast } from 'ngx-sonner';
 
 @Component({
   selector: 'app-event-list',
@@ -40,7 +41,7 @@ export class EventList implements OnInit {
         this.loading = false;
       },
       error: (err) => {
-        console.error('Error fetching events:', err);
+        toast.error('Error fetching events:', err);
         this.loading = false;
       },
     });

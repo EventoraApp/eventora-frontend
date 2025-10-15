@@ -15,6 +15,7 @@ import {
 } from '@ng-icons/ionicons';
 import { RouterLink } from '@angular/router';
 import { Events } from '../../../../services/events';
+import { toast } from 'ngx-sonner';
 
 @Component({
   selector: 'app-create-event',
@@ -134,13 +135,12 @@ export class CreateEvent implements OnInit {
       next: (res: any) => {
         console.log('Event created successfully:', res);
         this.loading = false;
-        alert('Event created successfully!');
+        toast.success('Event created successfully!');
         this.router.navigate(['/dashboard/events']); 
       },
       error: (err) => {
-        console.error('Error creating event:', err);
         this.loading = false;
-        alert('Failed to create event.');
+        toast.error('Failed to create event.', err);
       },
     });
   }

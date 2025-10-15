@@ -3,6 +3,7 @@ import { RouterOutlet } from '@angular/router';
 import { SideBar } from '../../components/side-bar/side-bar';
 import { DashNavbar } from '../../components/dash-navbar/dash-navbar';
 import { AuthService } from '../../services/auth-service';
+import { toast } from 'ngx-sonner';
 
 @Component({
   selector: 'app-dashboard',
@@ -19,7 +20,7 @@ export class Dashboard {
         this.username = res.username;
       },
       error: () => {
-        console.log('Something went wrong!');
+        toast.error('Something went wrong!');
       },
     });
   }

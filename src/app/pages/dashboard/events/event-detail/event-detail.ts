@@ -2,6 +2,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CommonModule,Location  } from '@angular/common';
 import { Events } from '../../../../services/events';
+import { toast } from 'ngx-sonner';
 
 @Component({
   selector: 'app-event-detail',
@@ -34,7 +35,7 @@ export class EventDetail implements OnInit {
         this.loading = false;
       },
       error: (err) => {
-        console.error('Error fetching event details:', err);
+        toast.error('Error fetching event details:', err);
         this.loading = false;
       },
     });
