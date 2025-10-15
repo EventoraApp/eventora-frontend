@@ -7,6 +7,10 @@ export const routes: Routes = [
     loadComponent: () => import('../app/pages/home/home').then((m) => m.Home),
   },
   {
+    path: 'find-event',
+    loadComponent: () => import('../app/pages/find-event/find-event').then((m) => m.FindEvent),
+  },
+  {
     path: 'login',
     loadComponent: () =>
       import('../app/pages/auth/login/login').then((m) => m.Login),
