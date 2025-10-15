@@ -3,11 +3,12 @@ import { ActivatedRoute } from '@angular/router';
 import { CommonModule,Location  } from '@angular/common';
 import { Events } from '../../../../services/events';
 import { toast } from 'ngx-sonner';
+import { NgIcon } from "@ng-icons/core";
 
 @Component({
   selector: 'app-event-detail',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, NgIcon],
   templateUrl: './event-detail.html',
   styleUrls: ['./event-detail.scss'],
 })

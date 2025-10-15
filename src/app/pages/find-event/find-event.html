@@ -1,3 +1,23 @@
-<div class="h-screen bg-slate-200 flex items-center justify-center">
-  <p>All Events will appear here</p>
+<div class="h-screen flex flex-col items-start px-8">
+  <div>
+    <h1 class="text-5xl font-extrabold text-gray-900 mb-5 py-10">
+      Find and interesting event
+    </h1>
+  </div>
+  <div class="grid grid-cols-4 gap-4">
+    @for(event of events; track event.id){
+    <div
+      class="cursor-pointer flex flex-col items-center justify-center p-3 bg-gray-200 h-fit py-5"
+    >
+      <img
+        [src]="event.image"
+        [alt]="event.name"
+        class="bg-white h-40 w-full"
+      />
+      <h1>{{ event.name }}</h1>
+      <p>{{ event.location }}</p>
+      <p>{{ event.time }}</p>
+    </div>
+    }
+  </div>
 </div>

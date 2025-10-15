@@ -2,11 +2,10 @@ import { Component, inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Events } from '../../services/events';
 import { toast } from 'ngx-sonner';
-import { EventTable } from "../../components/table/table";
 
 @Component({
   selector: 'app-find-event',
-  imports: [EventTable],
+  imports: [],
   templateUrl: './find-event.html',
   styleUrl: './find-event.scss'
 })
@@ -29,7 +28,6 @@ router = inject(Router);
           location: event.location,
           date: event.event_date,
           time: event.event_time,
-          status: event.is_published ? 'Published' : 'Draft',
           id: event.id,
           slug: event.slug,
         }));

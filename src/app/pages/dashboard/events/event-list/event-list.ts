@@ -24,7 +24,7 @@ export class EventList implements OnInit {
   }
   
   loadEvents() {
-    this.eventService.getAllEvents().subscribe({
+    this.eventService.getMyEvents().subscribe({
       next: (res) => {
         this.events = res.map((event: any) => ({
           image: event.image || 'assets/images/default.jpg',

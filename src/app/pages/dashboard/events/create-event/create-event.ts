@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import {
   FormControl,
   FormGroup,
-  FormsModule,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
@@ -13,7 +12,7 @@ import {
   ionTrashOutline,
   ionCloudUpload,
 } from '@ng-icons/ionicons';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { Events } from '../../../../services/events';
 import { toast } from 'ngx-sonner';
 
@@ -34,6 +33,8 @@ export class CreateEvent implements OnInit {
   isDonation: boolean = false;
   eventService = inject(Events);
   loading = false;
+  selectedFile = '';
+  router = inject(Router)
 
   ticketForm = new FormGroup({
     type: new FormControl('Paid'),
@@ -52,13 +53,12 @@ export class CreateEvent implements OnInit {
     location: new FormControl(''),
     event_date: new FormControl(''),
     event_time: new FormControl(''),
-    price: new FormControl("100", [Validators.required]),
-    capacity: new FormControl(this.ticketForm.value.quantity),
+    price: new FormControl('', [Validators.required]),
+    capacity: new FormControl(''),
     category: new FormControl(''),
     image: new FormControl(''),
     is_published: new FormControl(false),
   });
-  router: any;
 
   handleType(type: string) {
     this.ticketForm.value.type = type;
@@ -100,53 +100,59 @@ export class CreateEvent implements OnInit {
   onImageSelect(event: any) {
     const file = event.target.files[0];
     if (file) {
+        this.selectedFile = file;
       const reader = new FileReader();
       reader.onload = () =>
-        (this.createEventForm.value.image = reader.result as string);
+        this.createEventForm.patchValue({ image: reader.result as string });
       reader.readAsDataURL(file);
     }
   }
 
   onSubmit() {
+    this.createEventForm.patchValue({
+      capacity: this.ticketForm.value.quantity,
+      price: this.ticketForm.value.price,
+    });
     if (this.createEventForm.invalid) {
       this.createEventForm.markAllAsTouched();
-      console.log("Errors in form",this.createEventForm.value)
       return;
     }
-    
-    console.log("Errors in form 3",this.createEventForm.value)
+
     this.loading = true;
-    const formData = this.createEventForm.value;
+    const formData = new FormData();
+    const formValues = this.createEventForm.value;
 
-    const payload = {
-      title: formData.title,
-      image: formData.image,
-      description: formData.description,
-      location: formData.location,
-      event_date: formData.event_date,
-      event_time: formData.event_time,
-      price: formData.price,
-      capacity: formData.capacity,
-      category: formData.category,
-      is_published: formData.is_published,
-    };
+    formData.append('title', formValues.title || '');
+    formData.append('description', formValues.description || '');
+    formData.append('location', formValues.location || '');
+    formData.append('event_date', formValues.event_date || '');
+    formData.append('event_time', formValues.event_time || '');
+    formData.append('price', formValues.price || '');
+    formData.append('capacity', formValues.capacity || '');
+    formData.append('category', formValues.category || '');
+    formData.append('is_published', formValues.is_published ? 'true' : 'false');
 
-    this.eventService.createEvent(payload).subscribe({
+    if (this.selectedFile) {
+      formData.append('image', this.selectedFile);
+    }
+
+    this.eventService.createEvent(formData).subscribe({
       next: (res: any) => {
         console.log('Event created successfully:', res);
         this.loading = false;
         toast.success('Event created successfully!');
-        this.router.navigate(['/dashboard/events']); 
+        this.router.navigate(['/dashboard/events']);
       },
       error: (err) => {
         this.loading = false;
-        toast.error('Failed to create event.', err);
+        toast.error('Failed to create event.', err.error);
+        console.log(err.error);
       },
     });
   }
 
   removeImage() {
-    this.createEventForm.value.image = '';
+    this.createEventForm.patchValue({ image: '' });
   }
 
   ngOnInit(): void {

@@ -1,4 +1,5 @@
 <div class="max-w-4xl mx-auto p-6">
+  
   @if (!loading && event) {
     <div class="flex flex-col md:flex-row gap-6">
       <img
@@ -51,11 +52,27 @@
 
         <div class="mt-6">
           <button
-            class="bg-violet-600 text-white px-4 py-2 rounded-lg hover:bg-violet-700"
+            class="bg-violet-600 text-white px-4 py-2 hover:bg-violet-700"
             (click)=" goBack()"
           >
             Back to Events
           </button>
+          @if(!event.is_published){
+            <button
+            class="bg-transparent text-green-600 hover:underline mx-2 px-4 cursor-pointer"
+            
+          >
+           Publish Event
+          </button>
+        }@else {
+          <button
+          class="bg-transparent text-red-600 hover:underline mx-2 px-4 cursor-pointer"
+          
+        >
+         Delete Event
+        </button>
+
+          }
         </div>
       </div>
     </div>
