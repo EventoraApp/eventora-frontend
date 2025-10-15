@@ -1,9 +1,18 @@
-import { HttpInterceptorFn, HttpErrorResponse, HttpRequest, HttpHandlerFn } from '@angular/common/http';
+import {
+  HttpInterceptorFn,
+  HttpErrorResponse,
+  HttpRequest,
+  HttpHandlerFn,
+} from '@angular/common/http';
 import { inject } from '@angular/core';
 import { AuthService } from './auth-service'; // adjust the path to match your app
 import { catchError, switchMap, throwError } from 'rxjs';
+import { toast } from 'ngx-sonner';
 
-export const authInterceptor: HttpInterceptorFn = (req: HttpRequest<any>, next: HttpHandlerFn) => {
+export const authInterceptor: HttpInterceptorFn = (
+  req: HttpRequest<any>,
+  next: HttpHandlerFn
+) => {
   const authService = inject(AuthService);
   const token = localStorage.getItem('access_token');
 
@@ -18,15 +27,15 @@ export const authInterceptor: HttpInterceptorFn = (req: HttpRequest<any>, next: 
 
   return next(authReq).pipe(
     catchError((error: HttpErrorResponse) => {
-    
-      if (error.status === 401 && !req.url.includes('/api/users/login/') && !req.url.includes('/api/users/register/')) {
-      
+      if (
+        error.status === 401 &&
+        !req.url.includes('/api/users/login/') &&
+        !req.url.includes('/api/users/register/')
+      ) {
         return authService.refreshAccessToken().pipe(
           switchMap((newToken: string) => {
-          
             localStorage.setItem('access_token', newToken);
 
-        
             const newReq = req.clone({
               setHeaders: { Authorization: `Bearer ${newToken}` },
             });
@@ -34,7 +43,9 @@ export const authInterceptor: HttpInterceptorFn = (req: HttpRequest<any>, next: 
             return next(newReq);
           }),
           catchError((refreshError) => {
-            authService.logout();
+            // authService.logout();
+            toast.error("Couldn't Retrieve Session", refreshError.error);
+            console.log(refreshError.error);
             return throwError(() => refreshError);
           })
         );

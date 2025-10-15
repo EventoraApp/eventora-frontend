@@ -1,8 +1,35 @@
-<div class="h-screen flex flex-col items-start px-8">
-  <div>
-    <h1 class="text-5xl font-extrabold text-gray-900 mb-5 py-10">
+<div class="min-h-screen flex flex-col items-start p-8">
+  <div class="pb-10">
+    <h1 class="text-5xl font-extrabold text-gray-900 mb-5 ">
       Find and interesting event
     </h1>
+      <div
+        class="items-start grid grid-cols-1 md:grid-cols-2 md:items-center gap-3"
+      >
+        <input
+          type="search"
+          placeholder="What are you looking for?"
+          class="h-12 rounded-none py-2 px-5 placeholder:text-slate-400 placeholder:text-[14px] placeholder:italic active:ring-1 ring-fuchsia-700 flex-1"
+        />
+        <div class="flex items-center justify-start">
+          <select
+            class="h-12 rounded-none py-2 px-5 placeholder:text-slate-400 placeholder:text-[14px] placeholder:italic active:ring-1 ring-fuchsia-700"
+          >
+            <option value="">All Locations</option>
+            @for (loc of locations; track loc) {
+            <option [value]="loc">{{ loc }}</option>
+            }
+          </select>
+
+          <button (click)="onSearch()" class="bg-transparent cursor-pointer">
+            <div
+              class="p-2 bg-fuchsia-900 w-10 h-10 flex items-center justify-center rounded-full"
+            >
+              <ng-icon name="ionSearch" style="color: white" />
+            </div>
+          </button>
+        </div>
+      </div>
   </div>
   <div class="grid grid-cols-4 gap-4">
     @for(event of events; track event.id){
