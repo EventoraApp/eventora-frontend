@@ -42,7 +42,7 @@ export class Login {
           console.log('Login successful:', res);
           this.authService.getCurrentUser().subscribe({
             next: (res) => {
-              alert(`Welcome back, ${res.username}!`);
+              toast.success(`Welcome back, ${res.username}!`);
 
               this.loading = false;
     
