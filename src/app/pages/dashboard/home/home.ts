@@ -3,11 +3,12 @@ import { CommonModule } from '@angular/common';
 import { AuthService } from '../../../services/auth-service';
 import { provideIcons, NgIcon } from '@ng-icons/core';
 import { ionMegaphone, ionGift } from '@ng-icons/ionicons';
+import { RouterLink } from "@angular/router";
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, NgIcon],
+  imports: [CommonModule, NgIcon, RouterLink],
   templateUrl: './home.html',
   viewProviders: provideIcons({ ionMegaphone, ionGift }),
 })
