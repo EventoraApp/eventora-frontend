@@ -54,7 +54,7 @@ export class EventList implements OnInit {
   
   onEdit(event: any) {
     console.log('Edit event:', event);
-    this.router.navigate(['/dashboard/events/', event.id]);
+    this.router.navigate(['/dashboard/events/', event.id, 'edit']);
   }
 
   onDelete(event: any) {

@@ -21,23 +21,23 @@ export const routes: Routes = [
           import('./events/event-list/event-list').then((m) => m.EventList),
       },
       {
-        path: 'events/create',
+        path: 'events/new/create',
         loadComponent: () =>
           import('./events/create-event/create-event').then(
             (m) => m.CreateEvent
           ),
       },
         {
-          path: 'events/:id',
+          path: 'events/:id/edit',
           loadComponent: () =>
           import('./events/create-event/create-event').then(
             (m) => m.CreateEvent
           ),
         },
         {
-          path: 'events/:id/edit',
+          path: 'events/:id',
           loadComponent: () =>
-            import('./events/edit-event/edit-event').then((m) => m.EditEvent),
+            import('./events/event-detail/event-detail').then((m) => m.EventDetail),
         },
     ],
   },

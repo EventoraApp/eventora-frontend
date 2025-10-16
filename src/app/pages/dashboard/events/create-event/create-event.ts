@@ -150,7 +150,7 @@ export class CreateEvent implements OnInit {
         },
         error: (err) => {
           this.loading = false;
-          toast.error('Failed to edited event.', err.error);
+          toast.error(`Failed to edited event. ${JSON.stringify(err.error)}`);
           console.log(err.error);
         },
       });
@@ -164,8 +164,9 @@ export class CreateEvent implements OnInit {
         },
         error: (err) => {
           this.loading = false;
-          toast.error('Failed to create event.', err.error);
+          toast.error(`Failed to create event. ${JSON.stringify(err.error)}`);
           console.log(err.error);
+          this.router.navigate(['/dashboard/events/create']);
         },
       });
     }
@@ -188,14 +189,20 @@ export class CreateEvent implements OnInit {
     this.eventService.getEventById(id).subscribe((eventData) => {
       this.createEventForm.patchValue({
         title: eventData.title,
-        // description: eventData.description,
+        description: eventData.description,
         location: eventData.location,
         event_date: eventData.event_date,
         event_time: eventData.event_time,
         capacity: eventData.capacity,
+        category: eventData.category,
         image: eventData.image,
         price: eventData.price,
       });
+
+      this.ticketForm.patchValue({
+        quantity: eventData.capacity,
+        price: eventData.price, 
+      })
     });
   }
 }

@@ -45,7 +45,7 @@ export const authInterceptor: HttpInterceptorFn = (
             return next(newReq);
           }),
           catchError((refreshError) => {
-            // authService.logout();
+            authService.logout();
             toast.error("Couldn't Retrieve Session", refreshError.error);
             console.log(refreshError.error);
             router.navigate(['/login'])
