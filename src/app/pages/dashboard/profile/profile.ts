@@ -1,15 +1,27 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { AuthService } from '../../services/auth-service';
+import { NgIcon, provideIcons } from '@ng-icons/core';
+import { ionPersonOutline } from '@ng-icons/ionicons';
+import { AuthService } from '../../../services/auth-service';
+import { FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-profile',
   standalone: true,
+  imports: [DatePipe, ReactiveFormsModule],
   templateUrl: './profile.html',
-  styleUrls: ['./profile.scss']
+  styleUrls: ['./profile.scss'],
+  viewProviders: provideIcons({
+    ionPersonOutline
+  })
 })
 export class Profile implements OnInit {
   private authService = inject(AuthService);
   user: any;
+  profileForm =  new FormGroup({
+
+  })
+  loading = false
 
   ngOnInit(): void {
     this.fetchCurrentUser();
@@ -25,5 +37,9 @@ export class Profile implements OnInit {
         console.error('Failed to fetch user info:', err);
       }
     });
+  }
+
+  onSubmit() {
+    
   }
 }

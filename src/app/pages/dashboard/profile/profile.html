@@ -1,0 +1,77 @@
+<div class="w-full flex flex-col xl:px-60 px-5 pr-10 md:px-10 md:pr-15">
+  <div class="flex justify-between items-center mb-6">
+    <h1 class="text-4xl font-bold text-gray-900">Account Information</h1>
+    <p class="text-slate-500">Eventora account since {{user.date_joined | date}}</p>
+  </div>
+  <div class="w-full h-50 bg-slate-200 mx-auto relative">
+    <div
+      class="flex text-white flex-col items-center justify-center rounded-full w-30 h-30 -bottom-15 xl:w-35 xl:h-35 absolute bg-gray-400 xl:-bottom-20 left-5 border-2 border-white"
+    >
+      <p class="text-white text-center leading-5">Add a profile image</p>
+      <!-- <ng-icon name="ionPersonOutline"/> -->
+    </div>
+  </div>
+  <main class="mt-20">
+    @if (user) {
+    <section class="bg-white rounded-md p-8 shadow-sm border border-gray-200">
+      <h2 class="text-2xl font-bold text-gray-800 mb-6">Personal Information</h2>
+
+      <form
+        class="space-y-6"
+        [formGroup]="profileForm"
+      >
+       <div class="grid grid-cols-2 gap-2">
+        <div class="flex flex-col">
+          <label for="">First Name </label>
+          <input
+            formControlName="firstName"
+            type="text"
+            placeholder="First Name"
+            class="mt-1 w-full placeholder:text-slate-400 placeholder:text-[14px] placeholder:italic active:ring-1 ring-fuchsia-700 p-3"
+          />
+        </div>
+        <div class="flex flex-col">
+          <label for="">Last Name</label>
+          <input
+            formControlName="lastName"
+            type="text"
+            placeholder="Last Name"
+            class="mt-1 w-full placeholder:text-slate-400 placeholder:text-[14px] placeholder:italic active:ring-1 ring-fuchsia-700 p-3"
+          />
+        </div>
+      </div>
+
+     
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div>
+            <label class="block mb-2 text-gray-700"
+              >Username</label
+            >
+            <input
+              type="text"
+              formControlName="location"
+              name="location"
+              placeholder=""
+              class="placeholder:text-slate-400 placeholder:text-[14px] placeholder:italic w-full border border-gray-300 rounded-md p-3 focus:ring-2 focus:ring-fuchsia-700 outline-none"
+            />
+          </div>
+        
+        </div>
+
+        <!-- Save Button -->
+        <div class="flex justify-end">
+          <button
+          (click)="onSubmit()"
+            type="button"
+            class="bg-violet-800 hover:bg-violet-800 cursor-pointer text-white px-6 py-2 rounded-md font-semibold shadow-sm transition"
+          >
+           @if(loading){Loading...}@else{Save}
+          </button>
+        </div>
+      </form>
+    </section>
+    } @else {
+    <p>Loading user info...</p>
+    }
+  </main>
+</div>

@@ -12,8 +12,8 @@ export const routes: Routes = [
         loadComponent: () => import('./home/home').then((m) => m.Home),
       },
       {
-        path: 'settings',
-        loadComponent: () => import('./settings/settings').then((m) => m.Settings),
+        path: 'profile',
+        loadComponent: () => import('./profile/profile').then((m) => m.Profile),
       },
       {
         path: 'events',

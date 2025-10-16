@@ -5,7 +5,7 @@ import { filter } from 'rxjs/operators';
 import { provideIcons, NgIcon } from '@ng-icons/core';
 import {
   ionHome,
-  ionSettingsOutline,
+  ionPersonCircleSharp,
   ionCalendarOutline,
 } from '@ng-icons/ionicons';
 
@@ -15,14 +15,14 @@ import {
   templateUrl: './side-bar.html',
   styleUrl: './side-bar.scss',
   viewProviders: [
-    provideIcons({ ionHome, ionSettingsOutline, ionCalendarOutline }),
+    provideIcons({ ionHome, ionPersonCircleSharp, ionCalendarOutline }),
   ],
 })
 export class SideBar implements OnInit {
   router = inject(Router);
   isHomeActive = false;
   isEventActive = false;
-  isSettingsActive = false;
+  isProfileActive = false;
 
   ngOnInit(): void {
     this.updateActiveLinks(this.router.url); // initial state
@@ -38,6 +38,6 @@ export class SideBar implements OnInit {
   private updateActiveLinks(url: string): void {
     this.isHomeActive = url.includes('/dashboard/home');
     this.isEventActive = url.includes('/dashboard/events');
-    this.isSettingsActive = url.includes('/dashboard/settings');
+    this.isProfileActive = url.includes('/dashboard/profile');
   }
 }

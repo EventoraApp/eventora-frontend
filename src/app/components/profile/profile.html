@@ -1,9 +1,0 @@
-@if (user) {
-  <div>
-    <h2>Welcome, {{ user.username || user.email }}</h2>
-    <p>Email: {{ user.email }}</p>
-    <p>Role: {{ user.role }}</p>
-  </div>
-} @else {
-  <p>Loading user info...</p>
-}

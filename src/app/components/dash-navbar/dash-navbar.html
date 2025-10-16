@@ -29,9 +29,12 @@
         </svg>
       </button>
       <div
-        [ngClass]="{ 'opacity-100 h-25': showMenu}"
+        [ngClass]="{ 'opacity-100 h-fit': showMenu}"
         class="flex items-center justify-center flex-col w-full opacity-0 rounded-lg p-2 h-0 transition-all absolute overflow-hidden shadow-lg bg-gray-100 border border-gray-200"
       >
+        <button routerLink="/dashboard/profile" class="hover:underline bg-transparent text-gray-600 hover:text-gray-800 cursor-pointer text-[13px] flex items-center justify-center">
+          Account Settings
+        </button>
         <button routerLink="/find-event" class="hover:underline bg-transparent text-gray-600 hover:text-gray-800 cursor-pointer text-[13px] flex items-center justify-center">
           Find Events
         </button>

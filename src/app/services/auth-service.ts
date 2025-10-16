@@ -34,7 +34,7 @@ export class AuthService {
 
   refreshAccessToken() {
     const refresh = localStorage.getItem('refresh_token');
-   return this.http.post(`${this.baseUrl}/users/token/refresh/`, refresh).pipe(
+   return this.http.post(`${this.baseUrl}/users/token/refresh/`, {refresh: refresh}).pipe(
       tap((res: any) => {
         localStorage.setItem('access_token', res.access);
       })
@@ -43,7 +43,7 @@ export class AuthService {
 
   logout(): void {
     localStorage.removeItem('access_token');
-    localStorage.removeItem('refresh_token');
+    // localStorage.removeItem('refresh_token');
     // localStorage.removeItem('user');
   }
 
@@ -63,5 +63,9 @@ export class AuthService {
     //     localStorage.setItem('user', JSON.stringify(res));
     //   })
     // );
+  }
+
+  updateProfile(data: any): Observable<any>  {
+    return this.http.put( `${this.baseUrl}/users/me/profile`,data)
   }
 }
