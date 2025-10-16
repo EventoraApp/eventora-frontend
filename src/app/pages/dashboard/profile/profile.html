@@ -5,20 +5,76 @@
       Eventora account since {{ user.date_joined | date }}
     </p>
   </div>
-  <div class="w-full h-50 bg-slate-200 mx-auto relative rounded-md">
-    <input
-      type="file"
-      hidden
-      name=""
-      id=""
-      accept=".jpg,.jpeg,.png"
-      (change)="onImageSelect($event)"
+  <div
+    class="w-full h-50 bg-slate-200 mx-auto relative rounded-md flex items-center justify-center"
+  >
+    @if (profileForm.value.cover_photo) {
+    <img
+      [src]="profileForm.value.cover_photo"
+      alt="Covere"
+      class="w-full h-full object-fit"
     />
-    <div
-      class="flex text-white flex-col items-center justify-center rounded-full w-30 h-30 -bottom-15 xl:w-35 xl:h-35 absolute bg-gray-400 xl:-bottom-20 left-5 border-2 border-white"
+    <button
+      (click)="removeCoverPhoto()"
+      class="absolute top-3 right-3 bg-white text-violet-600 hover:bg-red-400 hover:text-white rounded-full p-2 cursor-pointer opacity-0 group-hover:opacity-100 transition-all duration-300 shadow-md"
+      title="Remove image"
     >
-      <p class="text-white text-center leading-5">Add a profile image</p>
-      <!-- <ng-icon name="ionPersonOutline"/> -->
+      <ng-icon name="ionTrashOutline" style="width: 20px; height: 20px" />
+    </button>
+    } @else {
+    <label
+      class="cursor-pointer flex flex-col items-center justify-center text-center text-gray-700"
+    >
+      <input
+        type="file"
+        hidden
+        (change)="onImageSelect($event)"
+        accept=".jpg,.jpeg,.png"
+      />
+      <div
+        class="border-dashed border border-gray-300 rounded-md p-4 flex flex-col items-center justify-center"
+      >
+        <ng-icon name="ionCloudUpload" style="width: 40px; height: 40px" />
+
+        <span class="font-medium">Add a Cover photo</span>
+      </div>
+    </label>
+    }
+    <div
+      class="overflow-hidden flex text-white flex-col items-center justify-center rounded-full w-30 h-30 -bottom-15 xl:w-35 xl:h-35 absolute bg-gray-400 xl:-bottom-20 left-5 border-2 border-gray-300"
+    >
+      @if (profileForm.value.profile_picture) {
+      <img
+        [src]="profileForm.value.profile_picture"
+        alt="Profile"
+        class="w-full h-full object-fit"
+      />
+      <button
+        (click)="removeProfilePic()"
+        class="absolute top-3 right-3 bg-white text-violet-600 hover:bg-red-400 hover:text-white rounded-full p-2 cursor-pointer opacity-0 group-hover:opacity-100 transition-all duration-300 shadow-md"
+        title="Remove image"
+      >
+        <ng-icon name="ionTrashOutline" style="width: 20px; height: 20px" />
+      </button>
+      } @else {
+      <label
+        class="cursor-pointer flex flex-col items-center justify-center text-center text-white"
+      >
+        <input
+          type="file"
+          hidden
+          (change)="onProfileImageSelect($event)"
+          accept=".jpg,.jpeg,.png"
+        />
+        <div
+          class="p-4 flex flex-col items-center justify-center"
+        >
+          <ng-icon name="ionCamera" style="width: 40px; height: 40px" />
+
+          <span class="font-medium leading-5">Add Profile</span>
+        </div>
+      </label>
+      }
     </div>
   </div>
   <main class="mt-20">
@@ -56,7 +112,7 @@
             <input
               type="text"
               formControlName="username"
-              name="location"
+              name="username"
               placeholder="Username"
               class="placeholder:text-slate-400 placeholder:text-[14px] placeholder:italic w-full border border-gray-300 rounded-md p-3 focus:ring-2 focus:ring-fuchsia-700 outline-none"
             />
@@ -85,6 +141,7 @@
               formControlName="address"
               type="text"
               placeholder="Eg. Kotei 123 Street"
+              name="Address"
               class="border border-gray-300 mt-1 w-full placeholder:text-slate-400 placeholder:text-[14px] placeholder:italic active:ring-1 ring-fuchsia-700 p-3"
             />
           </div>
@@ -94,9 +151,9 @@
               formControlName="country"
               type="text"
               placeholder="Country"
+              name="country"
               class="border border-gray-300 mt-1 w-full placeholder:text-slate-400 placeholder:text-[14px] placeholder:italic active:ring-1 ring-fuchsia-700 p-3"
             />
-           
           </div>
         </div>
         <div class="grid grid-cols-2 gap-2">
@@ -106,6 +163,7 @@
               formControlName="state"
               type="text"
               placeholder="State"
+              name="state"
               class="border border-gray-300 mt-1 w-full placeholder:text-slate-400 placeholder:text-[14px] placeholder:italic active:ring-1 ring-fuchsia-700 p-3"
             />
           </div>
@@ -115,6 +173,7 @@
               formControlName="city"
               type="text"
               placeholder="City"
+              name="city"
               class="border border-gray-300 mt-1 w-full placeholder:text-slate-400 placeholder:text-[14px] placeholder:italic active:ring-1 ring-fuchsia-700 p-3"
             />
           </div>
@@ -127,6 +186,7 @@
               type="text"
               formControlName="pin_code"
               placeholder="Zip Code"
+              name="zip"
               class="placeholder:text-slate-400 placeholder:text-[14px] placeholder:italic w-full border border-gray-300 rounded-md p-3 focus:ring-2 focus:ring-fuchsia-700 outline-none"
             />
           </div>
@@ -139,7 +199,7 @@
           type="button"
           class="bg-violet-800 hover:bg-violet-800 cursor-pointer text-white px-6 py-2 rounded-md font-semibold shadow-sm transition"
         >
-           @if(loading){Loading...}@else{Save}
+          @if(loading){Loading...}@else{Save}
         </button>
       </div>
     </form>
