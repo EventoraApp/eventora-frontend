@@ -40,7 +40,6 @@
     "leaflet": "^1.9.4",
     "ng-primitives": "^0.83.0",
     "ngx-bootstrap": "^20.0.2",
-    "ngx-country-picker": "^3.0.0",
     "ngx-intl-tel-input": "^17.0.0",
     "ngx-sonner": "^3.1.0",
     "postcss": "^8.5.6",
