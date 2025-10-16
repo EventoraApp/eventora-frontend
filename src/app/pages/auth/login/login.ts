@@ -63,7 +63,7 @@ export class Login {
         },
         error: (err) => {
           console.error('Login failed:', err);
-          toast.error('Invalid credentials. Please try again.');
+          toast.error(err.error.detail[0]);
           this.loading = false;
         },
       });

@@ -3,20 +3,24 @@ import { Router } from '@angular/router';
 import { Events } from '../../services/events';
 import { toast } from 'ngx-sonner';
 import { NgIcon, provideIcons } from '@ng-icons/core';
-import { ionSearch } from '@ng-icons/ionicons';
+import { ionSearch,ionLocationSharp,ionTime,ionFilter } from '@ng-icons/ionicons';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-find-event',
-  imports: [NgIcon],
+  imports: [NgIcon, DatePipe],
   templateUrl: './find-event.html',
   styleUrl: './find-event.scss',
   viewProviders: [
     provideIcons({
-      ionSearch,
+      ionSearch, ionLocationSharp,ionTime,ionFilter
     }),
   ],
 })
 export class FindEvent implements OnInit {
+goToEvent(arg0: any) {
+throw new Error('Method not implemented.');
+}
   router = inject(Router);
   private eventService = inject(Events);
   events: any[] = [];
@@ -31,11 +35,14 @@ export class FindEvent implements OnInit {
     this.eventService.getAllEvents().subscribe({
       next: (res) => {
         this.events = res.map((event: any) => ({
-          image: event.image || 'assets/images/default.jpg',
+          image: event.image || 'assets/images/laptopframe.png',
           name: event.title,
           location: event.location,
           date: event.event_date,
           time: event.event_time,
+          description: event.description,
+          price: event.price,
+          category: event.category,
           id: event.id,
           slug: event.slug,
         }));

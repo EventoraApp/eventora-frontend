@@ -80,7 +80,7 @@ export class Register {
       },
       error: (err) => {
         console.error('Registration failed:', JSON.stringify(err.error));
-        toast.error(`${JSON.stringify(err.error)}`);
+        toast.error(err.error.message[0]);
         this.loading = false
       },
     });

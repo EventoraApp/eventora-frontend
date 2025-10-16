@@ -1,50 +1,64 @@
 <div class="min-h-screen flex flex-col items-start p-8">
   <div class="pb-10">
-    <h1 class="text-5xl font-extrabold text-gray-900 mb-5 ">
-      Find and interesting event
+    <h1 class="text-5xl font-extrabold text-gray-900 mb-5">
+      Find an interesting event
     </h1>
-      <div
-        class="items-start grid grid-cols-1 md:grid-cols-2 md:items-center gap-3"
-      >
+    <div
+      class="items-start grid grid-cols-1 md:grid-cols-2 md:items-center gap-3"
+    >
+      <div class="flex items-center gap-3">
+        <div class="text-slate-700 py-3 px-4 border border-transparent hover:border-fuchsia-700 cursor-pointer rounded-md">
+          <ng-icon name="ionFilter" />
+        </div>
         <input
           type="search"
           placeholder="What are you looking for?"
           class="h-12 rounded-none py-2 px-5 placeholder:text-slate-400 placeholder:text-[14px] placeholder:italic active:ring-1 ring-fuchsia-700 flex-1"
         />
-        <div class="flex items-center justify-start">
-          <select
-            class="h-12 rounded-none py-2 px-5 placeholder:text-slate-400 placeholder:text-[14px] placeholder:italic active:ring-1 ring-fuchsia-700"
-          >
-            <option value="">All Locations</option>
-            @for (loc of locations; track loc) {
-            <option [value]="loc">{{ loc }}</option>
-            }
-          </select>
-
-          <button (click)="onSearch()" class="bg-transparent cursor-pointer">
-            <div
-              class="p-2 bg-fuchsia-900 w-10 h-10 flex items-center justify-center rounded-full"
-            >
-              <ng-icon name="ionSearch" style="color: white" />
-            </div>
-          </button>
-        </div>
       </div>
-  </div>
-  <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
-    @for(event of events; track event.id){
-    <div
-      class="cursor-pointer flex flex-col items-center justify-center p-3 bg-gray-200 h-fit py-5"
-    >
-      <img
-        [src]="event.image"
-        [alt]="event.name"
-        class="bg-white h-40 w-full"
-      />
-      <h1>{{ event.name }}</h1>
-      <p>{{ event.location }}</p>
-      <p>{{ event.time }}</p>
+      <div class="flex items-center justify-start">
+        <select
+          class="h-12 rounded-none py-2 px-5 placeholder:text-slate-400 placeholder:text-[14px] placeholder:italic active:ring-1 ring-fuchsia-700"
+        >
+          <option value="">All Locations</option>
+          @for (loc of locations; track loc) {
+          <option [value]="loc">{{ loc }}</option>
+          }
+        </select>
+
+        <button (click)="onSearch()" class="bg-transparent cursor-pointer">
+          <div
+            class="p-2 bg-fuchsia-900 w-10 h-10 flex items-center justify-center rounded-full"
+          >
+            <ng-icon name="ionSearch" style="color: white" />
+          </div>
+        </button>
+      </div>
     </div>
-    }
   </div>
+
+  <section class="trending-events">
+    <div class="cards-grid grid grid-cols-3">
+      @for (event of events; track event.id) {
+      <div class="card cursor-pointer bg-gray-200 flex flex-col min-w-[300px]">
+        <div class="card-image">
+          <img [src]="event.image" alt="{{ event.name }}" />
+        </div>
+        <div class="card-info">
+          <h3>{{ event.name }}</h3>
+          <p class="meta">
+            {{ event.date | date : "mediumDate" }} • {{ event.location }}
+          </p>
+          <!-- <p class="description">{{ event.description }}</p> -->
+        </div>
+        <button
+          (click)="goToEvent(event.id)"
+          class="w-full mt-auto cursor-pointer hover:bg-slate-600 hover:text-white transition-all bg-transparent border border-slate-600 text-slate-600"
+        >
+          Register Now
+        </button>
+      </div>
+      }
+    </div>
+  </section>
 </div>

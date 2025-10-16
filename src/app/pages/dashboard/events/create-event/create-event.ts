@@ -150,8 +150,8 @@ export class CreateEvent implements OnInit {
         },
         error: (err) => {
           this.loading = false;
-          toast.error(`Failed to edited event. ${JSON.stringify(err.error)}`);
-          console.log(err.error);
+          toast.error(err.error.message[0]);
+          this.router.navigate(['/dashboard/events/',this.eventId, 'edit' ]);
         },
       });
     } else {
@@ -164,8 +164,7 @@ export class CreateEvent implements OnInit {
         },
         error: (err) => {
           this.loading = false;
-          toast.error(`Failed to create event. ${JSON.stringify(err.error)}`);
-          console.log(err.error);
+          toast.error(err.error.message[0]);
           this.router.navigate(['/dashboard/events/create']);
         },
       });
