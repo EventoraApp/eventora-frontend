@@ -66,8 +66,9 @@ export class EventDetail implements OnInit {
   }
 
 
-   onEdit(event: any) {
-     console.log('Edit event:', event);
+    onEdit(event: any) {
+    console.log('Edit event:', event);
+    this.router.navigate(['/dashboard/events/', event.id, 'edit']);
   }
   
   onDelete(event: any) {
