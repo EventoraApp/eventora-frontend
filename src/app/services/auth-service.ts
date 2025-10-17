@@ -35,9 +35,11 @@ export class AuthService {
 
   refreshAccessToken() {
     const refresh = localStorage.getItem('refresh_token');
+    console.log("I was called")
    return this.http.post(`${this.baseUrl}/users/token/refresh/`, {refresh: refresh}).pipe(
       tap((res: any) => {
         localStorage.setItem('access_token', res.access);
+        localStorage.setItem('refresh_token', res.refresh);
       })
     );
   }

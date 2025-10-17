@@ -43,6 +43,7 @@ interface Testimonial {
 })
 export class Home implements OnInit {
   authService = inject(AuthService);
+
   user = {};
   carouselImages: string[] = [
     'assets/images/hero1.jpg',
@@ -124,7 +125,6 @@ export class Home implements OnInit {
 
   ngOnInit(): void {
     this.startCarousel();
-   
   }
 
   startCarousel() {

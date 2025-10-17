@@ -6,7 +6,7 @@ import {
 } from '@angular/common/http';
 import { inject } from '@angular/core';
 import { AuthService } from './auth-service'; // adjust the path to match your app
-import { catchError, switchMap, throwError } from 'rxjs';
+import { catchError, switchMap, tap, throwError } from 'rxjs';
 import { toast } from 'ngx-sonner';
 import { Router } from '@angular/router';
 
@@ -16,7 +16,11 @@ export const authInterceptor: HttpInterceptorFn = (
 ) => {
   const authService = inject(AuthService);
   const token = localStorage.getItem('access_token');
-  const router = inject(Router)
+  const router = inject(Router);
+  const currentDate = new Date();
+  // const tokenTime = Number(localStorage.getItem('token_time'))
+  const tokenDate = new Date(localStorage.getItem('token_date')!);
+  const diff = tokenDate.getTime() - currentDate.getTime();
 
   // Clone request and attach access token if available
   const authReq = token
@@ -27,35 +31,10 @@ export const authInterceptor: HttpInterceptorFn = (
       })
     : req;
 
-  return next(authReq).pipe(
-    catchError((error: HttpErrorResponse) => {
-      if (
-        error.status === 401 &&
-        !req.url.includes('/api/users/login/') &&
-        !req.url.includes('/api/users/register/')
-      ) {
-        return authService.refreshAccessToken().pipe(
-          switchMap((newToken: string) => {
-            localStorage.setItem('access_token', newToken);
+  if (diff <= 60000) {
+    console.log('Time expired!');
+    authService.refreshAccessToken()
+  }
 
-            const newReq = req.clone({
-              setHeaders: { Authorization: `Bearer ${newToken}` },
-            });
-
-            return next(newReq);
-          }),
-          catchError((refreshError) => {
-            authService.logout();
-            toast.error("Couldn't Retrieve Session", refreshError.error);
-            console.log(refreshError.error);
-            router.navigate(['/login'])
-            return throwError(() => refreshError);
-          })
-        );
-      }
-      router.navigate(['/login'])
-
-      return throwError(() => error);
-    })
-  );
+  return next(authReq);
 };
