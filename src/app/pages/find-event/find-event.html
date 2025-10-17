@@ -40,7 +40,7 @@
   <section class="trending-events">
     <div class="cards-grid grid grid-cols-3">
       @for (event of events; track event.id) {
-      <div class="card cursor-pointer bg-gray-200 flex flex-col min-w-[300px]">
+      <div (click)="handleEventDetails(event.id)" class="card cursor-pointer bg-gray-100 flex flex-col min-w-[300px]">
         <div class="card-image">
           <img [src]="event.image" alt="{{ event.name }}" />
         </div>
@@ -49,14 +49,14 @@
           <p class="meta">
             {{ event.date | date : "mediumDate" }} • {{ event.location }}
           </p>
-          <!-- <p class="description">{{ event.description }}</p> -->
+          <p class="description">{{ event.description }}</p>
         </div>
-        <button
+        <!-- <button
           (click)="goToEvent(event.id)"
           class="w-full mt-auto cursor-pointer hover:bg-slate-600 hover:text-white transition-all bg-transparent border border-slate-600 text-slate-600"
         >
           Register Now
-        </button>
+        </button> -->
       </div>
       }
     </div>

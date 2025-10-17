@@ -4,7 +4,7 @@ import { CommonModule,Location  } from '@angular/common';
 import { Events } from '../../../../services/events';
 import { toast } from 'ngx-sonner';
 import { NgIcon, provideIcons } from "@ng-icons/core";
-import { ionChevronBack } from '@ng-icons/ionicons';
+import { ionChevronBack,ionCreate ,ionLocationSharp,ionTrash} from '@ng-icons/ionicons';
 
 @Component({
   selector: 'app-event-detail',
@@ -13,7 +13,7 @@ import { ionChevronBack } from '@ng-icons/ionicons';
   templateUrl: './event-detail.html',
   styleUrls: ['./event-detail.scss'],
   viewProviders: provideIcons({
-    ionChevronBack
+    ionChevronBack,ionCreate,ionTrash,ionLocationSharp
   })
 })
 export class EventDetail implements OnInit {

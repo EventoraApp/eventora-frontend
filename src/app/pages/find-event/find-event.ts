@@ -1,5 +1,5 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { Events } from '../../services/events';
 import { toast } from 'ngx-sonner';
 import { NgIcon, provideIcons } from '@ng-icons/core';
@@ -8,7 +8,7 @@ import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-find-event',
-  imports: [NgIcon, DatePipe],
+  imports: [NgIcon, DatePipe, RouterLink],
   templateUrl: './find-event.html',
   styleUrl: './find-event.scss',
   viewProviders: [
@@ -61,5 +61,8 @@ throw new Error('Method not implemented.');
     console.log('Search with filters:');
     // Navigate to search results with query params, e.g.:
     // this.router.navigate(['/events'], { queryParams: this.filters });
+  }
+  handleEventDetails(id: any){
+this.router.navigate(['/register-event', id])
   }
 }

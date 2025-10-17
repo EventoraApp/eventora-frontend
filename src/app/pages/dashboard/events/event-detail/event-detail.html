@@ -1,75 +1,102 @@
-<a
-  routerLink="/dashboard/events"
-  class="cursor-pointer text-violet-600 font-medium flex items-center gap-2"
->
-  <ng-icon name="ionChevronBack" style="width: 22px; height: 22px" />
-  Back to events
-</a>
-<div class="max-w-4xl mx-auto p-6">
+<div class="flex relative flex-col lg:flex-row">
   @if (!loading && event) {
-  <div class="flex flex-col md:flex-row gap-6">
-    <img
-      [src]="event.image || 'assets/images/default.jpg'"
-      alt="{{ event.title }}"
-      class="w-full md:w-1/2 rounded-xl shadow-sm object-cover"
-    />
+  <aside class="bg-white border-r border-gray-200 p-6 space-y-6 flex-2">
+    <a
+      routerLink="/dashboard/events"
+      class="cursor-pointer text-violet-600 font-medium flex items-center gap-2"
+    >
+      <ng-icon name="ionChevronBack" style="width: 22px; height: 22px" />
+      Back to events
+    </a>
 
-    <div class="flex-1">
-      <h2 class="text-2xl font-bold text-violet-600 mb-2">
-        {{ event.title }}
-      </h2>
-
-      <p class="text-gray-600 mb-3">
-        {{ event.description }}
+    <div class="p-4 rounded-xl shadow-sm border border-gray-200 bg-white">
+      <div
+        class="relative rounded-lg overflow-hidden border border-violet-300 bg-violet-50 flex items-center justify-center h-[400px] mb-10 group"
+      >
+        <img
+          [src]="event.image || 'assets/images/default.jpg'"
+          alt="{{ event.title }}"
+          class="w-full h-full object-fit"
+        />
+      </div>
+      <p class="font-semibold text-gray-800">
+        {{ event.title || "Event Title" }}
+      </p>
+      <p class="text-sm text-gray-500">
+        {{ event.event_date | date : "fullDate" }} @
+        {{ event.event_time }}
       </p>
 
-      <ul class="space-y-1 text-gray-700">
-        <li><strong>Location:</strong> {{ event.location }}</li>
-        <li><strong>Date:</strong> {{ event.event_date }}</li>
-        <li><strong>Time:</strong> {{ event.event_time }}</li>
-        <li><strong>Price:</strong> {{ event.price }}</li>
-        <li><strong>Capacity:</strong> {{ event.capacity }}</li>
-        <li><strong>Category:</strong> {{ event.category }}</li>
-        <li>
-          <strong>Status:</strong>
-          <span
-            class="px-2 py-1 rounded-full text-xs font-medium"
-            [ngClass]="{
-              'bg-green-100 text-green-700': event.is_published,
-              'bg-yellow-100 text-yellow-700': !event.is_published
-            }"
-          >
-            {{ event.is_published ? "Published" : "Draft" }}
-          </span>
-        </li>
-      </ul>
-
-      <div class="mt-6">
-        <button
-          class="bg-transparent text-gray-600 p-0 hover:underline cursor-pointer"
-          (click)="onEdit(event)"
+      <div class="mt-3 flex items-center gap-2 justify-between">
+       
+        <div class="flex items-center justify-center ">
+          <ng-icon
+            name="ionLocationSharp"
+            style="width: 20px; height: 20px"
+          />
+          <p class="text-sm ">
+            {{ event.location }}
+          </p>
+        </div>
+         <span
+          class="px-2 py-1 rounded-full text-xs font-medium"
+          [ngClass]="{
+            'bg-green-100 text-green-700': event.is_published,
+            'bg-yellow-100 text-yellow-700': !event.is_published
+          }"
         >
-          Edit event
-        </button>
-        @if(!event.is_published){
-        <button
-          (click)="togglePublishEvent(event.id)"
-          class="bg-transparent text-green-600 hover:underline mx-2 px-4 cursor-pointer"
-        >
-          Publish Event
-        </button>
-        }@else {
-        <button
-          (click)="onDelete(event)"
-          class="bg-transparent text-red-400 hover:underline mx-2 px-4 cursor-pointer"
-        >
-          Delete event
-        </button>
-
-        }
+          {{ event.is_published ? "Published" : "Draft" }}
+        </span>
       </div>
     </div>
-  </div>
+  </aside>
+  <main class="flex-3 p-10 overflow-y-auto px-30">
+    <div class="flex flex-col gap-6">
+      <div class="flex justify-between items-center mb-6">
+        <h1 class="text-5xl font-extrabold text-gray-900">Event Dashboard</h1>
+      </div>
+      <div class="flex-1">
+        <h2 class="text-2xl font-bold text-violet-600 mb-2">
+          {{ event.title }}
+        </h2>
+
+        <p class="text-gray-600 mb-3">
+          {{ event.description }}
+        </p>
+
+        <ul class="space-y-1 text-gray-700">
+          <li><strong>Price:</strong> {{ event.price }}</li>
+          <li><strong>Capacity:</strong> {{ event.capacity }}</li>
+          <li><strong>Category:</strong> {{ event.category }}</li>
+        </ul>
+
+        <div class="mt-6 flex w-full justify-end">
+          <button
+            class="bg-transparent text-gray-600 p-0 hover:underline cursor-pointer flex items-center justify-center"
+            (click)="onEdit(event)"
+          >
+            <ng-icon name="ionCreate" style="width: 18px; height: 18px" /> Edit
+          </button>
+          @if(!event.is_published){
+          <button
+            (click)="togglePublishEvent(event.id)"
+            class="bg-transparent text-green-600 hover:underline mx-2 px-4 cursor-pointer"
+          >
+            Publish Event
+          </button>
+          }@else {
+          <button
+            (click)="onDelete(event)"
+            class="bg-transparent text-red-400 hover:underline mx-2 px-4 cursor-pointer flex items-center justify-center"
+          >
+            <ng-icon name="ionTrash" style="width: 18px; height: 18px" /> Delete
+          </button>
+
+          }
+        </div>
+      </div>
+    </div>
+  </main>
   } @else {
   <p class="text-center text-gray-500 mt-10">Loading event details...</p>
   }

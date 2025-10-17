@@ -28,6 +28,7 @@ export class Profile implements OnInit {
     profile_picture: new FormControl(''),
     cover_photo: new FormControl(''),
     username: new FormControl(''),
+    role: new FormControl(''),
     address: new FormControl(''),
     country: new FormControl(''),
     state: new FormControl(''),
@@ -63,6 +64,7 @@ export class Profile implements OnInit {
           first_name: profileData.first_name,
           last_name: profileData.last_name,
           phone_number: profileData.phone_number,
+          role: profileData.role,
         });
       },
       error: (err) => {

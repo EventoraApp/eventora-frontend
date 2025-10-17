@@ -1,7 +1,7 @@
 import { Routes } from '@angular/router';
 import { Dashboard } from './dashboard';
+import { roleGuard } from '../../guards/role-guard';
 export const routes: Routes = [
-  
   { path: '', pathMatch: 'full', redirectTo: 'home' },
   {
     path: '',
@@ -22,23 +22,26 @@ export const routes: Routes = [
       },
       {
         path: 'events/new/create',
+        canActivate: [roleGuard],
         loadComponent: () =>
           import('./events/create-event/create-event').then(
             (m) => m.CreateEvent
           ),
       },
-        {
-          path: 'events/:id/edit',
-          loadComponent: () =>
+      {
+        path: 'events/:id/edit',
+        loadComponent: () =>
           import('./events/create-event/create-event').then(
             (m) => m.CreateEvent
           ),
-        },
-        {
-          path: 'events/:id',
-          loadComponent: () =>
-            import('./events/event-detail/event-detail').then((m) => m.EventDetail),
-        },
+      },
+      {
+        path: 'events/:id',
+        loadComponent: () =>
+          import('./events/event-detail/event-detail').then(
+            (m) => m.EventDetail
+          ),
+      },
     ],
   },
 ];

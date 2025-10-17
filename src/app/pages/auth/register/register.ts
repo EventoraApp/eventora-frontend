@@ -46,7 +46,7 @@ export class Register {
       ),
     ]),
     password_confirm: new FormControl('', [Validators.required]),
-    role: new FormControl('organizer', [Validators.required]),
+    role: new FormControl('', [Validators.required]),
   });
 
   handleRegister() {
@@ -70,6 +70,7 @@ export class Register {
       password_confirm: password_confirm,
       role: role,
     };
+
 
     this.authService.registerUser(registerData).subscribe({
       next: (res) => {

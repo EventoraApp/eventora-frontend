@@ -27,6 +27,7 @@ export class AuthService {
         if (res.access && res.refresh) {
           localStorage.setItem('access_token', res.access);
           localStorage.setItem('refresh_token', res.refresh);
+          localStorage.setItem('user', res);
         }
       })
     );
@@ -43,8 +44,8 @@ export class AuthService {
 
   logout(): void {
     localStorage.removeItem('access_token');
-    // localStorage.removeItem('refresh_token');
-    // localStorage.removeItem('user');
+    localStorage.removeItem('refresh_token');
+    localStorage.removeItem('user');
   }
 
   getStoredUser(): any {
