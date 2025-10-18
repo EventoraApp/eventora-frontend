@@ -61,11 +61,6 @@ export class AuthService {
 
   getCurrentUser(): Observable<any> {
     return this.http.get(`${this.baseUrl}/users/me/`);
-    // .pipe(
-    //   tap((res) => {
-    //     localStorage.setItem('user', JSON.stringify(res));
-    //   })
-    // );
   }
 
   updateProfile(data: any): Observable<any>  {

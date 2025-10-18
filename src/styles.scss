@@ -7,14 +7,13 @@
 
 
 
-/* --------------- FONT & BASE SETTINGS --------------- */
 @layer base {
   :root,
   .root {
-    /* Core Theme Colors */
-    --color-primary: 99 102 241; /* Violet-500 */
-    --color-primary-hover: 124 58 237; /* Violet-600 */
-    --color-primary-light: 167 139 250; /* Violet-400 */
+
+    --color-primary: 99 102 241; 
+    --color-primary-hover: 124 58 237;
+    --color-primary-light: 167 139 250;
 
     --color-bg: 255 255 255;
     --color-bg-secondary: 249 250 251;
@@ -23,19 +22,19 @@
     --color-border: 229 231 235;
     --color-card: 255 255 255;
 
-    /* Font */
+
     --font-sans: "Inter", "Poppins", "Segoe UI", sans-serif;
 
-    /* Shadows & Transitions */
+
     --shadow-card: 0 4px 8px rgba(0, 0, 0, 0.05);
     --transition-fast: 0.25s ease;
     --radius-lg: 1rem;
   }
 
   .dark {
-    --color-primary: 139 92 246; /* Violet-500 in dark mode */
-    --color-primary-hover: 167 139 250; /* Violet-400 */
-    --color-primary-light: 196 181 253; /* Violet-300 */
+    --color-primary: 139 92 246; 
+    --color-primary-hover: 167 139 250;
+    --color-primary-light: 196 181 253; 
 
     --color-bg: 17 24 39;
     --color-bg-secondary: 31 41 55;
@@ -98,7 +97,7 @@
   }
 }
 
-/* --------------- COMPONENT STYLES --------------- */
+
 @layer components {
   .btn-primary {
     @apply bg-[rgb(var(--color-primary))] text-white px-4 py-2 rounded-lg font-medium shadow hover:bg-[rgb(var(--color-primary-hover))] transition-colors;
@@ -141,7 +140,7 @@
   }
 }
 
-/* --------------- UTILITIES OVERRIDES --------------- */
+
 @layer utilities {
   .bg-primary {
     background-color: rgb(var(--color-primary));

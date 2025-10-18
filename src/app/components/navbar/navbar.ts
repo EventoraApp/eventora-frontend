@@ -4,6 +4,7 @@ import { provideIcons, NgIcon } from '@ng-icons/core';
 import { ionSearch, ionMenu, ionClose, ionLogOutOutline } from '@ng-icons/ionicons';
 import { SideNavbar } from "../side-navbar/side-navbar";
 import { AuthService } from '../../services/auth-service';
+import { toast } from 'ngx-sonner';
 
 @Component({
   selector: 'app-navbar',
@@ -41,7 +42,7 @@ export class Navbar implements OnInit {
       },
       error: (err) => {
         console.log(err, 'An error occurred')
-        // alert('Couldnt get current user for some reasons')
+        toast.error('Couldnt get current user for some reasons')
       },
     });
 

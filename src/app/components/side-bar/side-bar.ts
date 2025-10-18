@@ -25,9 +25,9 @@ export class SideBar implements OnInit {
   isProfileActive = false;
 
   ngOnInit(): void {
-    this.updateActiveLinks(this.router.url); // initial state
+    this.updateActiveLinks(this.router.url); 
 
-    // Listen to route changes
+   
     this.router.events
       .pipe(filter((event): event is NavigationEnd => event instanceof NavigationEnd))
       .subscribe((event) => {

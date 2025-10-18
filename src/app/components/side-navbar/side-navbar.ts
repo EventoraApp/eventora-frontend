@@ -2,6 +2,7 @@ import { Component, inject } from '@angular/core';
 import { AuthService } from '../../services/auth-service';
 import { Router, RouterLink } from '@angular/router';
 import { NgIcon } from "@ng-icons/core";
+import { toast } from 'ngx-sonner';
 
 @Component({
   selector: 'app-side-navbar',
@@ -27,7 +28,7 @@ export class SideNavbar {
       },
       error: (err) => {
         console.log(err, 'An error occurred');
-        // alert('Couldnt get current user for some reasons');
+        toast.error('Couldnt get current user for some reasons');
       },
     });
   }

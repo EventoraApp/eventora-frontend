@@ -1,7 +1,7 @@
 <div class="landing-hero p-10 md:p-0">
   <div class="hero-overlay"></div>
   <div class="hero-inner container relative overflow-hidden">
-    <!-- Carousel as background -->
+
     <div class="hero-carousel absolute inset-0">
       @for (img of carouselImages; track $index) {
       <div class="slide" [class.active]="$index === currentIndex">
@@ -10,10 +10,10 @@
       }
     </div>
 
-    <!-- Overlay to dim and blur the background -->
+
     <div class="hero-overlay absolute inset-0 bg-black/40 z-[1]"></div>
 
-    <!-- Hero text content on top -->
+ 
     <div class="hero-text relative z-[2] text-white max-w-2xl py-24">
       <h1
         class="text-5xl md:text-6xl xl:text-7xl font-bold mb-4 text-white text-start md:text-center w-fit"

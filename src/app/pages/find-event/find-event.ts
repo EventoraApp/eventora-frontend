@@ -59,7 +59,6 @@ throw new Error('Method not implemented.');
 
   onSearch() {
     console.log('Search with filters:');
-    // Navigate to search results with query params, e.g.:
     // this.router.navigate(['/events'], { queryParams: this.filters });
   }
   handleEventDetails(id: any){

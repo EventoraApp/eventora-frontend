@@ -135,12 +135,9 @@ export class Home implements OnInit {
 
   onSearch() {
     console.log('Search with filters:', this.filters);
-    // Navigate to search results with query params, e.g.:
     // this.router.navigate(['/events'], { queryParams: this.filters });
   }
 
   goToEvent(id: string) {
-    // navigate to event detail page
-    // this.router.navigate(['/event', id]);
   }
 }

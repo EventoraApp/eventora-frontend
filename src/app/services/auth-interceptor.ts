@@ -5,7 +5,7 @@ import {
   HttpHandlerFn,
 } from '@angular/common/http';
 import { inject } from '@angular/core';
-import { AuthService } from './auth-service'; // adjust the path to match your app
+import { AuthService } from './auth-service'; 
 import { catchError, switchMap, tap, throwError } from 'rxjs';
 import { toast } from 'ngx-sonner';
 import { Router } from '@angular/router';
@@ -22,7 +22,7 @@ export const authInterceptor: HttpInterceptorFn = (
   const tokenDate = new Date(localStorage.getItem('token_date')!);
   const diff = tokenDate.getTime() - currentDate.getTime();
 
-  // Clone request and attach access token if available
+
   const authReq = token
     ? req.clone({
         setHeaders: {

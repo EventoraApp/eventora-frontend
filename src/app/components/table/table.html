@@ -12,7 +12,7 @@
     <tbody>
       @if (events.length > 0) { @for (event of events; track $index) {
       <tr class="hover:bg-slate-50 transition cursor-pointer">
-        <!-- Event Column -->
+
         <td class="px-6 py-4 flex items-center gap-4" (click)="onView(event)">
           <img
             [src]="event.image"
@@ -30,13 +30,13 @@
           </div>
         </td>
 
-        <!-- Date -->
+      
         <td class="px-6 py-4" (click)="onView(event)">
           <p class="text-gray-500">{{ event.date }}</p>
           <p class="text-xs text-gray-500">{{ event.time }}</p>
         </td>
 
-        <!-- Status -->
+     
         <td class="px-6 py-4" (click)="onView(event)">
           <div
             class="px-3 py-1 rounded-full text-xs font-medium w-fit"
@@ -50,7 +50,7 @@
           </div>
         </td>
 
-        <!-- Actions -->
+    
         <td class="px-6 py-4 text-right">
           <button
             title="Edit"
