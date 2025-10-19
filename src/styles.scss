@@ -47,7 +47,7 @@
   }
 
   body {
-    @apply bg-[rgb(var(--color-bg))] text-[rgb(var(--color-text))] font-sans antialiased transition-colors duration-300;
+    @apply transition-all bg-[rgb(var(--color-bg))] text-[rgb(var(--color-text))] font-sans antialiased transition-colors duration-300;
     font-family: var(--font-sans);
   }
 

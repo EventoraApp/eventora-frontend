@@ -3,24 +3,31 @@ import { Router, RouterLink } from '@angular/router';
 import { Events } from '../../services/events';
 import { toast } from 'ngx-sonner';
 import { NgIcon, provideIcons } from '@ng-icons/core';
-import { ionSearch,ionLocationSharp,ionTime,ionFilter } from '@ng-icons/ionicons';
+import {
+  ionSearch,
+  ionLocationSharp,
+  ionTime,
+  ionFilter,
+} from '@ng-icons/ionicons';
 import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-find-event',
-  imports: [NgIcon, DatePipe, RouterLink],
+  imports: [NgIcon, DatePipe],
   templateUrl: './find-event.html',
   styleUrl: './find-event.scss',
   viewProviders: [
     provideIcons({
-      ionSearch, ionLocationSharp,ionTime,ionFilter
+      ionSearch,
+      ionLocationSharp,
+      ionTime,
+      ionFilter,
     }),
   ],
 })
 export class FindEvent implements OnInit {
-goToEvent(arg0: any) {
-throw new Error('Method not implemented.');
-}
+
+
   router = inject(Router);
   private eventService = inject(Events);
   events: any[] = [];
@@ -61,7 +68,7 @@ throw new Error('Method not implemented.');
     console.log('Search with filters:');
     // this.router.navigate(['/events'], { queryParams: this.filters });
   }
-  handleEventDetails(id: any){
-this.router.navigate(['/register-event', id])
+  handleEventDetails(id: any) {
+    this.router.navigate(['/register-event', id]);
   }
 }

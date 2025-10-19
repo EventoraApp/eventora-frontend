@@ -1,6 +1,6 @@
 import { DatePipe } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import {
   ionBriefcaseSharp,
@@ -11,6 +11,8 @@ import {
   ionSearch,
 } from '@ng-icons/ionicons';
 import { AuthService } from '../../services/auth-service';
+import { Events } from '../../services/events';
+import { toast } from 'ngx-sonner';
 
 interface EventItem {
   id: string;
@@ -43,6 +45,10 @@ interface Testimonial {
 })
 export class Home implements OnInit {
   authService = inject(AuthService);
+  router = inject(Router)
+    private eventService = inject(Events);
+    events: any[] = [];
+    
 
   user = {};
   carouselImages: string[] = [
@@ -135,9 +141,35 @@ export class Home implements OnInit {
 
   onSearch() {
     console.log('Search with filters:', this.filters);
-    // this.router.navigate(['/events'], { queryParams: this.filters });
+    this.router.navigate(['/find-event'], { queryParams: this.filters });
   }
 
-  goToEvent(id: string) {
+ 
+  
+    loadEvents() {
+      this.eventService.getAllEvents().subscribe({
+        next: (res) => {
+          this.events = res.map((event: any) => ({
+            image: event.image || 'assets/images/laptopframe.png',
+            name: event.title,
+            location: event.location,
+            date: event.event_date,
+            time: event.event_time,
+            description: event.description,
+            price: event.price,
+            category: event.category,
+            id: event.id,
+            slug: event.slug,
+          }));
+  
+          console.log(this.events);
+        },
+        error: (err) => {
+          toast.error('Error fetching events:', err);
+        },
+      });
+    }
+    handleEventDetails(id: any) {
+    this.router.navigate(['/register-event', id]);
   }
 }
