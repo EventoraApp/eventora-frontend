@@ -22,7 +22,7 @@ export const routes: Routes = [
       },
       {
         path: 'events/new/create',
-        canActivate: [roleGuard],
+        // canActivate: [roleGuard],
         loadComponent: () =>
           import('./events/create-event/create-event').then(
             (m) => m.CreateEvent

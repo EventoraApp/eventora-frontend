@@ -66,4 +66,9 @@ export class AuthService {
   updateProfile(data: any): Observable<any>  {
     return this.http.put( `${this.baseUrl}/users/me/profile`,data)
   }
+
+  updateMe(data: any): Observable<any>  {
+    return this.http.put( `${this.baseUrl}/users/me/update`,data)
+  }
+
 }
