@@ -25,17 +25,20 @@ export class RegisterEvent implements OnInit {
   event: any = null;
   isTicketFormShowing: boolean = false;
   ticketCount = signal(1);
-  totalPrice = computed(() =>  this.ticketCount() * 200)
+  totalPrice = computed(() =>  (this.ticketCount() * this.event.price).toFixed(2))
   registered: boolean = false
 
   ngOnInit(): void {
     this.eventId = this.route.snapshot.paramMap.get('id');
+    this.getEvent(this.eventId)
   }
 
   getEvent(id: any) {
     this.eventService.getEventById(id).subscribe({
       next: (res) => {
         this.event = res;
+        console.log("Events",this.event)
+      
       },
       error: (err) => {
         toast.error("Coudn't fetch this event");

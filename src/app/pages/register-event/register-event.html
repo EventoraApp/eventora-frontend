@@ -1,6 +1,6 @@
 <div class="flex flex-col p-10">
   <div class="bg-gray-200 h-[60vh] w-full mb-10">
-    <img src="assets/images/music1.jpg" alt="event" class="w-full h-full" />
+    <img [src]="event.image" [alt]="event.name" class="w-full h-full" />
   </div>
 
   <main
@@ -8,13 +8,13 @@
   >
     <section class="flex-1 md:flex-3 gap-5 flex flex-col">
       <div class="flex flex-col gap-2">
-        <p class="text-[20px]">Event Date</p>
-        <h1 class="text-[35px] font-bold">Event Title</h1>
+        <p class="text-[20px]">{{event.event_date}}</p>
+        <h1 class="text-[35px] font-bold">{{event.title}}</h1>
         <div class="flex items-center">
           <div class="mr-2 w-8 h-8 rounded-full bg-slate-200"></div>
-          <p>Organised by Beauty and the Beast</p>
+          <p>Organised by {{event.organizer}}</p>
         </div>
-        <p class="text-[20px]">Event description and so on and so forth</p>
+        <p class="text-[20px]">{{event.description}}</p>
       </div>
 
       <div class="">
@@ -23,7 +23,7 @@
           <div class="w-5 h-5 text-black text-[20px]">
             <ng-icon name="ionCalendar" />
           </div>
-          <p>Today at 7pm</p>
+          <p>{{event.event_date}}, {{ event.event_time}} </p>
         </div>
       </div>
 
@@ -33,14 +33,14 @@
           <div class="w-5 h-5 text-black text-[20px]">
             <ng-icon name="ionLocationSharp" />
           </div>
-          <p>KNUST AU Garderns</p>
+          <p>{{event.location}}</p>
         </div>
       </div>
     </section>
 
     <section class="w-full lg:flex-2">
       <div class="shadow-md rounded-md p-5 flex flex-col items-center gap-4">
-        <h1 class="text-[25px]">$200</h1>
+        <h1 class="text-[25px]">${{event.price}}</h1>
         @if(!registered){
         <button
           (click)="toggleTicketForm()"
@@ -76,8 +76,8 @@
           <div
             class="pb-2 border-b border-slate-200 w-full flex flex-col items-center justify-center"
           >
-            <h1>Event Title</h1>
-            <p class="text-[14px] text-slate-700">Event Date</p>
+            <h1>{{event.title}}</h1>
+            <p class="text-[14px] text-slate-700">{{event.event_date}}</p>
           </div>
           <div class="flex flex-col items-center h-full">
             <div class="h-20">
