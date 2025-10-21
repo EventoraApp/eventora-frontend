@@ -38,6 +38,7 @@ export class CreateEvent implements OnInit {
   isEditMode = false;
   eventId: string | null = null;
   event: any = null;
+  allCategories:any = []
 
   ticketForm = new FormGroup({
     type: new FormControl('Paid'),
@@ -91,7 +92,15 @@ export class CreateEvent implements OnInit {
       }
     });
 
-    this.event
+    this.eventService.getCategories().subscribe({
+      next: (res) => {
+        this.allCategories = res
+      },
+      error: (err) => {
+        toast.error("Couldn't load Categories")
+        console.log(err)
+      }
+    })
   }
 
   openDrawer() {
@@ -135,7 +144,7 @@ export class CreateEvent implements OnInit {
     formData.append('event_time', formValues.event_time || '');
     formData.append('price', formValues.price || '');
     formData.append('capacity', formValues.capacity || '');
-    formData.append('category', formValues.category || '');
+    formData.append('category_id', formValues.category || '');
     formData.append('is_published', formValues.is_published ? 'true' : 'false');
 
     if (this.selectedFile) {
@@ -143,7 +152,7 @@ export class CreateEvent implements OnInit {
     }
 
     if (this.isEditMode) {
-      this.eventService.editEvent( this.eventId!,formData).subscribe({
+      this.eventService.editEvent(this.eventId!, formData).subscribe({
         next: (res: any) => {
           console.log('Event edited successfully:', res);
           this.loading = false;
@@ -153,7 +162,7 @@ export class CreateEvent implements OnInit {
         error: (err) => {
           this.loading = false;
           toast.error(err.error.message[0]);
-          this.router.navigate(['/dashboard/events/',this.eventId, 'edit' ]);
+          this.router.navigate(['/dashboard/events/', this.eventId, 'edit']);
         },
       });
     } else {
@@ -202,7 +211,7 @@ export class CreateEvent implements OnInit {
 
       this.ticketForm.patchValue({
         quantity: eventData.capacity,
-        price: eventData.price, 
+        price: eventData.price,
       })
     });
   }

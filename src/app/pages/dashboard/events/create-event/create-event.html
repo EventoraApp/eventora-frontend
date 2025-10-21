@@ -142,11 +142,9 @@
               formControlName="category"
             >
               <option value="" disabled selected hidden>Select Category</option>
-              <option value="Music">Music</option>
-              <option value="Tech">Tech</option>
-              <option value="Food & Drink">Food & Drink</option>
-              <option value="Sports">Sports</option>
-              <option value="Workshop">Workshop</option>
+              @for(cat of allCategories; track cat.id){
+                <option [value]="cat.id">{{cat.name}}</option>
+              }
             </select>
           </div>
         </div>
