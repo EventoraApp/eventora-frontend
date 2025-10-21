@@ -26,19 +26,23 @@ export class Events {
   getMyEvents(): Observable<any> {
     return this.http.get(`${this.baseUrl}/my-events/`);
   }
-
+  
   togglePublishEvent(id: number | string): Observable<any> {
     return this.http.patch(`${this.baseUrl}/events/${id}/publish/`, {
       published: true,
     });
   }
-
+  
   deleteEvent(id: number | string): Observable<any> {
     return this.http.delete(`${this.baseUrl}/events/${id}/`);
   }
-
-
+  
+  
   editEvent(id: number | string, eventData: any): Observable<any> {
     return this.http.put(`${this.baseUrl}/events/${id}/`, eventData);
+  }
+
+  getCategories(): Observable<any> {
+    return this.http.get(`${this.baseUrl}/categories/`);
   }
 }

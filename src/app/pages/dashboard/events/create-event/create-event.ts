@@ -90,6 +90,8 @@ export class CreateEvent implements OnInit {
         priceControl?.enable();
       }
     });
+
+    this.event
   }
 
   openDrawer() {
@@ -193,7 +195,7 @@ export class CreateEvent implements OnInit {
         event_date: eventData.event_date,
         event_time: eventData.event_time,
         capacity: eventData.capacity,
-        category: eventData.category,
+        category: eventData.category.name,
         image: eventData.image,
         price: eventData.price,
       });
