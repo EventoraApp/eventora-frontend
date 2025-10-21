@@ -25,7 +25,8 @@ export class Profile implements OnInit {
   private authService = inject(AuthService);
   countries = countries
   user: any;
-  selectedFile = '';
+  selectedFileC = '';
+  selectedFileP = '';
   profileForm = new FormGroup({
     profile_picture: new FormControl(''),
     cover_photo: new FormControl(''),
@@ -55,14 +56,14 @@ export class Profile implements OnInit {
         console.log('User profile:', profileData);
         this.user = profileData;
         this.profileForm.patchValue({
-          profile_picture: profileData.profile.profile_picture,
-          cover_photo: profileData.profile.cover_photo,
+          profile_picture: profileData.profile_picture,
+          cover_photo: profileData.cover_photo,
           username: profileData.username,
-          address: profileData.profile.address,
-          country: profileData.profile.country,
-          state: profileData.profile.state,
-          city: profileData.profile.city,
-          location: profileData.profile.location,
+          address: profileData.address,
+          country: profileData.country,
+          state: profileData.state,
+          city: profileData.city,
+          location: profileData.location,
           first_name: profileData.first_name,
           last_name: profileData.last_name,
           phone_number: profileData.phone_number,
@@ -99,6 +100,33 @@ export class Profile implements OnInit {
       })
     }
 
+     const formData = new FormData();
+    const formValues = this.profileForm.value;
+
+
+
+    formData.append('username', formValues.username || '');
+    formData.append('address', formValues.address || '');
+    formData.append('role', formValues.role || '');
+    formData.append('location', formValues.location || '');
+    formData.append('city', formValues.city || '');
+    formData.append('state', formValues.state || '');
+    formData.append('country', formValues.country || '');
+    formData.append('first_name', formValues.first_name || '');
+    formData.append('last_name', formValues.last_name || '');
+    formData.append('longitude', formValues.longitude || '');
+    formData.append('latitude', formValues.latitude || '');
+    formData.append('phone_number', formValues.phone_number || '');
+
+    if (this.selectedFileC) {
+      formData.append('cover_photo', this.selectedFileC);
+    }
+    if (this.selectedFileP) {
+      formData.append('profile_picture', this.selectedFileP);
+    }
+
+
+
     this.authService.updateProfile(this.profileForm.value).subscribe({
       next: (res: any) => {
         console.log('Profile updated successfully:', res);
@@ -107,7 +135,8 @@ export class Profile implements OnInit {
       },
       error: (err) => {
         this.loading = false;
-        toast.error(err.error.message[0]);
+        toast.error("An Error occurred");
+        console.log(err)
       },
     });
   }
@@ -115,7 +144,7 @@ export class Profile implements OnInit {
   onImageSelect(event: any) {
     const file = event.target.files[0];
     if (file) {
-      this.selectedFile = file;
+      this.selectedFileC = file;
       const reader = new FileReader();
       reader.onload = () =>
         this.profileForm.patchValue({ cover_photo: reader.result as string });
@@ -126,7 +155,7 @@ export class Profile implements OnInit {
   onProfileImageSelect(event: any) {
     const file = event.target.files[0];
     if (file) {
-      this.selectedFile = file;
+      this.selectedFileP = file;
       const reader = new FileReader();
       reader.onload = () =>
         this.profileForm.patchValue({
