@@ -7,6 +7,7 @@ import { DatePipe } from '@angular/common';
 import { toast } from 'ngx-sonner';
 // import { CountryISO, NgxIntlTelInputModule, SearchCountryField } from 'ngx-intl-tel-input';
 // import { CountryPickerModule } from 'ngx-country-picker';
+import { countries } from '../../../models/country'
 
 @Component({
   selector: 'app-profile',
@@ -22,6 +23,7 @@ import { toast } from 'ngx-sonner';
 })
 export class Profile implements OnInit {
   private authService = inject(AuthService);
+  countries = countries
   user: any;
   selectedFile = '';
   profileForm = new FormGroup({
@@ -33,11 +35,12 @@ export class Profile implements OnInit {
     country: new FormControl(''),
     state: new FormControl(''),
     city: new FormControl(''),
-    pin_code: new FormControl(''),
     location: new FormControl(''),
     first_name: new FormControl(''),
     last_name: new FormControl(''),
     phone_number: new FormControl(''),
+    latitude: new FormControl(''),
+    longitude: new FormControl(''),
   });
 
   loading = false;
@@ -52,15 +55,14 @@ export class Profile implements OnInit {
         console.log('User profile:', profileData);
         this.user = profileData;
         this.profileForm.patchValue({
-          profile_picture: profileData.profile_picture,
-          cover_photo: profileData.cover_photo,
+          profile_picture: profileData.profile.profile_picture,
+          cover_photo: profileData.profile.cover_photo,
           username: profileData.username,
-          address: profileData.address,
-          country: profileData.country,
-          state: profileData.state,
-          city: profileData.city,
-          pin_code: profileData.pin_code,
-          location: profileData.location,
+          address: profileData.profile.address,
+          country: profileData.profile.country,
+          state: profileData.profile.state,
+          city: profileData.profile.city,
+          location: profileData.profile.location,
           first_name: profileData.first_name,
           last_name: profileData.last_name,
           phone_number: profileData.phone_number,
@@ -68,13 +70,34 @@ export class Profile implements OnInit {
         });
       },
       error: (err) => {
-        console.error('Failed to fetch user info:', err);
+        toast.error('Failed to fetch user info:', err);
       },
     });
   }
 
   onSubmit() {
     this.loading = true;
+    if (this.profileForm.value.cover_photo = "") {
+      this.authService.deleteCoverPhoto().subscribe({
+        next: (res) => {
+          toast.success("Cover Photo deleted successfully")
+        },
+        error: (err) => {
+          toast.error("Couldn't delete cover photo")
+        }
+      })
+    }
+
+    if (this.profileForm.value.profile_picture = "") {
+      this.authService.deleteProfilePhoto().subscribe({
+        next: (res) => {
+          toast.success("Profile Photo deleted successfully")
+        },
+        error: (err) => {
+          toast.error("Couldn't delete profile photo")
+        }
+      })
+    }
 
     this.authService.updateProfile(this.profileForm.value).subscribe({
       next: (res: any) => {

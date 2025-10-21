@@ -6,21 +6,21 @@
     </p>
   </div>
   <div
-    class="w-full h-60 mb-10 bg-slate-200 mx-auto relative rounded-md flex items-center justify-center"
+    class="relative w-full h-60 mb-10 bg-slate-200 mx-auto relative rounded-md flex items-center justify-center group"
   >
     @if (profileForm.value.cover_photo) {
+      <button
+      (click)="removeCoverPhoto()"
+      class="absolute top-3 right-3 bg-white text-violet-600 hover:bg-red-400 hover:text-white rounded-full p-2 cursor-pointer opacity-0 group-hover:opacity-100 transition-all duration-300 shadow-md"
+      title="Remove image"
+      >
+      <ng-icon name="ionTrashOutline" style="width: 20px; height: 20px" />
+    </button>
     <img
       [src]="profileForm.value.cover_photo"
       alt="Covere"
       class="w-full h-full object-fit"
     />
-    <button
-      (click)="removeCoverPhoto()"
-      class="absolute top-3 right-3 bg-white text-violet-600 hover:bg-red-400 hover:text-white rounded-full p-2 cursor-pointer opacity-0 group-hover:opacity-100 transition-all duration-300 shadow-md"
-      title="Remove image"
-    >
-      <ng-icon name="ionTrashOutline" style="width: 20px; height: 20px" />
-    </button>
     } @else {
     <label
       class="cursor-pointer flex flex-col items-center justify-center text-center text-gray-700"
@@ -41,7 +41,7 @@
     </label>
     }
     <div
-      class="overflow-hidden flex text-white flex-col items-center justify-center rounded-full w-30 h-30 -bottom-15 xl:w-35 xl:h-35 absolute bg-gray-400 xl:-bottom-20 left-5 border-2 border-gray-300"
+      class="overflow-hidden flex text-white flex-col items-center justify-center rounded-full w-30 h-30 -bottom-15 xl:w-35 xl:h-35 absolute bg-gray-400 xl:-bottom-20 left-5 border-2 border-gray-300 group"
     >
       @if (profileForm.value.profile_picture) {
       <img
@@ -133,7 +133,7 @@
             <select
               name="role"
               id=""
-              class="mt-1 w-full placeholder:text-slate-400 placeholder:text-[14px] placeholder:italic active:ring-1 ring-fuchsia-700"
+              class="border border-gray-300 mt-1 w-full placeholder:text-slate-400 placeholder:text-[14px] placeholder:italic active:ring-1 ring-fuchsia-700 p-3"
               formControlName="role"
               [value]="profileForm.value.role"
             >
@@ -160,13 +160,20 @@
           </div>
           <div class="flex flex-col">
             <label for="">Country</label>
-            <input
-              formControlName="country"
-              type="text"
-              placeholder="Country"
+             <select
               name="country"
+              id=""
               class="border border-gray-300 mt-1 w-full placeholder:text-slate-400 placeholder:text-[14px] placeholder:italic active:ring-1 ring-fuchsia-700 p-3"
-            />
+              formControlName="country"
+              [value]="profileForm.value.country"
+            >
+            <option value="" selected disabled hidden>Select your Country</option>
+            @for(country of countries; track country.code){
+
+              <option [value]="country.name">{{country.name}}</option>
+            }
+            </select>
+      
           </div>
         </div>
         <div class="grid grid-cols-2 gap-2">
@@ -192,18 +199,6 @@
           </div>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div>
-            <label class="block mb-2 text-gray-700">Zip Code</label>
-            <input
-              type="text"
-              formControlName="pin_code"
-              placeholder="Zip Code"
-              name="zip"
-              class="placeholder:text-slate-400 placeholder:text-[14px] placeholder:italic w-full border border-gray-300 rounded-md p-3 focus:ring-2 focus:ring-fuchsia-700 outline-none"
-            />
-          </div>
-        </div>
       </section>
       <!-- Save Button -->
       <div class="flex justify-end mb-5">

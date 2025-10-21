@@ -63,12 +63,20 @@ export class AuthService {
     return this.http.get(`${this.baseUrl}/users/me/`);
   }
 
+  getUserProfile(): Observable<any> {
+    return this.http.get(`${this.baseUrl}/users/me/profile/`);
+  }
+  
   updateProfile(data: any): Observable<any>  {
     return this.http.put( `${this.baseUrl}/users/me/profile`,data)
   }
 
-  updateMe(data: any): Observable<any>  {
-    return this.http.put( `${this.baseUrl}/users/me/update`,data)
+  deleteCoverPhoto(): Observable<any> {
+    return this.http.delete(`${this.baseUrl}/users/me/profile/remove-cover/`);
+  }
+
+  deleteProfilePhoto(): Observable<any> {
+    return this.http.delete(`${this.baseUrl}/users/me/profile/remove-picture/`);
   }
 
 }
