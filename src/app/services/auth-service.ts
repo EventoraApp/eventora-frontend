@@ -68,7 +68,7 @@ export class AuthService {
   }
   
   updateProfile(data: any): Observable<any>  {
-    return this.http.put( `${this.baseUrl}/users/me/profile`,data)
+    return this.http.put( `${this.baseUrl}/users/me/profile/`,data)
   }
 
   deleteCoverPhoto(): Observable<any> {

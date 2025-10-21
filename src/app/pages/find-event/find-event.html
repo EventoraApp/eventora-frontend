@@ -11,6 +11,7 @@
           <ng-icon name="ionFilter" />
         </div>
         <input
+        [(ngModel)]="searchText" (ngModelChange)="onSearchChange()"
           type="search"
           placeholder="What are you looking for?"
           class="h-12 rounded-none py-2 px-5 placeholder:text-slate-400 placeholder:text-[14px] placeholder:italic active:ring-1 ring-fuchsia-700 flex-1"
@@ -39,7 +40,7 @@
 
   <section class="trending-events">
     <div class="cards-grid grid grid-cols-3">
-      @for (event of events; track event.id) {
+      @for (event of filteredEvents; track event.id) {
       <div (click)="handleEventDetails(event.id)" class="card cursor-pointer bg-gray-100 flex flex-col min-w-[300px]">
         <div class="card-image">
           <img [src]="event.image" alt="{{ event.name }}" />

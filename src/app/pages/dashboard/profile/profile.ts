@@ -127,15 +127,16 @@ export class Profile implements OnInit {
 
 
 
-    this.authService.updateProfile(this.profileForm.value).subscribe({
+    this.authService.updateProfile(formData).subscribe({
       next: (res: any) => {
         console.log('Profile updated successfully:', res);
         this.loading = false;
         toast.success('Profile updated  successfully!');
+        window.location.reload()
       },
       error: (err) => {
         this.loading = false;
-        toast.error("An Error occurred");
+        toast.error(err.error.message);
         console.log(err)
       },
     });
