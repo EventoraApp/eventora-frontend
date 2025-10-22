@@ -15,6 +15,7 @@ import {
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Events } from '../../../../services/events';
 import { toast } from 'ngx-sonner';
+import { AuthService } from '../../../../services/auth-service';
 
 @Component({
   selector: 'app-create-event',
@@ -32,13 +33,15 @@ export class CreateEvent implements OnInit {
   isFree: boolean = false;
   isDonation: boolean = false;
   eventService = inject(Events);
+  authService = inject(AuthService);
   loading = false;
   selectedFile = '';
   router = inject(Router);
   isEditMode = false;
   eventId: string | null = null;
   event: any = null;
-  allCategories:any = []
+  allCategories: any = []
+  role = ""
 
   ticketForm = new FormGroup({
     type: new FormControl('Paid'),
@@ -81,6 +84,19 @@ export class CreateEvent implements OnInit {
   }
 
   constructor(private route: ActivatedRoute) {
+
+    this.authService.getRole().subscribe({
+      next: (res) => {
+        this.role = res.role
+        if (res.role !== "organizer") {
+          toast.warning("Please update your role to an Organizer in your profile to be able to create an Event")
+        }
+      },
+      error: (err) => {
+        console.log(err)
+      }
+    })
+
     this.ticketForm.get('type')?.valueChanges.subscribe((type) => {
       const priceControl = this.ticketForm.get('price');
 
@@ -123,6 +139,10 @@ export class CreateEvent implements OnInit {
   }
 
   onSubmit() {
+    if (this.role !== "organizer") {
+      toast.error("Please update your role to an Organizer")
+      this.router.navigate(['/dashboard/profile'])
+    }
     this.createEventForm.patchValue({
       capacity: this.ticketForm.value.quantity,
       price: this.ticketForm.value.price,
@@ -176,7 +196,7 @@ export class CreateEvent implements OnInit {
         error: (err) => {
           this.loading = false;
           toast.error(err.error.message[0]);
-          this.router.navigate(['/dashboard/events/create']);
+          this.router.navigate(['/dashboard/events/new/create']);
         },
       });
     }

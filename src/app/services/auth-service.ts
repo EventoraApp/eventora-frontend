@@ -62,6 +62,9 @@ export class AuthService {
   getCurrentUser(): Observable<any> {
     return this.http.get(`${this.baseUrl}/users/me/`);
   }
+  getRole(): Observable<any> {
+    return this.http.get(`${this.baseUrl}/users/me/role/`);
+  }
 
   getUserProfile(): Observable<any> {
     return this.http.get(`${this.baseUrl}/users/me/profile/`);
