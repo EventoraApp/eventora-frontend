@@ -9,7 +9,10 @@
         <p class="text-[20px]">{{event.event_date}}</p>
         <h1 class="text-[35px] font-bold">{{event.title}}</h1>
         <div class="flex items-center">
-          <div class="mr-2 w-8 h-8 rounded-full bg-slate-200"></div>
+          <div class="mr-2 w-8 h-8 rounded-full bg-slate-200 overflow-hidden ">
+            <img [src]="event.organizer_profile_picture" alt="organizer_profile_picture" class="w-full h-full object-fit"
+            >
+          </div>
           <p>Organised by {{event.organizer_name}}</p>
         </div>
         <p class="text-[20px]">{{event.description}}</p>
