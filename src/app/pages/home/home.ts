@@ -132,7 +132,7 @@ export class Home implements OnInit {
           slug: event.slug,
         }));
 
-        this.trendingEvents = this.events.slice(0, 6)
+        this.trendingEvents = this.events.slice(0, 4)
       },
       error: (err) => {
         toast.error('Error fetching events:', err);
