@@ -132,7 +132,6 @@ export class Home implements OnInit {
           slug: event.slug,
         }));
 
-        console.log(this.events);
         this.trendingEvents = this.events.slice(0, 6)
       },
       error: (err) => {
