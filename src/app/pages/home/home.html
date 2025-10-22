@@ -25,6 +25,7 @@
         class="items-start grid grid-cols-1 md:grid-cols-2 md:items-center gap-3"
       >
         <input
+        [(ngModel)] = "filters.query"
           type="search"
           placeholder="What are you looking for?"
           class="h-12 rounded-none py-2 px-5 placeholder:text-slate-400 placeholder:text-[14px] placeholder:italic active:ring-1 ring-fuchsia-700 flex-1"
@@ -65,7 +66,7 @@
         <p class="meta">
           {{ ev.date | date : "mediumDate" }} • {{ ev.location }}
         </p>
-        <p class="description">{{ ev.shortDesc }}</p>
+        <p class="description">{{ ev.description }}</p>
       </div>
     </div>
     }

@@ -20,8 +20,7 @@ export class Login {
   private authService = inject(AuthService);
   private router = inject(Router);
   loading = false;
-  expireDate = new Date()
-  expireTime = 0
+  expireDate = ''
 
   loginForm = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),
@@ -42,10 +41,9 @@ export class Login {
       .subscribe({
         next: (res) => {
           console.log('Login successful:', res);
-          this.expireDate = new Date(res.access_token_expiry)
-          this.expireTime = this.expireDate.getTime()
-          localStorage.setItem('token_time', (this.expireTime).toString())
-          localStorage.setItem('token_date', (this.expireDate).toDateString())
+          this.expireDate = res.access_token_expiry
+          console.log(this.expireDate)
+          localStorage.setItem('token_date', this.expireDate)
 
           this.authService.getCurrentUser().subscribe({
             next: (res) => {

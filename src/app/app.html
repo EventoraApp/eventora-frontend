@@ -1,8 +1,8 @@
-@if(router.url === '/home' || router.url === '/find-event'  || router.url.startsWith('/register-event')  ){
+@if(router.url.startsWith('/home') || router.url.startsWith('/find-event')  || router.url.startsWith('/register-event')  ){
  
     <app-navbar></app-navbar>
 <div class="h-18"></div>
 }
 <router-outlet></router-outlet>
 <ngx-sonner-toaster position="top-center"  [expand]="true"/>
-@if(router.url === '/home' || router.url === '/find-event' || router.url.startsWith('/register-event') ){<app-footer></app-footer>}
+@if(router.url.startsWith('/home') || router.url.startsWith('/find-event') || router.url.startsWith('/register-event') ){<app-footer></app-footer>}

@@ -13,6 +13,7 @@ import {
 import { AuthService } from '../../services/auth-service';
 import { Events } from '../../services/events';
 import { toast } from 'ngx-sonner';
+import { FormsModule } from '@angular/forms';
 
 interface EventItem {
   id: string;
@@ -29,7 +30,7 @@ interface Testimonial {
 
 @Component({
   selector: 'app-home',
-  imports: [DatePipe, NgIcon],
+  imports: [DatePipe, NgIcon, FormsModule],
   templateUrl: './home.html',
   styleUrl: './home.scss',
   viewProviders: [
@@ -46,9 +47,9 @@ interface Testimonial {
 export class Home implements OnInit {
   authService = inject(AuthService);
   router = inject(Router)
-    private eventService = inject(Events);
-    events: any[] = [];
-    
+  private eventService = inject(Events);
+  events: any[] = [];
+
 
   user = {};
   carouselImages: string[] = [
@@ -68,39 +69,7 @@ export class Home implements OnInit {
   };
   categoryEntries = Object.entries(this.categories);
 
-  trendingEvents: EventItem[] = [
-    {
-      id: '1',
-      name: 'Live Music Night',
-      date: new Date('2025-11-10'),
-      location: 'Accra',
-      image: 'assets/images/music1.jpg',
-      shortDesc: 'Enjoy a spectacular evening of local bands and DJs.',
-    },
-    {
-      id: '2',
-      name: 'Tech Summit',
-      date: new Date('2025-12-05'),
-      location: 'Kumasi',
-      image: 'assets/images/tech1.jpg',
-      shortDesc: 'Join innovators, network, and learn from industry leaders.',
-    },
-    {
-      id: '3',
-      name: 'Food Festival',
-      date: new Date('2025-10-22'),
-      location: 'Tema',
-      image: 'assets/images/food1.jpg',
-      shortDesc: 'Taste cuisines from around the world at one place.',
-    },
-    {
-      id: '3',
-      name: 'Code Fest 2025',
-      date: new Date('2025-10-22'),
-      location: 'Tema',
-      image: 'assets/images/hack1.jpg',
-      shortDesc: 'Taste cuisines from around the world at one place.',
-    },
+  trendingEvents: any = [
   ];
 
   testimonials: Testimonial[] = [
@@ -131,6 +100,7 @@ export class Home implements OnInit {
 
   ngOnInit(): void {
     this.startCarousel();
+    this.loadEvents()
   }
 
   startCarousel() {
@@ -144,32 +114,33 @@ export class Home implements OnInit {
     this.router.navigate(['/find-event'], { queryParams: this.filters });
   }
 
- 
-  
-    loadEvents() {
-      this.eventService.getAllEvents().subscribe({
-        next: (res) => {
-          this.events = res.map((event: any) => ({
-            image: event.image || 'assets/images/laptopframe.png',
-            name: event.title,
-            location: event.location,
-            date: event.event_date,
-            time: event.event_time,
-            description: event.description,
-            price: event.price,
-            category: event.category,
-            id: event.id,
-            slug: event.slug,
-          }));
-  
-          console.log(this.events);
-        },
-        error: (err) => {
-          toast.error('Error fetching events:', err);
-        },
-      });
-    }
-    handleEventDetails(id: any) {
+
+
+  loadEvents() {
+    this.eventService.getAllEvents().subscribe({
+      next: (res) => {
+        this.events = res.map((event: any) => ({
+          image: event.image || 'assets/images/laptopframe.png',
+          name: event.title,
+          location: event.location,
+          date: event.event_date,
+          time: event.event_time,
+          description: event.description,
+          price: event.price,
+          category: event.category,
+          id: event.id,
+          slug: event.slug,
+        }));
+
+        console.log(this.events);
+        this.trendingEvents = this.events.slice(0, 6)
+      },
+      error: (err) => {
+        toast.error('Error fetching events:', err);
+      },
+    });
+  }
+  handleEventDetails(id: any) {
     this.router.navigate(['/register-event', id]);
   }
 }

@@ -1,5 +1,5 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { Router, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Events } from '../../services/events';
 import { toast } from 'ngx-sonner';
 import { NgIcon, provideIcons } from '@ng-icons/core';
@@ -27,8 +27,8 @@ import { FormsModule } from '@angular/forms';
   ],
 })
 export class FindEvent implements OnInit {
-
-
+  route = inject(ActivatedRoute)
+  allCategories: any = []
   router = inject(Router);
   private eventService = inject(Events);
   events: any[] = [];
@@ -36,9 +36,28 @@ export class FindEvent implements OnInit {
   loading = true;
   locations = ['Accra', 'Kumasi', 'Tema', 'Takoradi'];
   searchText = ""
+  showCategoryMenu = false;
+  selectedCategory: string | null = null;
 
   ngOnInit(): void {
     this.loadEvents();
+    this.eventService.getCategories().subscribe({
+      next: (res) => {
+        this.allCategories = res
+      },
+      error: (err) => {
+        toast.error("Couldn't load Categories")
+        console.log(err)
+      }
+    })
+
+    this.route.queryParams.subscribe(params => {
+      const search = params['query']
+      if (search) {
+        this.searchText = search
+        this.onSearchChange()
+      }
+    })
   }
 
   loadEvents() {
@@ -57,7 +76,6 @@ export class FindEvent implements OnInit {
           slug: event.slug,
         }));
         this.filteredEvents = [...this.events]
-        console.log(this.events);
         this.loading = false;
       },
       error: (err) => {
@@ -67,24 +85,40 @@ export class FindEvent implements OnInit {
     });
   }
 
-  onSearch() {
-    console.log('Search with filters:');
-    // this.router.navigate(['/find-event'], { queryParams: this.filters });
+
+  toggleCategoryMenu() {
+    this.showCategoryMenu = !this.showCategoryMenu;
   }
 
-  onSearchChange() {
-    console.log(this.searchText, this.events)
-    if (!this.searchText) {
-      this.filteredEvents = [...this.events]
+  onSelectCategory(catId: string | null) {
+    this.selectedCategory = catId;
+    this.showCategoryMenu = false;
+
+    if (!catId) {
+      this.filteredEvents = [...this.events];
     } else {
-      this.filteredEvents = this.events.filter((event) => {
-        event.name.toLowerCase().includes(this.searchText.toLowerCase())
-        
-        console.log("Filtered main", this.filteredEvents,this.searchText.toLowerCase())
-        console.log("Filtered", event.name.toLocaleLowerCase().includes(this.searchText.toLocaleLowerCase()))
-      })
+      this.filterByCategory(catId);
     }
   }
+
+  filterByCategory(catId: string) {
+    this.filteredEvents = this.events.filter(event => event.category.id === catId);
+  }
+
+
+
+  onSearchChange() {
+    const search = this.searchText.toLowerCase().trim();
+    if (!search) {
+      this.filteredEvents = [...this.events];
+      return;
+    }
+
+    this.filteredEvents = this.events.filter((event) =>
+      event.name.toLowerCase().includes(search)
+    );
+  }
+
 
   handleEventDetails(id: any) {
     this.router.navigate(['/register-event', id]);

@@ -3,34 +3,44 @@
     <h1 class="text-5xl font-extrabold text-gray-900 mb-5">
       Find an interesting event
     </h1>
-    <div
-      class="items-start grid grid-cols-1 md:grid-cols-2 md:items-center gap-3"
-    >
+    <div class="items-start grid grid-cols-1 md:grid-cols-2 md:items-center gap-3">
       <div class="flex items-center gap-3">
-        <div class="text-slate-700 py-3 px-4 border border-transparent hover:border-fuchsia-700 cursor-pointer rounded-md">
-          <ng-icon name="ionFilter" />
+        <div class="relative inline-block">
+          <div (click)="toggleCategoryMenu()"
+            class="text-slate-700 py-3 px-4 border border-transparent hover:border-fuchsia-700 cursor-pointer rounded-md">
+            <ng-icon name="ionFilter" />
+          </div>
+
+          @if(showCategoryMenu){ <ul
+            class="absolute z-10 mt-2 w-48 bg-white border border-gray-300 rounded-md shadow-md">
+            <li [class.bg-fuchsia-200]="!selectedCategory" (click)="onSelectCategory(null)"
+              class="px-4 py-2 hover:bg-fuchsia-100 cursor-pointer text-sm text-slate-700">
+              All
+            </li>
+            @for (cat of allCategories; track cat.id) {
+            <li [class.bg-fuchsia-200]="selectedCategory === cat.id" (click)="onSelectCategory(cat.id)"
+              class="px-4 py-2 hover:bg-fuchsia-100 cursor-pointer text-sm text-slate-700">
+              {{ cat.name }}
+            </li>
+            }
+          </ul>}
         </div>
-        <input
-        [(ngModel)]="searchText" (ngModelChange)="onSearchChange()"
-          type="search"
+
+        <input [(ngModel)]="searchText" (ngModelChange)="onSearchChange()" type="search"
           placeholder="What are you looking for?"
-          class="h-12 rounded-none py-2 px-5 placeholder:text-slate-400 placeholder:text-[14px] placeholder:italic active:ring-1 ring-fuchsia-700 flex-1"
-        />
+          class="h-12 rounded-none py-2 px-5 placeholder:text-slate-400 placeholder:text-[14px] placeholder:italic active:ring-1 ring-fuchsia-700 flex-1" />
       </div>
       <div class="flex items-center justify-start">
         <select
-          class="h-12 rounded-none py-2 px-5 placeholder:text-slate-400 placeholder:text-[14px] placeholder:italic active:ring-1 ring-fuchsia-700"
-        >
+          class="h-12 rounded-none py-2 px-5 placeholder:text-slate-400 placeholder:text-[14px] placeholder:italic active:ring-1 ring-fuchsia-700">
           <option value="">All Locations</option>
           @for (loc of locations; track loc) {
           <option [value]="loc">{{ loc }}</option>
           }
         </select>
 
-        <button (click)="onSearch()" class="bg-transparent cursor-pointer">
-          <div
-            class="p-2 bg-fuchsia-900 w-10 h-10 flex items-center justify-center rounded-full"
-          >
+        <button (click)="onSearchChange()" class="bg-transparent cursor-pointer">
+          <div class="p-2 bg-fuchsia-900 w-10 h-10 flex items-center justify-center rounded-full">
             <ng-icon name="ionSearch" style="color: white" />
           </div>
         </button>
@@ -38,8 +48,8 @@
     </div>
   </div>
 
-  <section class="trending-events">
-    <div class="cards-grid grid grid-cols-3">
+  <section class="trending-events w-full h-full">
+    @if(filteredEvents.length && events){<div class="cards-grid grid grid-cols-3">
       @for (event of filteredEvents; track event.id) {
       <div (click)="handleEventDetails(event.id)" class="card cursor-pointer bg-gray-100 flex flex-col min-w-[300px]">
         <div class="card-image">
@@ -52,14 +62,13 @@
           </p>
           <p class="description">{{ event.description }}</p>
         </div>
-        <!-- <button
-          (click)="goToEvent(event.id)"
-          class="w-full mt-auto cursor-pointer hover:bg-slate-600 hover:text-white transition-all bg-transparent border border-slate-600 text-slate-600"
-        >
-          Register Now
-        </button> -->
+       
       </div>
       }
-    </div>
+    </div>}@else {
+      <div class="w-full h-full flex items-center justify-center ">
+        <p class="italic text-slate-700 text-lg">No Events Found</p>
+      </div>
+    }
   </section>
 </div>
