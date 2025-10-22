@@ -228,7 +228,8 @@ export class CreateEvent implements OnInit {
         image: eventData.image,
         price: eventData.price,
       });
-
+      
+      console.log("Event cet",this.createEventForm.value.category)
       this.ticketForm.patchValue({
         quantity: eventData.capacity,
         price: eventData.price,
