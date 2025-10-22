@@ -30,7 +30,7 @@ interface Testimonial {
 
 @Component({
   selector: 'app-home',
-  imports: [DatePipe, NgIcon, FormsModule],
+  imports: [DatePipe, NgIcon, FormsModule, RouterLink],
   templateUrl: './home.html',
   styleUrl: './home.scss',
   viewProviders: [
@@ -110,9 +110,12 @@ export class Home implements OnInit {
   }
 
   onSearch() {
-    console.log('Search with filters:', this.filters);
     this.router.navigate(['/find-event'], { queryParams: this.filters });
   }
+
+  // browseCategory() {
+  //   this.router.navigate(['/find-event'], { queryParams: this.filters });
+  // }
 
 
 

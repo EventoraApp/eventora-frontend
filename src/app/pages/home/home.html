@@ -81,7 +81,7 @@
     class="cat-list grid md:grid-cols-3 grid-cols-2 lg:grid-cols-4 xl:grid-cols-5"
   >
     @for (cat of categoryEntries; track cat[0]) {
-    <div class="cat-item flex flex-col items-center">
+    <div routerLink="/find-event" class="cat-item flex flex-col items-center">
       <ng-icon [name]="cat[0]" class="text-3xl mb-2" />
       <div class="cat-name text-sm font-medium">{{ cat[1] }}</div>
     </div>
