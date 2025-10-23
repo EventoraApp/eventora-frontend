@@ -7,6 +7,7 @@ import {
   ionHome,
   ionPersonCircleSharp,
   ionCalendarOutline,
+  ionTicket
 } from '@ng-icons/ionicons';
 
 @Component({
@@ -15,7 +16,7 @@ import {
   templateUrl: './side-bar.html',
   styleUrl: './side-bar.scss',
   viewProviders: [
-    provideIcons({ ionHome, ionPersonCircleSharp, ionCalendarOutline }),
+    provideIcons({ ionHome, ionPersonCircleSharp, ionCalendarOutline,ionTicket }),
   ],
 })
 export class SideBar implements OnInit {
@@ -23,6 +24,7 @@ export class SideBar implements OnInit {
   isHomeActive = false;
   isEventActive = false;
   isProfileActive = false;
+  isTicketActive = false;
 
   ngOnInit(): void {
     this.updateActiveLinks(this.router.url); 
@@ -39,5 +41,6 @@ export class SideBar implements OnInit {
     this.isHomeActive = url.includes('/dashboard/home');
     this.isEventActive = url.includes('/dashboard/events');
     this.isProfileActive = url.includes('/dashboard/profile');
+    this.isTicketActive = url.includes('/dashboard/tickets');
   }
 }
