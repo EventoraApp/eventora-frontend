@@ -30,7 +30,7 @@ export class EventList implements OnInit {
     this.eventService.getMyEvents().subscribe({
       next: (res) => {
         this.events = res.map((event: any) => ({
-          image: event.image || 'assets/images/default.jpg',
+          image: event.image_url || 'assets/images/default.jpg',
           name: event.title,
           location: event.location,
           date: event.event_date,

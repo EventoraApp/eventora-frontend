@@ -64,7 +64,7 @@ export class FindEvent implements OnInit {
     this.eventService.getAllEvents().subscribe({
       next: (res) => {
         this.events = res.map((event: any) => ({
-          image: event.image || 'assets/images/laptopframe.png',
+          image: event.image_url || 'assets/images/laptopframe.png',
           name: event.title,
           location: event.location,
           date: event.event_date,
