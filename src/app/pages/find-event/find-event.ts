@@ -105,6 +105,14 @@ export class FindEvent implements OnInit {
     this.filteredEvents = this.events.filter(event => event.category.id === catId);
   }
 
+  filterByLocation(location: string | null) {
+    if(!location){
+      this.filteredEvents = [...this.events];
+      return
+    }
+    this.filteredEvents = this.events.filter(event => event.location === location);
+  }
+
 
 
   onSearchChange() {

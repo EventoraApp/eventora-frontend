@@ -16,10 +16,9 @@
     >
       + Create
     </button>
-    <div class="relative">
+    <div class="relative group">
       <button
-        (click)="toggleMenu()"
-        class="cursor-pointer transition-all flex items-center space-x-2 bg-slate-100 text-black hover:border-slate-300 hover:border-1 border-1 border-transparent rounded-4xl"
+        class=" cursor-pointer transition-all flex items-center space-x-2 bg-slate-100 text-black hover:border-slate-300 hover:border-1 border-1 border-transparent rounded-4xl"
       >
         <span>{{ username }}</span>
         <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
@@ -29,8 +28,7 @@
         </svg>
       </button>
       <div
-        [ngClass]="{ 'opacity-100 h-fit': showMenu}"
-        class="flex items-center justify-center flex-col w-full opacity-0 rounded-lg p-2 h-0 transition-all absolute overflow-hidden shadow-lg bg-gray-100 border border-gray-200"
+        class="flex items-center justify-center flex-col w-full opacity-0 group-hover:opacity-100 group-hover:h-fit  rounded-md p-2 h-0 transition-all absolute overflow-hidden shadow-lg bg-gray-100 border border-gray-200"
       >
         <button routerLink="/dashboard/profile" class="hover:underline bg-transparent text-gray-600 hover:text-gray-800 cursor-pointer text-[13px] flex items-center justify-center">
           Account Settings

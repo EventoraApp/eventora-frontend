@@ -5,10 +5,11 @@ import { ionSearch } from '@ng-icons/ionicons';
 import { Router, RouterLink } from '@angular/router';
 import { Events } from '../../../../services/events';
 import { toast } from 'ngx-sonner';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-event-list',
-  imports: [EventTable, NgIcon, RouterLink],
+  imports: [EventTable, NgIcon,FormsModule, RouterLink],
   templateUrl: './event-list.html',
   styleUrl: './event-list.scss',
   viewProviders: [provideIcons({ ionSearch })],
@@ -17,6 +18,8 @@ export class EventList implements OnInit {
   router = inject(Router);
   private eventService = inject(Events);
   events: any[] = [];
+  filteredEvents: any[] = [];
+  searchText =""
   loading = true;
 
   ngOnInit(): void {
@@ -37,7 +40,7 @@ export class EventList implements OnInit {
           slug: event.slug,
         }));
 
-        console.log(this.events);
+        this.filteredEvents = [...this.events]
         this.loading = false;
       },
       error: (err) => {
@@ -70,6 +73,19 @@ export class EventList implements OnInit {
         },
       });
     }
+  }
+
+
+  onSearchChange() {
+    const search = this.searchText.toLowerCase().trim();
+    if (!search) {
+      this.filteredEvents = [...this.events];
+      return;
+    }
+
+    this.filteredEvents = this.events.filter((event) =>
+      event.name.toLowerCase().includes(search)
+    );
   }
 
 }

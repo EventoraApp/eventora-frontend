@@ -84,6 +84,12 @@ export class CreateEvent implements OnInit {
   }
 
   constructor(private route: ActivatedRoute) {
+    this.isDrawerOpen = false;
+    this.eventId = this.route.snapshot.paramMap.get('id');
+    if (this.eventId) {
+      this.isEditMode = true;
+      this.loadEvent(this.eventId);
+    }
 
     this.authService.getRole().subscribe({
       next: (res) => {
@@ -206,30 +212,26 @@ export class CreateEvent implements OnInit {
     this.createEventForm.patchValue({ image: '' });
   }
 
+
   ngOnInit(): void {
-    this.isDrawerOpen = false;
-    this.eventId = this.route.snapshot.paramMap.get('id');
-    if (this.eventId) {
-      this.isEditMode = true;
-      this.loadEvent(this.eventId);
-    }
+    
+console.log("Oninit Event cet", this.createEventForm.value)
   }
 
   loadEvent(id: string) {
     this.eventService.getEventById(id).subscribe((eventData) => {
       this.createEventForm.patchValue({
         title: eventData.title,
-        description: eventData.description,
+        description: eventData.description, 
         location: eventData.location,
         event_date: eventData.event_date,
         event_time: eventData.event_time,
         capacity: eventData.capacity,
-        category: eventData.category.name,
+        category: eventData.category.id,
         image: eventData.image,
         price: eventData.price,
       });
-      
-      console.log("Event cet",this.createEventForm.value.category)
+
       this.ticketForm.patchValue({
         quantity: eventData.capacity,
         price: eventData.price,
