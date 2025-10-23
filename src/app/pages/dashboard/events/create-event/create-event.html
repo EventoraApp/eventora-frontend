@@ -165,7 +165,7 @@
       <div>
         <label class="block text-gray-700 font-medium mb-1">Price</label>
         <input onkeydown="return event.key !== 'e' && event.key !== 'E' && event.key !== '+' && event.key !== '-'"
-          formControlName="price" type="number" [value]="ticketForm.value.type"
+          formControlName="price" type="number" [value]="ticketForm.value.price"
           ngClass="{'italic text-slate-400' : ticketForm.value.type !== 'Paid'}" placeholder="Enter ticket Price"
           class="placeholder:text-slate-400 placeholder:text-[14px] placeholder:italic w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-violet-500 outline-none" />
       </div>
