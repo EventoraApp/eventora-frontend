@@ -197,8 +197,8 @@
         <input type="text" formControlName="name"
           class="placeholder:text-slate-400 placeholder:text-[14px] placeholder:italic w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-violet-500 outline-none"
           placeholder="Could be the name of your Event" />
-          @if(createEventForm.get('name')?.touched &&
-          createEventForm.get('name')?.errors?.['required']){
+          @if(ticketForm.get('name')?.touched &&
+          ticketForm.get('name')?.errors?.['required']){
 
           <p class="text-[13px] text-red-400">
             Please provide a ticket name
@@ -212,8 +212,8 @@
           class="placeholder:text-slate-400 placeholder:text-[14px] placeholder:italic w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-violet-500 outline-none"
           placeholder="Enter quantity" formControlName="quantity" [value]="createEventForm.value.capacity"
           onkeydown="return event.key !== 'e' && event.key !== 'E' && event.key !== '+' && event.key !== '-'" />
-          @if(createEventForm.get('quantity')?.touched &&
-          createEventForm.get('quantity')?.errors?.['required']){
+          @if(ticketForm.get('quantity')?.touched &&
+          ticketForm.get('quantity')?.errors?.['required']){
 
           <p class="text-[13px] text-red-400">
             Please this field must not be empty
@@ -227,8 +227,8 @@
           formControlName="price" type="number" [value]="ticketForm.value.price"
           ngClass="{'italic text-slate-400' : ticketForm.value.type !== 'Paid'}" placeholder="Enter ticket Price"
           class="placeholder:text-slate-400 placeholder:text-[14px] placeholder:italic w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-violet-500 outline-none" />
-          @if(createEventForm.get('price')?.touched &&
-          createEventForm.get('price')?.errors?.['required']){
+          @if(ticketForm.get('price')?.touched &&
+          ticketForm.get('price')?.errors?.['required']){
 
           <p class="text-[13px] text-red-400">
             Please this field must not be empty
@@ -241,8 +241,8 @@
           <label class="block text-gray-700 font-medium mb-1">Sales start <span class="text-red-400">*</span></label>
           <input formControlName="event_start_date" type="date"
             class="w-full border border-gray-300 rounded-md px-3 py-2" />
-            @if(createEventForm.get('event_start_date')?.touched &&
-          createEventForm.get('event_start_date')?.errors?.['required']){
+            @if(ticketForm.get('event_start_date')?.touched &&
+          ticketForm.get('event_start_date')?.errors?.['required']){
 
           <p class="text-[13px] text-red-400">
             Please this field must not be empty
@@ -253,8 +253,8 @@
           <label class="block text-gray-700 font-medium mb-1">Start time <span class="text-red-400">*</span></label>
           <input formControlName="event_start_time" type="time"
             class="w-full border border-gray-300 rounded-md px-3 py-2" />
-            @if(createEventForm.get('event_start_time')?.touched &&
-          createEventForm.get('event_start_time')?.errors?.['required']){
+            @if(ticketForm.get('event_start_time')?.touched &&
+          ticketForm.get('event_start_time')?.errors?.['required']){
 
           <p class="text-[13px] text-red-400">
             Please this field must not be empty
@@ -266,8 +266,8 @@
           <label class="block text-gray-700 font-medium mb-1">Sales end <span class="text-red-400">*</span></label>
           <input formControlName="event_end_date" type="date"
             class="w-full border border-gray-300 rounded-md px-3 py-2" />
-            @if(createEventForm.get('event_end_date')?.touched &&
-          createEventForm.get('event_end_date')?.errors?.['required']){
+            @if(ticketForm.get('event_end_date')?.touched &&
+          ticketForm.get('event_end_date')?.errors?.['required']){
 
           <p class="text-[13px] text-red-400">
             Please this field must not be empty
@@ -278,8 +278,8 @@
           <label class="block text-gray-700 font-medium mb-1">End time <span class="text-red-400">*</span></label>
           <input formControlName="event_end_time" type="time"
             class="w-full border border-gray-300 rounded-md px-3 py-2" />
-            @if(createEventForm.get('event_end_time')?.touched &&
-          createEventForm.get('event_end_time')?.errors?.['required']){
+            @if(ticketForm.get('event_end_time')?.touched &&
+          ticketForm.get('event_end_time')?.errors?.['required']){
 
           <p class="text-[13px] text-red-400">
             Please this field must not be empty
