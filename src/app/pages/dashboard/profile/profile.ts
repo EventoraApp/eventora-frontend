@@ -89,7 +89,7 @@ export class Profile implements OnInit {
       })
     }
 
-    if (this.profileForm.value.profile_picture = "") {
+    if (!this.profileForm.value.profile_picture) {
       this.authService.deleteProfilePhoto().subscribe({
         next: (res) => {
           toast.success("Profile Photo deleted successfully")
