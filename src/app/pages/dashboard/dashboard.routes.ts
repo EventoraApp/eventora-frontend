@@ -21,6 +21,11 @@ export const routes: Routes = [
           import('./events/event-list/event-list').then((m) => m.EventList),
       },
       {
+        path: 'tickets',
+        loadComponent: () =>
+          import('./tickets/tickets').then((m) => m.Tickets),
+      },
+      {
         path: 'events/new/create',
         // canActivate: [roleGuard],
         loadComponent: () =>
