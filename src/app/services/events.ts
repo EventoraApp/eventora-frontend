@@ -30,6 +30,15 @@ export class Events {
   getMyTickets(): Observable<any> {
     return this.http.get(`${this.baseUrl}/tickets/my-tickets/`);
   }
+
+
+  buyTickets(data: any): Observable<any> {
+    return this.http.post(`${this.baseUrl}/tickets/register/`,data);
+  }
+
+  buyMoreTickets(id: any, data:any): Observable<any> {
+    return this.http.post(`${this.baseUrl}/tickets/tickets/${id}/add-more/`, data);
+  }
   
   togglePublishEvent(id: number | string): Observable<any> {
     return this.http.patch(`${this.baseUrl}/events/${id}/publish/`, {

@@ -17,7 +17,7 @@ import { FormsModule } from '@angular/forms';
 export class Tickets implements OnInit {
   router = inject(Router);
   private eventService = inject(Events);
-  events: any[] = [];
+  tickets: any[] = [];
   filteredEvents: any[] = [];
   searchText =""
   loading = true;
@@ -27,24 +27,15 @@ export class Tickets implements OnInit {
   }
 
   loadEvents() {
-    this.eventService.getMyEvents().subscribe({
+    this.eventService.getMyTickets().subscribe({
       next: (res) => {
-        this.events = res.map((event: any) => ({
-          image: event.image || 'assets/images/default.jpg',
-          name: event.title,
-          location: event.location,
-          date: event.event_date,
-          time: event.event_time,
-          status: event.is_published ? 'Published' : 'Draft',
-          id: event.id,
-          slug: event.slug,
-        }));
+        this.tickets = res
 
-        this.filteredEvents = [...this.events]
+        this.filteredEvents = [...this.tickets]
         this.loading = false;
       },
       error: (err) => {
-        toast.error('Error fetching events:', err);
+        toast.error('Error fetching tickets:', err);
         this.loading = false;
       },
     });
@@ -60,11 +51,11 @@ export class Tickets implements OnInit {
     this.router.navigate(['/dashboard/events/', event.id, 'edit']);
   }
 
-  onDelete(event: any) {
-    if (confirm(`Are you sure you want to delete ${event.name}?`)) {
-      this.eventService.deleteEvent(event.id).subscribe({
+  onDelete(ticket: any) {
+    if (confirm(`Are you sure you want to delete ${ticket.name}?`)) {
+      this.eventService.deleteEvent(ticket.id).subscribe({
         next: () => {
-          this.events = this.events.filter((e) => e.id !== event.id);
+          this.tickets = this.tickets.filter((e) => e.id !== ticket.id);
           toast.success('Event Deleted successfully!');
         },
         error: (err) => {
@@ -79,12 +70,12 @@ export class Tickets implements OnInit {
   onSearchChange() {
     const search = this.searchText.toLowerCase().trim();
     if (!search) {
-      this.filteredEvents = [...this.events];
+      this.filteredEvents = [...this.tickets];
       return;
     }
 
-    this.filteredEvents = this.events.filter((event) =>
-      event.name.toLowerCase().includes(search)
+    this.filteredEvents = this.tickets.filter((ticket) =>
+      ticket.name.toLowerCase().includes(search)
     );
   }
 

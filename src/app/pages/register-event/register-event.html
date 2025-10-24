@@ -10,8 +10,8 @@
         <h1 class="text-[35px] font-bold">{{event.title}}</h1>
         <div class="flex items-center">
           <div class="mr-2 w-8 h-8 rounded-full bg-slate-200 overflow-hidden ">
-            <img [src]="event.organizer_profile_picture" alt="organizer_profile_picture" class="w-full h-full object-fit"
-            >
+            <img [src]="event.organizer_profile_picture" alt="organizer_profile_picture"
+              class="w-full h-full object-fit">
           </div>
           <p>Organised by {{event.organizer_name}}</p>
         </div>
@@ -45,9 +45,16 @@
         @if(!registered){
         <button (click)="toggleTicketForm()"
           class="w-full rounded-sm bg-fuchsia-800 cursor-pointer transition-all hover:bg-violet-800">
-          Get Tickets</button>}@else {
-        <button class="w-full rounded-sm bg-slate-200 cursor-pointer text-slate-600 border border-slate-300">
-          Registered</button>}
+          Get Tickets</button>
+        }@else {
+        <div class="flex items-center justify-center gap-2 flex-col w-full">
+          <button (click)="toggleTicketForm()"
+            class="w-full rounded-sm bg-fuchsia-800 cursor-pointer transition-all hover:bg-violet-800">
+            Get More Tickets</button>
+          <button class="w-full rounded-sm bg-slate-200 cursor-pointer text-slate-600 border border-slate-300">
+            Registered</button>
+        </div>
+        }
       </div>
     </section>
   </main>

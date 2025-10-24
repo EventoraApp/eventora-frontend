@@ -25,7 +25,7 @@ export class RegisterEvent implements OnInit {
   event: any = null;
   isTicketFormShowing: boolean = false;
   ticketCount = signal(1);
-  totalPrice = computed(() =>  (this.ticketCount() * this.event.price).toFixed(2))
+  totalPrice = computed(() => (this.ticketCount() * this.event.price).toFixed(2))
   registered: boolean = false
 
   ngOnInit(): void {
@@ -37,8 +37,8 @@ export class RegisterEvent implements OnInit {
     this.eventService.getEventById(id).subscribe({
       next: (res) => {
         this.event = res;
-        console.log("Events",this.event)
-      
+        console.log("Events", this.event)
+
       },
       error: (err) => {
         toast.error("Coudn't fetch this event");
@@ -66,10 +66,25 @@ export class RegisterEvent implements OnInit {
   }
 
   checkout() {
-    toast.success("Kudos! You have successfully registered for this event")
-    this.registered = !this.registered
-    setTimeout(()=>{
-      this.toggleTicketForm()
-    }, 500)
+    const quantity = this.ticketCount()
+    this.eventService.buyTickets({
+      event: this.event.id,
+      quantity: quantity,
+      promotion_code: "string"
+    }).subscribe({
+      next: (res) => {
+        console.log(res)
+        toast.success("Kudos! You have successfully registered for this event")
+        this.registered = !this.registered
+        setTimeout(() => {
+          this.toggleTicketForm()
+        }, 500)
+      },
+      error: (err) => {
+        toast.error("Couldn't Register")
+        console.log(err)
+
+      }
+    })
   }
 }
