@@ -134,6 +134,13 @@
           <option value="organizer">Organizer</option>
           <option value="attendee">Attendee</option>
         </select>
+        @if(registerForm.get('role')?.touched &&
+          registerForm.get('role')?.errors?.['required']){
+
+          <p class="text-[13px] text-red-400">
+            Please select a role
+          </p>
+          }
       </div>
 
       <button
