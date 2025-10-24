@@ -68,7 +68,7 @@ export class Login {
         },
         error: (err) => {
           console.error('Login failed:', err);
-          toast.error(err.error.detail[0]);
+          toast.error(err.error.detail.message);
           this.loading = false;
         },
       });
