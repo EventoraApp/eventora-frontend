@@ -66,6 +66,7 @@ export class RegisterEvent implements OnInit {
   }
 
   checkout() {
+    
     const quantity = this.ticketCount()
     this.eventService.buyTickets({
       event: this.event.id,
