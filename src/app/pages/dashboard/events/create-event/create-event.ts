@@ -1,5 +1,5 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule,NgClass } from '@angular/common';
 import {
   FormControl,
   FormGroup,
@@ -10,7 +10,7 @@ import { NgIcon, provideIcons } from '@ng-icons/core';
 import {
   ionChevronBack,
   ionTrashOutline,
-  ionCloudUpload,
+  ionCloudUpload,ionTicket
 } from '@ng-icons/ionicons';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Events } from '../../../../services/events';
@@ -20,11 +20,11 @@ import { AuthService } from '../../../../services/auth-service';
 @Component({
   selector: 'app-create-event',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, NgIcon, RouterLink],
+  imports: [CommonModule, ReactiveFormsModule, NgIcon, RouterLink, NgClass],
   templateUrl: './create-event.html',
   styleUrls: ['./create-event.scss'],
   viewProviders: [
-    provideIcons({ ionChevronBack, ionCloudUpload, ionTrashOutline }),
+    provideIcons({ ionTicket,ionChevronBack, ionCloudUpload, ionTrashOutline }),
   ],
 })
 export class CreateEvent implements OnInit {
@@ -45,25 +45,25 @@ export class CreateEvent implements OnInit {
 
   ticketForm = new FormGroup({
     type: new FormControl('Paid'),
-    name: new FormControl(''),
-    quantity: new FormControl(''),
-    price: new FormControl(''),
-    event_start_date: new FormControl(''),
-    event_start_time: new FormControl(''),
-    event_end_date: new FormControl(''),
-    event_end_time: new FormControl(''),
+    name: new FormControl('', [Validators.required]),
+    quantity: new FormControl('', [Validators.required]),
+    price: new FormControl('', [Validators.required]),
+    event_start_date: new FormControl('', [Validators.required]),
+    event_start_time: new FormControl('', [Validators.required]),
+    event_end_date: new FormControl('', [Validators.required]),
+    event_end_time: new FormControl('', [Validators.required]),
   });
 
   createEventForm = new FormGroup({
-    title: new FormControl(''),
-    description: new FormControl(''),
-    location: new FormControl(''),
-    event_date: new FormControl(''),
-    event_time: new FormControl(''),
+    title: new FormControl('', [Validators.required]),
+    description: new FormControl('', [Validators.required,Validators.maxLength(150)]),
+    location: new FormControl('', [Validators.required]),
+    event_date: new FormControl('', [Validators.required]),
+    event_time: new FormControl('', [Validators.required]),
     price: new FormControl('', [Validators.required]),
-    capacity: new FormControl(''),
-    category: new FormControl(''),
-    image: new FormControl(''),
+    capacity: new FormControl('', [Validators.required]),
+    category: new FormControl('', [Validators.required]),
+    image: new FormControl('', [Validators.required]),
     is_published: new FormControl(false),
   });
 
@@ -153,8 +153,8 @@ export class CreateEvent implements OnInit {
       capacity: this.ticketForm.value.quantity,
       price: this.ticketForm.value.price,
     });
-    if (this.createEventForm.invalid) {
-      toast.error("Leave nothing blank here")
+    if (!this.createEventForm.value.image) {
+      toast.error("Please add an image")
       this.createEventForm.markAllAsTouched();
       return;
     }

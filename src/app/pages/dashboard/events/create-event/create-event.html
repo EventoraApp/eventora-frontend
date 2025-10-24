@@ -1,6 +1,6 @@
-<div class="flex min-h-screen relative">
+<div class="flex min-h-screen relative flex-col lg:flex-row">
 
-  <aside class="w-64 bg-white border-r border-gray-200 p-6 space-y-6 fixed">
+  <aside class="flex-row w-full lg:flex-col lg:w-64 bg-white border-r border-gray-200 p-6 space-y-6 xl:fixed">
     <a routerLink="/dashboard/events" class="cursor-pointer text-violet-600 font-medium flex items-center gap-2">
       <ng-icon name="ionChevronBack" style="width: 22px; height: 22px" />
       Back to events
@@ -27,7 +27,7 @@
   </aside>
 
 
-  <main class="flex-1 p-10 overflow-y-auto ml-64 px-30">
+  <main class="flex-1 p-6 overflow-y-auto xl:ml-64 xl:px-30">
 
     <div
       class="relative rounded-lg overflow-hidden border-2 border-dashed border-violet-300 bg-violet-50 flex items-center justify-center h-[350px] mb-10 group">
@@ -58,34 +58,71 @@
       <form class="space-y-6" [formGroup]="createEventForm">
 
         <div>
-          <label class="block font-semibold mb-2 text-gray-700">Event title *</label>
-          <input formControlName="title" name="title" type="text" required placeholder="Event Title"
+          <label class="block font-semibold mb-2 text-gray-700">Event title <span class="text-red-400">*</span></label>
+          <input formControlName="title" [ngClass]="{
+            'ring-red-400':
+              createEventForm.get('title')?.errors &&
+              createEventForm.get('title')?.touched
+          }" name="title" type="text" required placeholder="Event Title"
             class="placeholder:text-slate-400 placeholder:text-[14px] placeholder:italic w-full border border-gray-300 rounded-md p-3 focus:ring-2 focus:ring-violet-500 outline-none" />
+          @if(createEventForm.get('title')?.touched &&
+          createEventForm.get('title')?.errors?.['required']){
+
+          <p class="text-[13px] text-red-400">
+            Please this field must not be empty
+          </p>
+          }
         </div>
 
         <!-- Summary -->
         <div>
-          <label class="block font-semibold mb-2 text-gray-700">Summary</label>
-          <textarea formControlName="description" name="description" rows="3" maxlength="140"
+          <label class="block font-semibold mb-2 text-gray-700">Summary <span class="text-red-400">*</span></label>
+          <textarea formControlName="description" name="description" rows="3" 
             placeholder="Short description of your event..."
             class="placeholder:text-slate-400 placeholder:text-[14px] placeholder:italic w-full border border-gray-300 rounded-md p-3 focus:ring-2 focus:ring-violet-500 outline-none"></textarea>
-          <p class="text-gray-400 text-xs mt-1">Max 140 characters</p>
+
+          @if(createEventForm.get('description')?.touched){
+          @if(createEventForm.get('description')?.errors?.['required']){
+
+          <p class="text-[13px] text-red-400">
+            Please give a little description about this event
+          </p>
+          }@else if (createEventForm.get('description')?.errors?.['maxlength']) {
+          <p class="text-[13px] text-red-400">
+            Description must not be more than 150 charaters
+          </p>
+          }}
+          <p class="text-gray-400 text-xs mt-1">Max 150 characters</p>
         </div>
 
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div>
-            <label class="block font-semibold mb-2 text-gray-700">Event date</label>
+            <label class="block font-semibold mb-2 text-gray-700">Event date <span class="text-red-400">*</span></label>
             <input type="date" formControlName="event_date" name="event_date" required
               class="placeholder:text-slate-400 placeholder:text-[14px] placeholder:italic w-full border border-gray-300 rounded-md p-3 focus:ring-2 focus:ring-violet-500 outline-none" />
+            @if(createEventForm.get('event_date')?.touched &&
+            createEventForm.get('event_date')?.errors?.['required']){
+
+            <p class="text-[13px] text-red-400">
+              Please add a date
+            </p>
+            }
           </div>
           <div>
-            <label class="block font-semibold mb-2 text-gray-700">Event time</label>
+            <label class="block font-semibold mb-2 text-gray-700">Event time <span class="text-red-400">*</span></label>
             <input type="time" formControlName="event_time" name="event_time" required
               class="placeholder:text-slate-400 placeholder:text-[14px] placeholder:italic w-full border border-gray-300 rounded-md p-3 focus:ring-2 focus:ring-violet-500 outline-none" />
+            @if(createEventForm.get('event_time')?.touched &&
+            createEventForm.get('event_time')?.errors?.['required']){
+
+            <p class="text-[13px] text-red-400">
+              Please add an event time
+            </p>
+            }
           </div>
           <div>
-            <label class="block font-semibold mb-2 text-gray-700">Category</label>
+            <label class="block font-semibold mb-2 text-gray-700">Category <span class="text-red-400">*</span></label>
             <select name="category" id=""
               class="placeholder:text-slate-400 placeholder:text-[14px] placeholder:italic w-full border border-gray-300 rounded-md p-3 focus:ring-2 focus:ring-violet-500 outline-none"
               formControlName="category" [value]="createEventForm.value.category">
@@ -94,29 +131,37 @@
               <option [value]="cat.id">{{cat.name}}</option>
               }
             </select>
+            @if(createEventForm.get('category')?.touched &&
+            createEventForm.get('category')?.errors?.['required']){
+
+            <p class="text-[13px] text-red-400">
+              Please select a category
+            </p>
+            }
           </div>
         </div>
 
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-end justify-between">
           <div>
-            <label class="block font-semibold mb-2 text-gray-700">Location</label>
+            <label class="block font-semibold mb-2 text-gray-700">Location <span class="text-red-400">*</span></label>
             <input type="text" formControlName="location" name="location" placeholder="Accra, Ghana"
               class="placeholder:text-slate-400 placeholder:text-[14px] placeholder:italic w-full border border-gray-300 rounded-md p-3 focus:ring-2 focus:ring-violet-500 outline-none" />
-          </div>
-          <div>
-            <label class="block font-semibold mb-2 text-gray-700">Capacity</label>
-            <input type="number" formControlName="capacity" name="capacity" placeholder="Set event capacity"
-              (focus)="openDrawer()" [value]="ticketForm.value.quantity" readonly
-              class="placeholder:text-slate-400 placeholder:text-[14px] placeholder:italic w-full border border-gray-300 rounded-md p-3 focus:ring-2 focus:ring-violet-500 outline-none" />
+            @if(createEventForm.get('location')?.touched &&
+            createEventForm.get('location')?.errors?.['required']){
+
+            <p class="text-[13px] text-red-400">
+              Please add a location
+            </p>
+            }
           </div>
         </div>
 
 
         <div class="flex justify-end">
-          <button (click)="onSubmit()" type="button"
+          <button  (click)="openDrawer()" type="button"
             class="bg-violet-800 hover:bg-violet-800 cursor-pointer text-white px-6 py-2 rounded-md font-semibold shadow-sm transition">
-            @if(loading){Loading...}@else{Save}
+            Add Tickets
           </button>
         </div>
       </form>
@@ -148,49 +193,98 @@
 
     <form class="flex-1 overflow-y-auto space-y-4 px-2" [formGroup]="ticketForm">
       <div>
-        <label class="block text-gray-700 font-medium mb-1">Name</label>
+        <label class="block text-gray-700 font-medium mb-1">Ticket Name <span class="text-red-400">*</span></label>
         <input type="text" formControlName="name"
           class="placeholder:text-slate-400 placeholder:text-[14px] placeholder:italic w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-violet-500 outline-none"
           placeholder="Could be the name of your Event" />
+          @if(createEventForm.get('name')?.touched &&
+          createEventForm.get('name')?.errors?.['required']){
+
+          <p class="text-[13px] text-red-400">
+            Please provide a ticket name
+          </p>
+          }
       </div>
 
       <div>
-        <label class="block text-gray-700 font-medium mb-1">Available quantity</label>
+        <label class="block text-gray-700 font-medium mb-1">Available quantity <span class="text-red-400">*</span></label>
         <input type="number"
           class="placeholder:text-slate-400 placeholder:text-[14px] placeholder:italic w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-violet-500 outline-none"
           placeholder="Enter quantity" formControlName="quantity" [value]="createEventForm.value.capacity"
           onkeydown="return event.key !== 'e' && event.key !== 'E' && event.key !== '+' && event.key !== '-'" />
+          @if(createEventForm.get('quantity')?.touched &&
+          createEventForm.get('quantity')?.errors?.['required']){
+
+          <p class="text-[13px] text-red-400">
+            Please this field must not be empty
+          </p>
+          }
       </div>
 
       <div>
-        <label class="block text-gray-700 font-medium mb-1">Price</label>
+        <label class="block text-gray-700 font-medium mb-1">Price <span class="text-red-400">*</span></label>
         <input onkeydown="return event.key !== 'e' && event.key !== 'E' && event.key !== '+' && event.key !== '-'"
           formControlName="price" type="number" [value]="ticketForm.value.price"
           ngClass="{'italic text-slate-400' : ticketForm.value.type !== 'Paid'}" placeholder="Enter ticket Price"
           class="placeholder:text-slate-400 placeholder:text-[14px] placeholder:italic w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-violet-500 outline-none" />
+          @if(createEventForm.get('price')?.touched &&
+          createEventForm.get('price')?.errors?.['required']){
+
+          <p class="text-[13px] text-red-400">
+            Please this field must not be empty
+          </p>
+          }
       </div>
 
       <div class="grid grid-cols-2 gap-4">
         <div>
-          <label class="block text-gray-700 font-medium mb-1">Sales start</label>
+          <label class="block text-gray-700 font-medium mb-1">Sales start <span class="text-red-400">*</span></label>
           <input formControlName="event_start_date" type="date"
             class="w-full border border-gray-300 rounded-md px-3 py-2" />
+            @if(createEventForm.get('event_start_date')?.touched &&
+          createEventForm.get('event_start_date')?.errors?.['required']){
+
+          <p class="text-[13px] text-red-400">
+            Please this field must not be empty
+          </p>
+          }
         </div>
         <div>
-          <label class="block text-gray-700 font-medium mb-1">Start time</label>
+          <label class="block text-gray-700 font-medium mb-1">Start time <span class="text-red-400">*</span></label>
           <input formControlName="event_start_time" type="time"
             class="w-full border border-gray-300 rounded-md px-3 py-2" />
+            @if(createEventForm.get('event_start_time')?.touched &&
+          createEventForm.get('event_start_time')?.errors?.['required']){
+
+          <p class="text-[13px] text-red-400">
+            Please this field must not be empty
+          </p>
+          }
         </div>
 
         <div>
-          <label class="block text-gray-700 font-medium mb-1">Sales end</label>
+          <label class="block text-gray-700 font-medium mb-1">Sales end <span class="text-red-400">*</span></label>
           <input formControlName="event_end_date" type="date"
             class="w-full border border-gray-300 rounded-md px-3 py-2" />
+            @if(createEventForm.get('event_end_date')?.touched &&
+          createEventForm.get('event_end_date')?.errors?.['required']){
+
+          <p class="text-[13px] text-red-400">
+            Please this field must not be empty
+          </p>
+          }
         </div>
         <div>
-          <label class="block text-gray-700 font-medium mb-1">End time</label>
+          <label class="block text-gray-700 font-medium mb-1">End time <span class="text-red-400">*</span></label>
           <input formControlName="event_end_time" type="time"
             class="w-full border border-gray-300 rounded-md px-3 py-2" />
+            @if(createEventForm.get('event_end_time')?.touched &&
+          createEventForm.get('event_end_time')?.errors?.['required']){
+
+          <p class="text-[13px] text-red-400">
+            Please this field must not be empty
+          </p>
+          }
         </div>
       </div>
     </form>
@@ -199,8 +293,8 @@
       <button (click)="closeDrawer()" class="px-4 py-2 border border-gray-300 rounded-md font-medium">
         Cancel
       </button>
-      <button (click)="closeDrawer()" class="px-4 py-2 bg-violet-600 text-white rounded-md hover:bg-violet-700">
-        Save
+      <button (click)="onSubmit()" class="px-4 py-2 bg-violet-600 text-white rounded-md hover:bg-violet-700">
+        @if(loading){Loading...}@else{Save Event}
       </button>
     </div>
   </div>

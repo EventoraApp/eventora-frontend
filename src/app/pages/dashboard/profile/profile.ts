@@ -78,7 +78,7 @@ export class Profile implements OnInit {
 
   onSubmit() {
     this.loading = true;
-    if (this.profileForm.value.cover_photo = "") {
+    if (!this.profileForm.value.cover_photo) {  
       this.authService.deleteCoverPhoto().subscribe({
         next: (res) => {
           toast.success("Cover Photo deleted successfully")
@@ -132,7 +132,7 @@ export class Profile implements OnInit {
         console.log('Profile updated successfully:', res);
         this.loading = false;
         toast.success('Profile updated  successfully!');
-        window.location.reload()
+        // window.location.reload()
       },
       error: (err) => {
         this.loading = false;
