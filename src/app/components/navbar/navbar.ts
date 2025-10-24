@@ -42,7 +42,7 @@ export class Navbar implements OnInit {
       },
       error: (err) => {
         console.log(err, 'An error occurred')
-        toast.error('Couldnt get current user for some reasons')
+        // toast.error('Couldnt get current user for some reasons')
       },
     });
 
