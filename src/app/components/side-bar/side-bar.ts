@@ -9,6 +9,8 @@ import {
   ionCalendarOutline,
   ionTicket
 } from '@ng-icons/ionicons';
+import { AuthService } from '../../services/auth-service';
+import { toast } from 'ngx-sonner';
 
 @Component({
   selector: 'app-side-bar',
@@ -25,11 +27,13 @@ export class SideBar implements OnInit {
   isEventActive = false;
   isProfileActive = false;
   isTicketActive = false;
+  authService = inject(AuthService)
+  profile_pic = ""
 
   ngOnInit(): void {
     this.updateActiveLinks(this.router.url); 
 
-   
+   this.fetchCurrentUser()
     this.router.events
       .pipe(filter((event): event is NavigationEnd => event instanceof NavigationEnd))
       .subscribe((event) => {
@@ -43,4 +47,18 @@ export class SideBar implements OnInit {
     this.isProfileActive = url.includes('/dashboard/profile');
     this.isTicketActive = url.includes('/dashboard/tickets');
   }
+
+
+  fetchCurrentUser() {
+      this.authService.getCurrentUser().subscribe({
+        next: (profileData) => {
+          console.log('User profile:', profileData);
+          this.profile_pic = profileData.profile_picture_url;
+          console.log(this.profile_pic)
+        },
+        error: (err) => {
+          toast.error('Failed to fetch user info:', err);
+        },
+      });
+    }
 }

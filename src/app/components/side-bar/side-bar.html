@@ -12,8 +12,10 @@
       <ng-icon name="ionTicket"  style="width: 22px; height: 22px;"/>
     </div>
   </div>
-  <div title="Profile" routerLink="/dashboard/profile" [ngClass]="{'bg-gradient-eventora':isProfileActive}"  class=" hover:bg-white flex items-center justify-center h-10 w-10 rounded-md text-gray-700  cursor-pointer transition-all">
-    <ng-icon name="ionPersonCircleSharp" style="width: 35px; height: 35px;"/>
+  <div title="Profile" routerLink="/dashboard/profile" [ngClass]="{'bg-gradient-eventora':isProfileActive}"  class=" hover:bg-white overflow-hidden flex items-center justify-center h-10 w-10 rounded-md text-gray-700  cursor-pointer transition-all">
+    @if(!profile_pic){<ng-icon name="ionPersonCircleSharp" style="width: 35px; height: 35px;"/>}@else{
+      <img [src]="profile_pic" alt="profile" class="w-full h-full object-contain">
+    }
   </div>
 
 </aside>

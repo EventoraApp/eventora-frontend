@@ -13,6 +13,7 @@ import { toast } from 'ngx-sonner';
 export class SideNavbar {
   router = inject(Router)
   authService = inject(AuthService);
+  profile_pic = ""
   user = {
     username: '',
     email: '',
@@ -25,6 +26,7 @@ export class SideNavbar {
     this.authService.getCurrentUser().subscribe({
       next: (res) => {
         this.user = res;
+        this.profile_pic = res.profile_picture
       },
       error: (err) => {
         console.log(err, 'An error occurred');

@@ -44,7 +44,11 @@
   </div>
   }@else {
   <div class="mt-10 flex flex-col items-center justify-center">
-    <div class="rounded-full w-30 h-30 bg-gray-500 m-2"></div>
+    <div class="rounded-full w-30 h-30 bg-slate-500 m-2 overflow-hidden">
+      @if(!profile_pic){<ng-icon name="ionPersonCircleSharp" style="width: 35px; height: 35px;"/>}@else{
+      <img [src]="profile_pic" alt="profile" class="w-full h-full object-contain">
+    }
+    </div>
     <button
       routerLink="/dashboard/home"
       class="text-[15px] text-gray-600 bg-transparent border border-gray-600 rounded-full cursor-pointer hover:bg-gray-200"
