@@ -36,17 +36,17 @@ export class Navbar implements OnInit {
 
   }
   ngOnInit(): void {
-       this.authService.getCurrentUser().subscribe({
+       if(localStorage.getItem("access_token")){this.authService.getCurrentUser().subscribe({
       next: (res) => {
         this.user = res;
       },
       error: (err) => {
         console.log(err, 'An error occurred')
-        // toast.error('Couldnt get current user for some reasons')
+        toast.error('Couldnt get current user for some reasons')
       },
     });
 
-    
+  }
   }
 
 

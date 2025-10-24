@@ -80,10 +80,9 @@ export const authInterceptor: HttpInterceptorFn = (
   return next(authReq).pipe(
     catchError((error: HttpErrorResponse) => {
       if (error.status === 401) {
-        
-        //   toast.error("Session Expired. Please Login")
-        // localStorage.removeItem('access_token');
-        // router.navigate(['/login']);
+        toast.error("Please Login")
+        localStorage.removeItem('access_token');
+        router.navigate(['/login']);
       }
       return throwError(() => error);
     })

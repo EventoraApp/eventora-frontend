@@ -113,9 +113,9 @@ export class Home implements OnInit {
     this.router.navigate(['/find-event'], { queryParams: this.filters });
   }
 
-  // browseCategory() {
-  //   this.router.navigate(['/find-event'], { queryParams: this.filters });
-  // }
+  browseCategory() {
+    this.router.navigate(['/find-event'], { queryParams: this.filters });
+  }
 
 
 

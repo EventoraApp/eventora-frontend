@@ -23,7 +23,7 @@ export class SideNavbar {
   };
 
   ngOnInit(): void {
-    this.authService.getCurrentUser().subscribe({
+    if(localStorage.getItem("access_token")){ this.authService.getCurrentUser().subscribe({
       next: (res) => {
         this.user = res;
         this.profile_pic = res.profile_picture
@@ -32,7 +32,7 @@ export class SideNavbar {
         console.log(err, 'An error occurred');
         toast.error('Couldnt get current user for some reasons');
       },
-    });
+    });}
   }
 
   handleLogOut() {
