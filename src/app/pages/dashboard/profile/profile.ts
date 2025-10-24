@@ -132,7 +132,7 @@ export class Profile implements OnInit {
         console.log('Profile updated successfully:', res);
         this.loading = false;
         toast.success('Profile updated  successfully!');
-        // window.location.reload()
+        window.location.reload()
       },
       error: (err) => {
         this.loading = false;
