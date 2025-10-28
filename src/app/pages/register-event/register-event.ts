@@ -101,7 +101,7 @@ export class RegisterEvent implements OnInit {
           this.registered = !this.registered;
           setTimeout(() => {
             this.toggleTicketForm();
-            this.initializePayment(quantity);
+            if(this.event.price !="0.00")(this.initializePayment(quantity));
           }, 500);
         },
         error: (err) => {
