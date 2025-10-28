@@ -124,7 +124,7 @@ export class RegisterEvent implements OnInit {
           this.registered = !this.registered;
           setTimeout(() => {
             this.toggleTicketForm();
-            this.initializePayment(quantity);
+            this.initializePayment(quantity);  
           }, 500);
         },
         error: (err) => {
@@ -144,6 +144,7 @@ export class RegisterEvent implements OnInit {
         next: (res) => {
           toast.success(res.message);
           window.open(`${res.data.authorization_url}`, '_blank');
+          window.location.reload()
         },
         error: (err) => {
           toast.error("Couldn't initaite payement");
