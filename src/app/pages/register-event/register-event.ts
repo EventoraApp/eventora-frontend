@@ -69,7 +69,7 @@ export class RegisterEvent implements OnInit {
   }
 
   increment() {
-    if (this.ticketCount() === this.eventTicket.remaining_tickets_allowed) {
+    if (this.ticketCount() ===  10) {
       toast.warning(
         `You can only purchase a maximum of ${this.eventTicket.remaining_tickets_allowed} tickets`
       );
