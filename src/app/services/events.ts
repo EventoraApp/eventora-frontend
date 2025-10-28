@@ -27,19 +27,6 @@ export class Events {
     return this.http.get(`${this.baseUrl}/my-events/`);
   }
 
-  getMyTickets(): Observable<any> {
-    return this.http.get(`${this.baseUrl}/tickets/my-tickets/`);
-  }
-
-
-  buyTickets(data: any): Observable<any> {
-    return this.http.post(`${this.baseUrl}/tickets/register/`,data);
-  }
-
-  buyMoreTickets(id: any, data:any): Observable<any> {
-    return this.http.post(`${this.baseUrl}/tickets/tickets/${id}/add-more/`, data);
-  }
-  
   togglePublishEvent(id: number | string): Observable<any> {
     return this.http.patch(`${this.baseUrl}/events/${id}/publish/`, {
       published: true,
@@ -58,4 +45,42 @@ export class Events {
   getCategories(): Observable<any> {
     return this.http.get(`${this.baseUrl}/categories/`);
   }
+
+  getEventInfo(id:any): Observable<any> {
+    return this.http.get(`${this.baseUrl}/tickets/events/${id}/capacity/`);
+  }
+
+  getMyTickets(): Observable<any> {
+    return this.http.get(`${this.baseUrl}/tickets/my-tickets/`);
+  }
+
+  getMyTicketStatsAttendee(): Observable<any> {
+    return this.http.get(`${this.baseUrl}/tickets/my-tickets/stats/`);
+  }
+
+  getMyTicketStatsOrganizer(): Observable<any> {
+    return this.http.get(`${this.baseUrl}/tickets/my-tickets/stats/`);
+  }
+  
+  getEventTickets(id:any): Observable<any> {
+    return this.http.get(`${this.baseUrl}/tickets/organizer/events/${id}/tickets/`);
+  }
+
+  getAllTickets(): Observable<any> {
+    return this.http.get(`${this.baseUrl}/tickets/organizer/tickets/`);
+  }
+  
+  
+  buyTickets(data: any): Observable<any> {
+    return this.http.post(`${this.baseUrl}/tickets/register/`,data);
+  }
+  
+  buyMoreTickets(id: any, data:any): Observable<any> {
+    return this.http.post(`${this.baseUrl}/tickets/tickets/${id}/add-more/`, data);
+  }
+  
+  makePayment(data: any): Observable<any> {
+    return this.http.post(`${this.baseUrl}/payments/initialize/`,data);
+  }
 }
+

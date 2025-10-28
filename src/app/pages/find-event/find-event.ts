@@ -44,6 +44,7 @@ export class FindEvent implements OnInit {
     this.eventService.getCategories().subscribe({
       next: (res) => {
         this.allCategories = res
+        console.log(res)
       },
       error: (err) => {
         toast.error("Couldn't load Categories")
@@ -71,12 +72,13 @@ export class FindEvent implements OnInit {
           time: event.event_time,
           description: event.description,
           price: event.price,
-          category: event.category,
+          category: event.category_name,
           id: event.id,
           slug: event.slug,
         }));
         this.filteredEvents = [...this.events]
         this.loading = false;
+        console.log(this.filteredEvents)
       },
       error: (err) => {
         toast.error('Error fetching events:', err);

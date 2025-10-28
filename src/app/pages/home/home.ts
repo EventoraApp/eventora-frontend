@@ -130,7 +130,7 @@ export class Home implements OnInit {
           time: event.event_time,
           description: event.description,
           price: event.price,
-          category: event.category,
+          category: event.category_name,
           id: event.id,
           slug: event.slug,
         }));

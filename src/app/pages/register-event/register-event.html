@@ -82,7 +82,7 @@
               </div>
             </div>
             <div class="mt-auto w-full mb-2 p-2 border border-slate-200 rounded-sm flex justify-between items-center">
-              <p>Ticket Name</p>
+              <p class="text-slate-700">{{event.available_tickets| number}} Tickets left</p>
               <div class="flex justify-center items-center gap-2">
                 <button (click)="decrement()" type="button"
                   class="w-full rounded-sm bg-fuchsia-800 cursor-pointer transition-all hover:bg-violet-800">
@@ -96,14 +96,19 @@
               </div>
             </div>
           </div>
-          <button (click)="checkout()" type="button"
+          @if(!registered){
+            <button (click)="checkout()" type="button"
             class="mt-auto w-full rounded-sm bg-fuchsia-800 cursor-pointer transition-all hover:bg-violet-800">
             Checkout
-          </button>
+          </button>}
+            @else{<button (click)="checkout()" type="button"
+            class="mt-auto w-full rounded-sm bg-fuchsia-800 cursor-pointer transition-all hover:bg-violet-800">
+            Buy more
+          </button>}
         </div>
         <aside class="flex-2 border-l border-slate-200 h-full bg-slate-100">
           <div class="w-full h-[200px] bg-slate-200 overflow-hidden">
-            <img [src]="event.image_url" [alt]="event.name" class="object-cover" />
+            <img [src]="event.image_url" [alt]="event.name" class="object-cover h-full w-full" />
           </div>
           <div class="flex flex-col p-5">
             <h1>Order summary</h1>

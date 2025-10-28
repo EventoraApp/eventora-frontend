@@ -15,6 +15,80 @@
       Register a new Event
     </button>
   </div>
-  <p class="text-center italic text-slate-700"> No Tickets here yet</p>
-  <!-- <app-table [events]="filteredEvents" (view)="onView($event)" (edit)="onEdit($event)" (delete)="onDelete($event)" /> -->
+  <div class="overflow-x-auto rounded-md shadow-sm">
+  <table class="min-w-full text-sm text-left">
+    <thead class="bg-slate-100 text-black">
+      <tr>
+        <th class="px-6 py-3 font-semibold">Ticket #</th>
+        <th class="px-6 py-3 font-semibold">Event</th>
+        <th class="px-6 py-3 font-semibold">Date</th>
+        <th class="px-6 py-3 font-semibold">Rate</th>
+        <th class="px-6 py-3 font-semibold">Status</th>
+        <th class="px-6 py-3 font-semibold">Quantiy</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      @if (tickets.length > 0) { @for (ticket of  filteredTickets; track $index) {
+      <tr class="hover:bg-slate-50 transition cursor-pointer">
+
+        <td class="px-6 py-4" (click)="onView(ticket)">
+          <p class="text-gray-500">{{ ticket.ticket_number }}</p>
+        </td>
+
+        <td class="px-6 py-4 flex items-center gap-4" (click)="onView(ticket)">
+
+          <div>
+            <a
+              target="_blank"
+              class="text-violet-600 dark:text-violet-400 font-semibold hover:underline"
+            >
+              {{ ticket.event_title }}
+            </a>
+            <p class="text-gray-500 text-xs">{{ ticket.event_location }}</p>
+          </div>
+        </td>
+
+      
+
+        <td class="px-6 py-4" (click)="onView(ticket)">
+          <p class="text-gray-500">{{ ticket.event_date }}</p>
+          <p class="text-xs text-gray-500">{{ ticket.event_time }}</p>
+        </td>
+
+        <td class="px-6 py-4" (click)="onView(ticket)">
+          <p class="text-xs text-gray-500">GHC {{ ticket.final_price }}</p>
+        </td>
+        
+        
+        <td class="px-6 py-4" (click)="onView(ticket)">
+          <div
+          class="px-3 py-1 rounded-full text-xs font-medium w-fit"
+          [ngClass]="{
+              'bg-green-100 text-green-700': ticket.status === 'confirmed',
+              'bg-yellow-100 text-yellow-700': ticket.status === 'pending',
+              'bg-red-100 text-red-700': ticket.status === 'cancelled'
+            }"
+            >
+            {{ ticket.status }}
+          </div>
+        </td>
+        
+        
+        <td class="px-6 py-4">
+          
+          <p class="text-gray-500">{{ ticket.quantity }} of 10</p>
+        </td>
+      </tr>
+      } } @else {
+      <tr>
+        <td colspan="4" class="px-6 py-4 text-center text-gray-400">
+          No events found
+        </td>
+      </tr>
+      }
+    </tbody>
+  </table>
+</div>
+
 </section>
