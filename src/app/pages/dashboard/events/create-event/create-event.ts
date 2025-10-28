@@ -200,6 +200,7 @@ export class CreateEvent implements OnInit {
           this.router.navigate(['/dashboard/events']);
         },
         error: (err) => {
+          console.log('Event created err:', err);
           this.loading = false;
           toast.error(err.error.message[0]);
           this.router.navigate(['/dashboard/events/new/create']);

@@ -66,6 +66,7 @@ export class EventList implements OnInit {
         next: () => {
           this.events = this.events.filter((e) => e.id !== event.id);
           toast.success('Event Deleted successfully!');
+          window.location.reload()
         },
         error: (err) => {
           console.error('Delete failed', err);
