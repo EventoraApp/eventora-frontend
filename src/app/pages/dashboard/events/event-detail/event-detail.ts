@@ -5,11 +5,12 @@ import { Events } from '../../../../services/events';
 import { toast } from 'ngx-sonner';
 import { NgIcon, provideIcons } from "@ng-icons/core";
 import { ionChevronBack,ionCreate ,ionLocationSharp,ionTrash} from '@ng-icons/ionicons';
+import { EventStatsComponent } from "../../../../components/event-stats/event-stats";
 
 @Component({
   selector: 'app-event-detail',
   standalone: true,
-  imports: [CommonModule, NgIcon, RouterLink],
+  imports: [CommonModule, NgIcon, RouterLink, EventStatsComponent],
   templateUrl: './event-detail.html',
   styleUrls: ['./event-detail.scss'],
   viewProviders: provideIcons({
@@ -18,6 +19,7 @@ import { ionChevronBack,ionCreate ,ionLocationSharp,ionTrash} from '@ng-icons/io
 })
 export class EventDetail implements OnInit {
   event: any = null;
+  event_info: any = null;
   loading = true;
   eventService = inject(Events)
   router =inject(Router)
@@ -43,6 +45,15 @@ export class EventDetail implements OnInit {
       error: (err) => {
         toast.error('Error fetching event details:', err);
         this.loading = false;
+      },
+    });
+    this.eventService.getEventInfo(id).subscribe({
+      next: (res) => {
+        this.event_info = res.data;
+        console.log("Info",res)
+      },
+      error: (err) => {
+        toast.error('Error fetching event info:', err);
       },
     });
   }

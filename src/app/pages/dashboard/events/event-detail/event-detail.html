@@ -52,20 +52,11 @@
   </aside>
   <main class="flex-3 p-10 overflow-y-auto ">
     <div class="flex flex-col gap-6">
-      <div class="flex justify-between items-center ">
-        <h1 class="text-5xl font-extrabold text-fuchsia-900 ">{{ event.title }}</h1>
-      </div>
       <div class="flex-1">
 
-        <p class="text-gray-600 mb-3">
-          {{ event.description }}
-        </p>
+        
+        <app-event-stats [data]="event_info"></app-event-stats>
 
-        <ul class="space-y-1 text-gray-700">
-          <li><strong>Price:</strong> $ {{ event.price }}</li>
-          <li><strong>Capacity:</strong> {{ event.capacity }}</li>
-          <li><strong>Category:</strong> {{ event.category_name }}</li>
-        </ul>
 
         <div class="mt-6 flex w-full justify-end">
           <button

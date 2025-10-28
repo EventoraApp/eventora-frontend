@@ -30,12 +30,26 @@ export class RegisterEvent implements OnInit {
   totalPrice = computed(() =>
     (this.ticketCount() * this.event.price).toFixed(2)
   );
-  registered: boolean = true;
+  registered: boolean = false;
 
   ngOnInit(): void {
     this.eventId = this.route.snapshot.paramMap.get('id');
     this.getEvent(this.eventId);
-    this.getEventTicket();
+    this.checkRegistration();
+  }
+
+  checkRegistration() {
+    this.eventService.checkRegistration(this.eventId).subscribe({
+      next: (res) => {
+        console.log('Register', res);
+        this.registered = res.is_registered;
+        this.eventTicket = res.ticket;
+      },
+      error: (err) => {
+        toast.error("Coudn't check for registration");
+        console.log('Register', err);
+      },
+    });
   }
 
   getEvent(id: any) {
@@ -55,8 +69,10 @@ export class RegisterEvent implements OnInit {
   }
 
   increment() {
-    if (this.ticketCount() === 10) {
-      toast.warning('You can only purchase a maximum of 10 tickets');
+    if (this.ticketCount() === this.eventTicket.remaining_tickets_allowed) {
+      toast.warning(
+        `You can only purchase a maximum of ${this.eventTicket.remaining_tickets_allowed} tickets`
+      );
       return;
     }
     this.ticketCount.set(this.ticketCount() + 1);
@@ -67,18 +83,6 @@ export class RegisterEvent implements OnInit {
       return;
     }
     this.ticketCount.set(this.ticketCount() - 1);
-  }
-
-  getEventTicket() {
-    this.eventService.getEventTickets(this.eventId).subscribe({
-      next: (res) => {
-        this.eventTicket = res;
-        console.log(res);
-      },
-      error: (err) => {
-        console.log(err);
-      },
-    });
   }
 
   checkout() {
@@ -97,11 +101,34 @@ export class RegisterEvent implements OnInit {
           this.registered = !this.registered;
           setTimeout(() => {
             this.toggleTicketForm();
-            this.initializePayment(quantity)
+            this.initializePayment(quantity);
           }, 500);
         },
         error: (err) => {
           toast.error(err.error[0] || err.error.non_field_errors[0]);
+          console.log(err);
+        },
+      });
+  }
+
+  buyMore() {
+    const quantity = this.ticketCount();
+    this.eventService
+      .buyMoreTickets(this.eventTicket.id, {
+        quantity: quantity,
+      })
+      .subscribe({
+        next: (res) => {
+          console.log(res);
+          toast.success('Kudos! You have successfully added more tickets');
+          this.registered = !this.registered;
+          setTimeout(() => {
+            this.toggleTicketForm();
+            this.initializePayment(quantity);
+          }, 500);
+        },
+        error: (err) => {
+          toast.error( err.error.error);
           console.log(err);
         },
       });
@@ -116,7 +143,7 @@ export class RegisterEvent implements OnInit {
       .subscribe({
         next: (res) => {
           toast.success(res.message);
-          window.open(`${res.data.authorization_url}`, "_blank")
+          window.open(`${res.data.authorization_url}`, '_blank');
         },
         error: (err) => {
           toast.error("Couldn't initaite payement");

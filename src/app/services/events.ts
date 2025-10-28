@@ -46,8 +46,12 @@ export class Events {
     return this.http.get(`${this.baseUrl}/categories/`);
   }
 
+  checkRegistration(id: any): Observable<any> {
+    return this.http.get(`${this.baseUrl}/tickets/check-registration/?event_id=${id}`);
+  }
+
   getEventInfo(id:any): Observable<any> {
-    return this.http.get(`${this.baseUrl}/tickets/events/${id}/capacity/`);
+    return this.http.get(`${this.baseUrl}/events/${id}/analytics/`);
   }
 
   getMyTickets(): Observable<any> {

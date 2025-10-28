@@ -3,19 +3,24 @@
     <img [src]="event.image_url" [alt]="event.name" class="w-full h-full" />
   </div>
 
-  <main class="flex flex-col lg:flex-row items-start justify-center gap-4 text-slate-700">
+  <main
+    class="flex flex-col lg:flex-row items-start justify-center gap-4 text-slate-700"
+  >
     <section class="flex-1 md:flex-3 gap-5 flex flex-col">
       <div class="flex flex-col gap-2">
-        <p class="text-[20px]">{{event.event_date}}</p>
-        <h1 class="text-[35px] font-bold">{{event.title}}</h1>
+        <p class="text-[20px]">{{ event.event_date }}</p>
+        <h1 class="text-[35px] font-bold">{{ event.title }}</h1>
         <div class="flex items-center">
-          <div class="mr-2 w-8 h-8 rounded-full bg-slate-200 overflow-hidden ">
-            <img [src]="event.organizer_profile_picture" alt="organizer_profile_picture"
-              class="w-full h-full object-fit">
+          <div class="mr-2 w-8 h-8 rounded-full bg-slate-200 overflow-hidden">
+            <img
+              [src]="event.organizer_profile_picture"
+              alt="organizer_profile_picture"
+              class="w-full h-full object-fit"
+            />
           </div>
-          <p>Organised by {{event.organizer_name}}</p>
+          <p>Organised by {{ event.organizer_name }}</p>
         </div>
-        <p class="text-[20px]">{{event.description}}</p>
+        <p class="text-[20px]">{{ event.description }}</p>
       </div>
 
       <div class="">
@@ -24,7 +29,7 @@
           <div class="w-5 h-5 text-black text-[20px]">
             <ng-icon name="ionCalendar" />
           </div>
-          <p>{{event.event_date}}, {{ event.event_time}} </p>
+          <p>{{ event.event_date }}, {{ event.event_time }}</p>
         </div>
       </div>
 
@@ -34,92 +39,141 @@
           <div class="w-5 h-5 text-black text-[20px]">
             <ng-icon name="ionLocationSharp" />
           </div>
-          <p>{{event.location}}</p>
+          <p>{{ event.location }}</p>
         </div>
       </div>
     </section>
 
     <section class="w-full lg:flex-2">
       <div class="shadow-md rounded-md p-5 flex flex-col items-center gap-4">
-        <h1 class="text-[25px]">${{event.price}}</h1>
+        <h1 class="text-[25px]">GHC {{ event.price }}</h1>
         @if(!registered){
-        <button (click)="toggleTicketForm()"
-          class="w-full rounded-sm bg-fuchsia-800 cursor-pointer transition-all hover:bg-violet-800">
-          Get Tickets</button>
-        }@else {
+        <button
+          (click)="toggleTicketForm()"
+          class="w-full rounded-sm bg-fuchsia-800 cursor-pointer transition-all hover:bg-violet-800"
+        >
+          Get Tickets
+        </button>
+        }@else { @if(eventTicket.remaining_tickets_allowed > 0){
+
         <div class="flex items-center justify-center gap-2 flex-col w-full">
-          <button (click)="toggleTicketForm()"
-            class="w-full rounded-sm bg-fuchsia-800 cursor-pointer transition-all hover:bg-violet-800">
-            Get More Tickets</button>
-          <button class="w-full rounded-sm bg-slate-200 cursor-pointer text-slate-600 border border-slate-300">
-            Registered</button>
+          <button
+            (click)="toggleTicketForm()"
+            class="w-full rounded-sm bg-fuchsia-800 cursor-pointer transition-all hover:bg-violet-800"
+          >
+            Get More Tickets
+          </button>
+          <button
+            class="w-full rounded-sm bg-slate-200 cursor-pointer text-slate-600 border border-slate-300"
+          >
+            Registered
+          </button>
         </div>
-        }
+        }@else {
+        <button
+          class="w-full rounded-sm bg-slate-200 cursor-pointer text-slate-600 border border-slate-300"
+        >
+          Registered
+        </button>
+
+        } }
       </div>
     </section>
   </main>
 
   @if(isTicketFormShowing) {
-  <div style="background-color: rgba(0, 0, 0, 0.493)"
-    class="fixed top-0 left-0 z-300 h-screen w-full bg-black px-10 md:px-20 lg:px-30 xl:px-50 py-10 flex items-center justify-center">
+  <div
+    style="background-color: rgba(0, 0, 0, 0.493)"
+    class="fixed top-0 left-0 z-300 h-screen w-full bg-black px-10 md:px-20 lg:px-30 xl:px-50 py-10 flex items-center justify-center"
+  >
     <form class="bg-white h-[70vh] w-full relative">
-      <div style="background-color: rgba(238, 231, 231, 0.842)" (click)="toggleTicketForm()"
-        class="cursor-pointer right-2 top-2 text-[18px] absolute text-black flex rounded-full p-3 items-center justify-center">
+      <div
+        style="background-color: rgba(238, 231, 231, 0.842)"
+        (click)="toggleTicketForm()"
+        class="cursor-pointer right-2 top-2 text-[18px] absolute text-black flex rounded-full p-3 items-center justify-center"
+      >
         <ng-icon name="ionClose" />
       </div>
 
       <div class="flex items-start h-full">
         <div class="flex-3 overflow-y-auto flex flex-col p-5 h-full">
-          <div class="pb-2 border-b border-slate-200 w-full flex flex-col items-center justify-center">
-            <h1>{{event.title}}</h1>
-            <p class="text-[14px] text-slate-700">{{event.event_date}}</p>
+          <div
+            class="pb-2 border-b border-slate-200 w-full flex flex-col items-center justify-center"
+          >
+            <h1>{{ event.title }}</h1>
+            <p class="text-[14px] text-slate-700">{{ event.event_date }}</p>
           </div>
           <div class="flex flex-col items-center h-full">
-            <div class="flex items-center justify-center  h-full">
-
+            <div class="flex items-center justify-center h-full">
               <div class="h-50 flex items-center justify-center">
-                <img class="h-100 " src="assets/images/ticket.png" alt="ticket" />
+                <img
+                  class="h-100"
+                  src="assets/images/ticket.png"
+                  alt="ticket"
+                />
               </div>
             </div>
-            <div class="mt-auto w-full mb-2 p-2 border border-slate-200 rounded-sm flex justify-between items-center">
-              <p class="text-slate-700">{{event.available_tickets| number}} Tickets left</p>
+            <div
+              class="mt-auto w-full mb-2 p-2 border border-slate-200 rounded-sm flex justify-between items-center"
+            >
+              <p class="text-slate-700">
+                {{ event.available_tickets | number }} Tickets left
+              </p>
               <div class="flex justify-center items-center gap-2">
-                <button (click)="decrement()" type="button"
-                  class="w-full rounded-sm bg-fuchsia-800 cursor-pointer transition-all hover:bg-violet-800">
+                <button
+                  (click)="decrement()"
+                  type="button"
+                  class="w-full rounded-sm bg-fuchsia-800 cursor-pointer transition-all hover:bg-violet-800"
+                >
                   -
                 </button>
                 <p>{{ ticketCount() }}</p>
-                <button (click)="increment()" type="button"
-                  class="w-full rounded-sm bg-fuchsia-800 cursor-pointer transition-all hover:bg-violet-800">
+                <button
+                  (click)="increment()"
+                  type="button"
+                  class="w-full rounded-sm bg-fuchsia-800 cursor-pointer transition-all hover:bg-violet-800"
+                >
                   +
                 </button>
               </div>
             </div>
           </div>
           @if(!registered){
-            <button (click)="checkout()" type="button"
-            class="mt-auto w-full rounded-sm bg-fuchsia-800 cursor-pointer transition-all hover:bg-violet-800">
-            Checkout
-          </button>}
-            @else{<button (click)="checkout()" type="button"
-            class="mt-auto w-full rounded-sm bg-fuchsia-800 cursor-pointer transition-all hover:bg-violet-800">
-            Buy more
-          </button>}
+          <button
+            (click)="checkout()"
+            type="button"
+            class="mt-auto w-full rounded-sm bg-fuchsia-800 cursor-pointer transition-all hover:bg-violet-800"
+          >
+            Checkout</button
+          >} @else{<button
+            (click)="buyMore()"
+            type="button"
+            class="mt-auto w-full rounded-sm bg-fuchsia-800 cursor-pointer transition-all hover:bg-violet-800"
+          >
+            Buy more</button
+          >}
         </div>
         <aside class="flex-2 border-l border-slate-200 h-full bg-slate-100">
           <div class="w-full h-[200px] bg-slate-200 overflow-hidden">
-            <img [src]="event.image_url" [alt]="event.name" class="object-cover h-full w-full" />
+            <img
+              [src]="event.image_url"
+              [alt]="event.name"
+              class="object-cover h-full w-full"
+            />
           </div>
           <div class="flex flex-col p-5">
             <h1>Order summary</h1>
             <div
-              class="border-b border-slate-300 pb-5 text-[15px] text-slate-500 flex items-start justify-between gap-2">
+              class="border-b border-slate-300 pb-5 text-[15px] text-slate-500 flex items-start justify-between gap-2"
+            >
               <p>{{ ticketCount() }} x Ticket name</p>
               <p>${{ totalPrice() }}</p>
             </div>
-            <div class="my-2 flex justify-between items-center gap-2 text-[20px]">
+            <div
+              class="my-2 flex justify-between items-center gap-2 text-[20px]"
+            >
               <h1>Total</h1>
-              <h1>${{ totalPrice() }}</h1>
+              <h1>GHC {{ totalPrice() }}</h1>
             </div>
           </div>
         </aside>

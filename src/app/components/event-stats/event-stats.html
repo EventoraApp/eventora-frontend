@@ -1,0 +1,74 @@
+<div class=" grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+  <!-- Event Overview -->
+  <div class="bg-white shadow-md rounded-xl p-4 col-span-2">
+    <h2 class="text-xl font-semibold text-gray-800 mb-3">
+      {{ data.event.title }} — Overview
+    </h2>
+    <div class="grid sm:grid-cols-3 gap-4 text-center">
+      <div>
+        <p class="text-gray-500 text-sm">Capacity</p>
+        <p class="text-2xl font-bold">{{ data.event.capacity | number }}</p>
+      </div>
+      <div>
+        <p class="text-gray-500 text-sm">Tickets Sold</p>
+        <p class="text-2xl font-bold text-blue-600">{{ data.ticket_sales.total_sold }}</p>
+      </div>
+      <div>
+        <p class="text-gray-500 text-sm">Available</p>
+        <p class="text-2xl font-bold text-green-600">{{ data.event.available_tickets }}</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Capacity Utilization -->
+  <div class="bg-white shadow-md rounded-xl p-4">
+    <h3 class="font-semibold mb-2">Utilization</h3>
+    <div class="w-full bg-gray-200 rounded-full h-3 mb-2">
+      <div
+        class="bg-blue-600 h-3 rounded-full transition-all duration-500"
+        [style.width.%]="soldPercentage"
+      ></div>
+    </div>
+    <p class="text-sm text-gray-600">
+      {{ soldPercentage | number:'1.0-2' }}% of capacity utilized
+    </p>
+  </div>
+
+  <!-- Revenue -->
+  <div class="bg-white shadow-md rounded-xl p-4">
+    <h3 class="font-semibold mb-2">Revenue Summary</h3>
+    <p class="text-gray-600 text-sm">
+      Total Revenue:
+      <span class="font-semibold text-green-700">
+        ${{ data.revenue.total_revenue | number }}
+      </span>
+    </p>
+    <p class="text-gray-600 text-sm">
+      Avg. Ticket Price:
+      <span class="font-semibold text-gray-800">
+        ${{ data.revenue.average_ticket_price | number:'1.2-2' }}
+      </span>
+    </p>
+  </div>
+
+  <!-- Timeline -->
+  <div class="bg-white shadow-md rounded-xl p-4">
+    <h3 class="font-semibold mb-2">Timeline</h3>
+    <p class="text-gray-600 text-sm">
+      Days until event:
+      <span class="font-bold text-blue-600">{{ data.timeline.days_until_event }}</span>
+    </p>
+    <p class="text-gray-600 text-sm">
+      Sales velocity:
+      <span class="font-bold text-green-600">
+        {{ data.timeline.sales_velocity }} / day
+      </span>
+    </p>
+  </div>
+
+  <!-- Chart -->
+  <div class="bg-white shadow-md rounded-xl p-4 col-span-2">
+    <h3 class="font-semibold mb-3">Daily Ticket Sales</h3>
+    <canvas #salesChart></canvas>
+  </div>
+</div>
